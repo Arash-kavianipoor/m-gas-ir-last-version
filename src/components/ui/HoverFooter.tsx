@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Mail,
   Phone,
@@ -18,18 +18,37 @@ import {
 import { useLanguage } from '../../i18n/LanguageContext';
 import { COMPANY_INFO } from '../../data/company';
 import { CatalogDownloadModal } from '../CatalogDownloadModal';
+import { detectDevice } from '../../utils/deviceDetection';
 
 export const TextHoverEffect: React.FC<{ text: string; className?: string }> = ({ text, className = '' }) => {
   const [cursor, setCursor] = useState({ x: 0, y: 0 });
   const [hovered, setHovered] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const dev = detectDevice();
+    setIsDesktop(!dev.lowGpuMode && window.innerWidth >= 1024);
+  }, []);
 
   const handleMouseMove = (e: React.MouseEvent<SVGSVGElement>) => {
+    if (!isDesktop) return;
     const rect = e.currentTarget.getBoundingClientRect();
     setCursor({
       x: e.clientX - rect.left,
       y: e.clientY - rect.top,
     });
   };
+
+  // Mobile / Low GPU Mode: Render static, beautiful, zero-overhead SVG text without dynamic masks
+  if (!isDesktop) {
+    return (
+      <div className={`relative w-full flex items-center justify-center select-none overflow-hidden py-2 ${className}`}>
+        <span className="font-black text-4xl sm:text-6xl tracking-widest uppercase font-mono text-slate-800/80 hover:text-emerald-500/30 transition-colors">
+          {text}
+        </span>
+      </div>
+    );
+  }
 
   return (
     <div className={`relative w-full flex items-center justify-center select-none overflow-hidden ${className}`}>
@@ -98,7 +117,7 @@ export const TextHoverEffect: React.FC<{ text: string; className?: string }> = (
 
 export const FooterBackgroundGradient: React.FC = () => {
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+    <div className="absolute inset-0 pointer-events-none overflow-hidden hidden lg:block">
       <div className="absolute -bottom-24 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-emerald-500/10 rounded-full blur-[120px]" />
       <div className="absolute -bottom-10 right-10 w-[300px] h-[300px] bg-teal-500/10 rounded-full blur-[90px]" />
       <div className="absolute -bottom-10 left-10 w-[300px] h-[300px] bg-emerald-700/10 rounded-full blur-[90px]" />

@@ -3,6 +3,10 @@ import {createRoot} from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
 import { registerServiceWorker } from './serviceWorkerRegistration';
+import { applyDeviceClassesToHtml } from './utils/deviceDetection';
+
+// Initialize device detection and apply GPU safe classes immediately
+applyDeviceClassesToHtml();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -11,3 +15,4 @@ createRoot(document.getElementById('root')!).render(
 );
 
 registerServiceWorker();
+

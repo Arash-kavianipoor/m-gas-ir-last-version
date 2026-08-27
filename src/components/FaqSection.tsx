@@ -154,8 +154,8 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ onOpenRfq }) => {
   return (
     <section id="faq" className="py-20 bg-[#071118] relative border-t border-slate-800/80">
       
-      {/* Background ambient glows */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      {/* Background ambient glows - desktop GPU only */}
+      <div className="hidden lg:block absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-1/4 left-1/3 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[140px]" />
         <div className="absolute bottom-10 right-1/4 w-[400px] h-[400px] bg-teal-500/5 rounded-full blur-[120px]" />
       </div>

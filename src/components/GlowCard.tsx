@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, ReactNode } from 'react';
+import { detectDevice } from '../utils/deviceDetection';
 
 export interface GlowCardProps {
   children: ReactNode;
@@ -39,9 +40,10 @@ export const GlowCard: React.FC<GlowCardProps> = ({
 
   useEffect(() => {
     const checkIsDesktop = () => {
+      const device = detectDevice();
       const isWideScreen = window.innerWidth >= 1024;
       const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
-      setIsDesktop(isWideScreen && hasFinePointer);
+      setIsDesktop(!device.lowGpuMode && isWideScreen && hasFinePointer);
     };
 
     checkIsDesktop();
@@ -77,31 +79,44 @@ export const GlowCard: React.FC<GlowCardProps> = ({
   };
 
   const getInlineStyles = () => {
+    // If on mobile/low-GPU device, return lightweight static style without dynamic gradients
+    if (!isDesktop) {
+      const mobileStyles: React.CSSProperties = {
+        backgroundColor: '#0F172A',
+        borderColor: 'rgba(51, 65, 85, 0.7)',
+        position: 'relative',
+      };
+      if (width !== undefined) {
+        mobileStyles.width = typeof width === 'number' ? `${width}px` : width;
+      }
+      if (height !== undefined) {
+        mobileStyles.height = typeof height === 'number' ? `${height}px` : height;
+      }
+      return mobileStyles;
+    }
+
     const baseStyles: React.CSSProperties & Record<string, any> = {
       '--base': base,
       '--spread': spread,
       '--radius': '24',
       '--border': '1',
-      '--backdrop': 'rgba(15, 23, 42, 0.75)',
+      '--backdrop': 'rgba(15, 23, 42, 0.85)',
       '--backup-border': 'rgba(51, 65, 85, 0.5)',
       '--size': '260',
       '--outer': '1',
       '--border-size': 'calc(var(--border, 1) * 1px)',
       '--spotlight-size': 'calc(var(--size, 260) * 1px)',
       '--hue': 'calc(var(--base) + (var(--xp, 0) * var(--spread, 0)))',
-      backgroundColor: 'var(--backdrop, rgba(15, 23, 42, 0.75))',
+      backgroundColor: 'var(--backdrop, rgba(15, 23, 42, 0.85))',
       border: '1px solid var(--backup-border)',
       position: 'relative',
-    };
-
-    if (isDesktop) {
-      baseStyles.backgroundImage = `radial-gradient(
+      backgroundImage: `radial-gradient(
         var(--spotlight-size) var(--spotlight-size) at
         calc(var(--x, 0) * 1px)
         calc(var(--y, 0) * 1px),
         hsl(var(--hue, 140) 80% 60% / 0.15), transparent
-      )`;
-    }
+      )`,
+    };
 
     if (width !== undefined) {
       baseStyles.width = typeof width === 'number' ? `${width}px` : width;
@@ -123,8 +138,8 @@ export const GlowCard: React.FC<GlowCardProps> = ({
         relative 
         shadow-xl
         p-4 lg:p-5 
-        backdrop-blur-md
-        transition-all duration-300
+        ${isDesktop ? 'backdrop-blur-md' : 'border border-slate-700/80'}
+        transition-colors duration-200
         ${className}
       `}
     >
@@ -134,3 +149,4 @@ export const GlowCard: React.FC<GlowCardProps> = ({
     </div>
   );
 };
+

@@ -97,8 +97,8 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
   return (
     <section id="products" className="py-20 bg-[#060F14] relative">
       
-      {/* Background ambient lighting */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      {/* Background ambient lighting - desktop GPU only */}
+      <div className="hidden lg:block absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-10 right-1/4 w-[450px] h-[450px] bg-emerald-500/5 rounded-full blur-[140px]" />
         <div className="absolute bottom-10 left-1/4 w-[450px] h-[450px] bg-teal-500/5 rounded-full blur-[140px]" />
       </div>

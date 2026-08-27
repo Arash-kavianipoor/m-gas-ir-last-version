@@ -54,9 +54,9 @@ export const CatalogDownloadModal: React.FC<CatalogDownloadModalProps> = ({
         className="relative w-full max-w-xl bg-[#0C1520] border border-emerald-500/30 rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden text-slate-200"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Background decorative glows */}
-        <div className="absolute -top-20 -right-20 w-48 h-48 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-20 -left-20 w-48 h-48 bg-teal-500/15 rounded-full blur-3xl pointer-events-none" />
+        {/* Background decorative glows - desktop only */}
+        <div className="hidden lg:block absolute -top-20 -right-20 w-48 h-48 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="hidden lg:block absolute -bottom-20 -left-20 w-48 h-48 bg-teal-500/15 rounded-full blur-3xl pointer-events-none" />
 
         {/* Close Button */}
         <button

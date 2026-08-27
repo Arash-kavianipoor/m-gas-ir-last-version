@@ -132,14 +132,23 @@
   overflow-x: clip;
 }
 
-@media (max-width: 1023px) {
+/* ==========================================================================
+   MOBILE & MOBILE CHROME GPU CRASH PREVENTION (GPU SAFE MODE)
+   Disables heavy Skia rasterization passes, offscreen blur buffers, 
+   dynamic backdrop-filter layers, and SVG mask compositing.
+   ========================================================================== */
+@media (max-width: 1023px), (hover: none) and (pointer: coarse) {
   * {
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* Disable all backdrop-filter blurs on mobile to prevent GPU layer tearing & tile corruption */
+  /* 1. Disable all backdrop-filter blurs to prevent GPU tile allocation crashes */
   header,
   nav,
+  div,
+  span,
+  section,
+  footer,
   [data-glow],
   .group\/glowcard,
   .product-catalog-grid,
@@ -153,11 +162,64 @@
     -webkit-backdrop-filter: none !important;
   }
 
+  /* 2. Hide heavy decorative background Gaussian blur elements on mobile */
+  .blur-3xl,
+  .blur-2xl,
+  .blur-xl,
+  [class*="blur-["],
+  [class*="blur-3xl"],
+  [class*="blur-2xl"] {
+    display: none !important;
+    filter: none !important;
+  }
+
+  /* 3. Simplify shadows to prevent tile seam tearing and Skia context loss */
   .product-catalog-grid .group\/glowcard,
-  .product-catalog-grid [data-glow] {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3) !important;
+  .product-catalog-grid [data-glow],
+  .glow-card {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4) !important;
+    background-image: none !important;
   }
 }
+
+/* Specific class-based protection activated by device detection */
+html.is-mobile-chrome,
+html.gpu-safe-mode,
+html.is-mobile-device {
+  /* Prevent compositor thread overdraw */
+  -webkit-overflow-scrolling: touch;
+}
+
+html.is-mobile-chrome *,
+html.gpu-safe-mode * {
+  /* Prevent excessive GPU layer creation */
+  will-change: auto !important;
+}
+
+html.is-mobile-chrome .blur-3xl,
+html.is-mobile-chrome .blur-2xl,
+html.is-mobile-chrome [class*="blur-"],
+html.gpu-safe-mode .blur-3xl,
+html.gpu-safe-mode .blur-2xl,
+html.gpu-safe-mode [class*="blur-"] {
+  display: none !important;
+  filter: none !important;
+}
+
+html.is-mobile-chrome .backdrop-blur-md,
+html.is-mobile-chrome .backdrop-blur-lg,
+html.is-mobile-chrome .backdrop-blur-xl,
+html.is-mobile-chrome .backdrop-blur-sm,
+html.is-mobile-chrome .backdrop-blur,
+html.gpu-safe-mode .backdrop-blur-md,
+html.gpu-safe-mode .backdrop-blur-lg,
+html.gpu-safe-mode .backdrop-blur-xl,
+html.gpu-safe-mode .backdrop-blur-sm,
+html.gpu-safe-mode .backdrop-blur {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
 
 @keyframes fadeIn {
   from {

@@ -80,9 +80,9 @@ export const FactoryVideoTour: React.FC = () => {
 
   return (
     <section id="factory-tour" className="py-20 bg-gradient-to-b from-[#050D12] via-[#07131A] to-[#050D12] relative overflow-hidden border-t border-slate-800/60">
-      {/* Ambient background glows */}
-      <div className="absolute top-1/4 -start-40 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/4 -end-40 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+      {/* Ambient background glows - desktop GPU only */}
+      <div className="hidden lg:block absolute top-1/4 -start-40 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="hidden lg:block absolute bottom-1/4 -end-40 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         

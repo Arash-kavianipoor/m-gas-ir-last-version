@@ -86,9 +86,9 @@ export const HistoryVision: React.FC = () => {
 
         {/* Featured Founder & Managing Director Leadership Card */}
         <div className="mb-16 rounded-3xl bg-gradient-to-br from-slate-900/95 via-slate-900/90 to-[#07141B] border-2 border-emerald-500/30 shadow-2xl shadow-emerald-950/40 relative overflow-hidden">
-          {/* Ambient Background Glows */}
-          <div className="absolute top-0 start-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 end-0 w-80 h-80 bg-teal-500/5 rounded-full blur-3xl pointer-events-none" />
+          {/* Ambient Background Glows - desktop GPU only */}
+          <div className="hidden lg:block absolute top-0 start-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="hidden lg:block absolute bottom-0 end-0 w-80 h-80 bg-teal-500/5 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 items-stretch">
             {/* Founder Full-Height Uncropped Portrait (Positioned on the Left on Desktop) */}
@@ -104,7 +104,7 @@ export const HistoryVision: React.FC = () => {
               {/* Uncropped Full Height Photo Display */}
               <div className="relative w-full h-[380px] sm:h-[440px] lg:h-[500px] xl:h-[540px] flex items-end justify-center">
                 {/* Subtle soft spotlight glow behind person */}
-                <div className="absolute bottom-4 inset-x-8 h-72 bg-emerald-500/15 rounded-full blur-2xl pointer-events-none" />
+                <div className="hidden lg:block absolute bottom-4 inset-x-8 h-72 bg-emerald-500/15 rounded-full blur-2xl pointer-events-none" />
 
                 <img
                   src="/founder/mousa-amooie.png"

@@ -109,76 +109,54 @@ export const MeniscusMobileNav: React.FC<MeniscusNavProps> = ({
       'calculator',
     ];
 
-    let ticking = false;
+    let lastScrollTime = 0;
+    let scrollTimeout: NodeJS.Timeout | null = null;
+
+    const performSectionCheck = () => {
+      const windowHeight = window.innerHeight;
+      const scrollY = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight;
+
+      /*
+       * Bottom of page.
+       */
+      if (scrollY + windowHeight >= docHeight - 140) {
+        const calcIdx = items.findIndex((item) => item.id === 'calculator');
+        if (calcIdx !== -1) {
+          setActiveIndex(calcIdx);
+        }
+        return;
+      }
+
+      let currentSectionId = 'hero';
+      for (let i = SECTION_ORDER.length - 1; i >= 0; i--) {
+        const sectionId = SECTION_ORDER[i];
+        const element = document.getElementById(sectionId);
+        if (!element) continue;
+
+        const rect = element.getBoundingClientRect();
+        if (rect.top <= windowHeight * 0.45 && rect.bottom > 80) {
+          currentSectionId = sectionId;
+          break;
+        }
+      }
+
+      const index = items.findIndex((item) => item.id === currentSectionId);
+      if (index !== -1 && index !== activeIndex) {
+        setActiveIndex(index);
+      }
+    };
 
     const handleScroll = () => {
-      if (ticking) return;
-
-      ticking = true;
-
-      window.requestAnimationFrame(() => {
-        const scrollY = window.scrollY;
-        const windowHeight = window.innerHeight;
-        const docHeight =
-          document.documentElement.scrollHeight;
-
-        /*
-         * Bottom of page.
-         */
-        if (
-          scrollY + windowHeight >=
-          docHeight - 140
-        ) {
-          const calcIdx = items.findIndex(
-            (item) => item.id === 'calculator'
-          );
-
-          if (calcIdx !== -1) {
-            setActiveIndex(calcIdx);
-          }
-
-          ticking = false;
-          return;
-        }
-
-        let currentSectionId = 'hero';
-
-        for (
-          let i = SECTION_ORDER.length - 1;
-          i >= 0;
-          i--
-        ) {
-          const sectionId = SECTION_ORDER[i];
-          const element =
-            document.getElementById(sectionId);
-
-          if (!element) continue;
-
-          const rect =
-            element.getBoundingClientRect();
-
-          if (
-            rect.top <= windowHeight * 0.45 &&
-            rect.bottom > 80
-          ) {
-            currentSectionId = sectionId;
-            break;
-          }
-        }
-
-        const index = items.findIndex(
-          (item) => item.id === currentSectionId
-        );
-
-        if (
-          index !== -1 &&
-          index !== activeIndex
-        ) {
-          setActiveIndex(index);
-        }
-
-        ticking = false;
-      });
+      const now = Date.now();
+      // Throttle to at most once per 120ms to prevent GPU compositor lockup
+      if (now - lastScrollTime > 120) {
+        lastScrollTime = now;
+        performSectionCheck();
+      } else {
+        if (scrollTimeout) clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(performSectionCheck, 120);
+      }
     };
 
     window.addEventListener(
@@ -187,13 +165,14 @@ export const MeniscusMobileNav: React.FC<MeniscusNavProps> = ({
       { passive: true }
     );
 
-    handleScroll();
+    performSectionCheck();
 
     return () => {
       window.removeEventListener(
         'scroll',
         handleScroll
       );
+      if (scrollTimeout) clearTimeout(scrollTimeout);
     };
   }, [activeSectionOverride, isRTL]);
 
