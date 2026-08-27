@@ -10,9 +10,14 @@ import {
   ChevronRight,
   Flame,
   MessageCircle,
+  FileDown,
+  FileText,
+  Download,
+  Sparkles,
 } from 'lucide-react';
 import { useLanguage } from '../../i18n/LanguageContext';
 import { COMPANY_INFO } from '../../data/company';
+import { CatalogDownloadModal } from '../CatalogDownloadModal';
 
 export const TextHoverEffect: React.FC<{ text: string; className?: string }> = ({ text, className = '' }) => {
   const [cursor, setCursor] = useState({ x: 0, y: 0 });
@@ -103,6 +108,7 @@ export const FooterBackgroundGradient: React.FC = () => {
 
 export const HoverFooter: React.FC = () => {
   const { t, isRTL, currentLanguage } = useLanguage();
+  const [catalogModalOpen, setCatalogModalOpen] = useState(false);
 
   return (
     <footer id="footer" className="relative mt-20 border-t border-slate-800/80 bg-[#0B131E] text-slate-300 overflow-hidden">
@@ -134,6 +140,32 @@ export const HoverFooter: React.FC = () => {
               {t.footerAboutText}
             </p>
 
+            {/* Download Brochure CTA Card */}
+            <div className="p-3 rounded-2xl bg-gradient-to-r from-amber-950/40 via-slate-900 to-slate-900 border border-amber-500/30 space-y-2">
+              <div className="flex items-center justify-between text-xs">
+                <span className="font-bold text-amber-300 flex items-center gap-1.5">
+                  <FileDown className="w-4 h-4 text-amber-400" />
+                  <span>{t.navDownloadCatalog}</span>
+                </span>
+                <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                  PDF 2026
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-400">
+                {currentLanguage === 'fa'
+                  ? 'دانلود دفترچه رسمی مشخصات فنی و جدول ظرفیت کپسول‌ها'
+                  : 'Download official technical product brochure & dimensions guide'}
+              </p>
+              <button
+                type="button"
+                onClick={() => setCatalogModalOpen(true)}
+                className="w-full inline-flex items-center justify-center gap-2 py-1.5 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-md transition-all hover:scale-[1.02] active:scale-[0.98]"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>{currentLanguage === 'fa' ? 'دریافت رایگان فایل PDF' : 'Download Catalog PDF'}</span>
+              </button>
+            </div>
+
             <div className="pt-2 flex flex-wrap items-center gap-2">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-950/60 text-emerald-300 border border-emerald-800/40">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
@@ -149,6 +181,10 @@ export const HoverFooter: React.FC = () => {
             <div className="pt-2 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-medium">
               <a href="#articles" className="text-emerald-400 hover:text-emerald-300 transition-colors">
                 {t.navArticles}
+              </a>
+              <span className="text-slate-700">•</span>
+              <a href="#faq" className="text-emerald-400 hover:text-emerald-300 transition-colors">
+                {t.faqBadge || 'FAQ'}
               </a>
               <span className="text-slate-700">•</span>
               <a href="#products" className="text-slate-400 hover:text-white transition-colors">
@@ -329,6 +365,12 @@ export const HoverFooter: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Catalog Download Modal */}
+      <CatalogDownloadModal
+        isOpen={catalogModalOpen}
+        onClose={() => setCatalogModalOpen(false)}
+      />
     </footer>
   );
 };

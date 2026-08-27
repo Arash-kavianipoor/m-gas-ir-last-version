@@ -200,7 +200,7 @@ function MainWebsite() {
           <button
             type="button"
             onClick={scrollToTop}
-            className="p-2.5 sm:p-3 rounded-full bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700 shadow-xl backdrop-blur-md transition-all transform hover:-translate-y-1"
+            className="p-2.5 sm:p-3 rounded-full bg-slate-900 lg:bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700 shadow-xl lg:backdrop-blur-md transition-all transform hover:-translate-y-1"
             aria-label="Scroll to top"
           >
             <ArrowUp className="w-4 h-4" />
@@ -216,7 +216,7 @@ function MainWebsite() {
           title={t.salesManagerWhatsApp}
         >
           <span className="absolute -top-1 -right-1 flex h-3 w-3">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-300 opacity-75"></span>
+            <span className="hidden lg:inline-flex animate-ping absolute h-full w-full rounded-full bg-emerald-300 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-600"></span>
           </span>
           <MessageCircle className="w-6 h-6 sm:w-7 sm:h-7 fill-slate-950" />

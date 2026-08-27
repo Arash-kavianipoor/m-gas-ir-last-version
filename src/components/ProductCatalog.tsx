@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   Flame,
   Search,
@@ -16,6 +16,8 @@ import {
   DollarSign,
   Palette,
   Sparkles,
+  FileDown,
+  Download,
 } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { PRODUCTS } from '../data/products';
@@ -25,6 +27,7 @@ import { CylinderAngleViewer } from './CylinderAngleViewer';
 import { RalColor, getRalColorByCode, RAL_POPULAR_COLORS } from '../data/ralColors';
 import { RalColorModal } from './RalColorModal';
 import { COMPANY_INFO } from '../data/company';
+import { CatalogDownloadModal } from './CatalogDownloadModal';
 
 interface ProductCatalogProps {
   onSelectProductForSpecs: (product: Product) => void;
@@ -38,6 +41,8 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
   const { currentLanguage, t, formatNumber, isRTL } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<ProductCategory | 'all'>('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [isSwitchingCategory, setIsSwitchingCategory] = useState(false);
+  const [catalogModalOpen, setCatalogModalOpen] = useState(false);
 
   // State to hold selected RAL color per product card
   const [productColors, setProductColors] = useState<Record<string, RalColor>>({});
@@ -51,6 +56,15 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
     { id: 'home', label: t.categoryHome },
     { id: 'automotive', label: t.categoryAutomotive },
   ];
+
+  const handleCategoryChange = (catId: ProductCategory | 'all') => {
+    if (catId === selectedCategory) return;
+    setIsSwitchingCategory(true);
+    setSelectedCategory(catId);
+    setTimeout(() => {
+      setIsSwitchingCategory(false);
+    }, 250);
+  };
 
   const filteredProducts = useMemo(() => {
     return PRODUCTS.filter((product) => {
@@ -118,16 +132,16 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
         </div>
 
         {/* Filters and Search Bar */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-10">
+        <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 mb-10">
           
           {/* Category Tabs */}
-          <div className="flex flex-wrap items-center gap-1.5 p-1.5 rounded-2xl bg-slate-900/95 border border-slate-800 w-full md:w-auto">
+          <div className="flex flex-wrap items-center gap-1.5 p-1.5 rounded-2xl bg-slate-900/95 border border-slate-800 w-full lg:w-auto">
             {categories.map((cat) => (
               <button
                 key={cat.id}
                 type="button"
-                onClick={() => setSelectedCategory(cat.id as any)}
-                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all flex-1 md:flex-none text-center ${
+                onClick={() => handleCategoryChange(cat.id as any)}
+                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all flex-1 sm:flex-none text-center ${
                   selectedCategory === cat.id
                     ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-950 font-bold'
                     : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
@@ -138,23 +152,87 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
             ))}
           </div>
 
-          {/* Search Input */}
-          <div className="relative w-full md:w-80">
-            <Search className={`w-4 h-4 text-slate-400 absolute top-1/2 -translate-y-1/2 ${isRTL ? 'right-3.5' : 'left-3.5'}`} />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={t.searchPlaceholder}
-              className={`w-full bg-slate-900/95 border border-slate-800 rounded-2xl py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/60 transition-colors ${
-                isRTL ? 'pr-10 pl-4' : 'pl-10 pr-4'
-              }`}
-            />
+          {/* Right Action: Search & Quick Download Catalog Button */}
+          <div className="flex items-center gap-3 w-full lg:w-auto">
+            {/* Search Input */}
+            <div className="relative flex-1 lg:w-72">
+              <Search className={`w-4 h-4 text-slate-400 absolute top-1/2 -translate-y-1/2 ${isRTL ? 'right-3.5' : 'left-3.5'}`} />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder={t.searchPlaceholder}
+                className={`w-full bg-slate-900/95 border border-slate-800 rounded-2xl py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/60 transition-colors ${
+                  isRTL ? 'pr-10 pl-4' : 'pl-10 pr-4'
+                }`}
+              />
+            </div>
+
+            {/* Quick Download Catalog Action */}
+            <button
+              type="button"
+              onClick={() => setCatalogModalOpen(true)}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-2xl bg-amber-950/50 hover:bg-amber-900/70 border border-amber-500/40 text-amber-300 text-xs font-semibold shrink-0 transition-all shadow-md shadow-amber-950/30"
+              title={t.navDownloadCatalog}
+            >
+              <FileDown className="w-4 h-4 text-amber-400" />
+              <span className="hidden sm:inline">{t.navDownloadCatalog}</span>
+              <span className="sm:hidden font-mono">PDF</span>
+            </button>
           </div>
         </div>
 
-        {/* Product Cards Grid with GlowCard and CylinderAngleViewer */}
-        {filteredProducts.length > 0 ? (
+        {/* Skeleton Loading Screen or Product Cards Grid */}
+        {isSwitchingCategory ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {[1, 2, 3, 4, 5, 6].map((idx) => (
+              <div
+                key={`skeleton-${idx}`}
+                className="p-5 rounded-3xl bg-slate-900/60 border border-slate-800 animate-pulse space-y-4"
+              >
+                {/* Header Skeleton */}
+                <div className="flex items-center justify-between pb-3 border-b border-slate-800/80">
+                  <div className="h-5 w-20 bg-slate-800 rounded-lg" />
+                  <div className="h-5 w-24 bg-slate-800 rounded-lg" />
+                </div>
+                {/* Visualizer 4:3 Box Skeleton */}
+                <div className="w-full aspect-[4/3] rounded-2xl bg-slate-800/50 flex items-center justify-center">
+                  <div className="w-20 h-32 rounded-2xl bg-slate-700/30 border border-slate-600/20" />
+                </div>
+                {/* Color swatches skeleton */}
+                <div className="flex items-center justify-between pt-1">
+                  <div className="flex gap-2">
+                    {[1, 2, 3, 4, 5].map((s) => (
+                      <div key={s} className="w-5 h-5 rounded-full bg-slate-800" />
+                    ))}
+                  </div>
+                  <div className="h-4 w-16 bg-slate-800 rounded" />
+                </div>
+                {/* Title & Desc Skeleton */}
+                <div className="space-y-2 pt-1">
+                  <div className="flex justify-between items-center">
+                    <div className="h-6 w-36 bg-slate-800 rounded-lg" />
+                    <div className="h-6 w-16 bg-slate-800 rounded-lg" />
+                  </div>
+                  <div className="h-4 w-full bg-slate-800/60 rounded" />
+                  <div className="h-4 w-2/3 bg-slate-800/60 rounded" />
+                </div>
+                {/* Specs Box Skeleton */}
+                <div className="grid grid-cols-2 gap-2 pt-1">
+                  <div className="h-12 bg-slate-950 rounded-xl border border-slate-800" />
+                  <div className="h-12 bg-slate-950 rounded-xl border border-slate-800" />
+                  <div className="h-12 bg-slate-950 rounded-xl border border-slate-800" />
+                  <div className="h-12 bg-slate-950 rounded-xl border border-slate-800" />
+                </div>
+                {/* Action Buttons Skeleton */}
+                <div className="flex gap-2 pt-3 border-t border-slate-800">
+                  <div className="h-9 flex-1 bg-slate-800 rounded-xl" />
+                  <div className="h-9 flex-1 bg-slate-800 rounded-xl" />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : filteredProducts.length > 0 ? (
           <div className="product-catalog-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {filteredProducts.map((product) => {
               const loc = product.locales[currentLanguage] || product.locales.en;
@@ -256,7 +334,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
                     <div className="grid grid-cols-2 gap-2 pt-1">
                       
                       {/* Empty Weight */}
-                      <div className="p-2 rounded-xl bg-slate-950/70 border border-slate-800/80">
+                      <div className="p-2 rounded-xl bg-slate-950 border border-slate-800">
                         <div className="flex items-center gap-1 text-[10px] text-slate-400 mb-0.5">
                           <Scale className="w-3 h-3 text-emerald-400" />
                           <span>{t.emptyWeight}</span>
@@ -267,7 +345,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
                       </div>
 
                       {/* Circle Diameter */}
-                      <div className="p-2 rounded-xl bg-slate-950/70 border border-slate-800/80">
+                      <div className="p-2 rounded-xl bg-slate-950 border border-slate-800">
                         <div className="flex items-center gap-1 text-[10px] text-slate-400 mb-0.5">
                           <Ruler className="w-3 h-3 text-emerald-400" />
                           <span>{t.circleDiameter}</span>
@@ -278,7 +356,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
                       </div>
 
                       {/* Height */}
-                      <div className="p-2 rounded-xl bg-slate-950/70 border border-slate-800/80">
+                      <div className="p-2 rounded-xl bg-slate-950 border border-slate-800">
                         <div className="flex items-center gap-1 text-[10px] text-slate-400 mb-0.5">
                           <Ruler className="w-3 h-3 text-emerald-400" />
                           <span>{t.cylinderHeight}</span>
@@ -289,7 +367,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
                       </div>
 
                       {/* Test Pressure */}
-                      <div className="p-2 rounded-xl bg-slate-950/70 border border-slate-800/80">
+                      <div className="p-2 rounded-xl bg-slate-950 border border-slate-800">
                         <div className="flex items-center gap-1 text-[10px] text-slate-400 mb-0.5">
                           <ShieldCheck className="w-3 h-3 text-emerald-400" />
                           <span>{t.testPressure}</span>
@@ -356,6 +434,12 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
             onSelectColor={(col) => handleSetProductColor(activeColorPickerProduct.id, col)}
           />
         )}
+
+        {/* Official Product Catalog PDF Download Modal */}
+        <CatalogDownloadModal
+          isOpen={catalogModalOpen}
+          onClose={() => setCatalogModalOpen(false)}
+        />
 
       </div>
     </section>

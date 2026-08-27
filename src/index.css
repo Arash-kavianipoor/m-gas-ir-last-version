@@ -128,9 +128,8 @@
 }
 
 #root {
-  isolation: isolate;
   min-height: 100vh;
-  position: relative;
+  overflow-x: clip;
 }
 
 @media (max-width: 1023px) {
@@ -138,11 +137,25 @@
     -webkit-tap-highlight-color: transparent;
   }
 
+  /* Disable all backdrop-filter blurs on mobile to prevent GPU layer tearing & tile corruption */
+  header,
+  nav,
+  [data-glow],
+  .group\/glowcard,
+  .product-catalog-grid,
+  .product-catalog-grid *,
+  .backdrop-blur-md,
+  .backdrop-blur-lg,
+  .backdrop-blur-xl,
+  .backdrop-blur-sm,
+  .backdrop-blur {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
   .product-catalog-grid .group\/glowcard,
   .product-catalog-grid [data-glow] {
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3) !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
   }
 }
 

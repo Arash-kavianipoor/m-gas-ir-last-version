@@ -15,6 +15,8 @@ import {
   Compass,
   Video,
   BookOpen,
+  Download,
+  FileDown,
 } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { SUPPORTED_LANGUAGES } from '../i18n/languages';
@@ -22,6 +24,7 @@ import { LanguageCode } from '../types';
 import { COMPANY_INFO } from '../data/company';
 import { FlagIcon } from './FlagIcon';
 import { scrollToElement } from '../utils/scrollHelper';
+import { CatalogDownloadModal } from './CatalogDownloadModal';
 
 interface HeaderProps {
   onOpenRfq?: () => void;
@@ -33,6 +36,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [catalogModalOpen, setCatalogModalOpen] = useState(false);
   
   const headerRef = useRef<HTMLElement | null>(null);
   const langDropdownRef = useRef<HTMLDivElement | null>(null);
@@ -365,12 +369,24 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
             {/* Right Action Elements */}
             <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
               
+              {/* Download Catalog PDF Button */}
+              <button
+                type="button"
+                onClick={() => setCatalogModalOpen(true)}
+                className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-slate-900/80 hover:bg-slate-800 text-amber-300 hover:text-amber-200 border border-amber-500/40 px-2.5 py-1 text-xs font-semibold transition-all lg:backdrop-blur-md shrink-0 shadow-sm"
+                title={t.navDownloadCatalog}
+              >
+                <FileDown className="w-3.5 h-3.5 text-amber-400" />
+                <span className="hidden md:inline">{t.navDownloadCatalog}</span>
+                <span className="md:hidden font-mono">PDF</span>
+              </button>
+
               {/* WhatsApp Quick Link */}
               <a
                 href={`https://wa.me/${COMPANY_INFO.contacts.internationalSalesManager.whatsapp.replace('+', '')}?text=Hello%20M%20Gas%20Sales`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 rounded-full bg-emerald-500/20 hover:bg-emerald-500/35 text-emerald-200 border border-emerald-400/40 px-2.5 py-1 text-xs font-semibold transition-all backdrop-blur-md"
+                className="inline-flex items-center gap-1 rounded-full bg-emerald-500/20 hover:bg-emerald-500/35 text-emerald-200 border border-emerald-400/40 px-2.5 py-1 text-xs font-semibold transition-all lg:backdrop-blur-md"
                 title={t.salesManagerWhatsApp}
               >
                 <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
@@ -382,7 +398,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
                 <button
                   type="button"
                   onClick={toggleLangDropdown}
-                  className={`inline-flex items-center justify-center gap-1.5 rounded-full transition-all backdrop-blur-md border ${
+                  className={`inline-flex items-center justify-center gap-1.5 rounded-full transition-all lg:backdrop-blur-md border ${
                     langDropdownOpen
                       ? 'bg-white/30 text-white border-white/60 shadow-sm ring-1 ring-white/30'
                       : 'bg-white/20 hover:bg-white/30 text-white border-white/40'
@@ -493,6 +509,22 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
               </span>
             </div>
 
+            {/* Download Catalog PDF on Mobile */}
+            <button
+              type="button"
+              onClick={() => {
+                setMobileMenuOpen(false);
+                setCatalogModalOpen(true);
+              }}
+              className="w-full flex items-center justify-between p-3 rounded-2xl bg-amber-950/40 hover:bg-amber-900/60 border border-amber-600/40 text-amber-200 text-xs font-semibold transition-colors"
+            >
+              <div className="flex items-center gap-2">
+                <FileDown className="w-4 h-4 text-amber-400" />
+                <span>{t.navDownloadCatalog}</span>
+              </div>
+              <span className="font-mono text-amber-300 bg-amber-900/60 px-2 py-0.5 rounded text-[10px]">PDF (2026)</span>
+            </button>
+
             {/* Sales WhatsApp on Mobile */}
             <a
               href={`https://wa.me/${COMPANY_INFO.contacts.internationalSalesManager.whatsapp.replace('+', '')}?text=Hello%20M%20Gas%20Sales`}
@@ -579,6 +611,12 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
           </div>
         </div>
       )}
+
+      {/* Official Catalog Download Modal */}
+      <CatalogDownloadModal
+        isOpen={catalogModalOpen}
+        onClose={() => setCatalogModalOpen(false)}
+      />
     </>
   );
 };

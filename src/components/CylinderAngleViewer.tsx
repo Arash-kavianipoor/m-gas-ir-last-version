@@ -29,9 +29,11 @@ export const CylinderAngleViewer: React.FC<CylinderAngleViewerProps> = ({
   const [isZoomed, setIsZoomed] = useState(false);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [renderMode, setRenderMode] = useState<'photo' | 'cad'>('photo');
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const activeAngle = controlledAngle ?? internalAngle;
   const setAngle = (angle: 'front' | 'perspective' | 'valveDetail' | 'real') => {
+    setImageLoaded(false);
     if (onAngleChange) {
       onAngleChange(angle);
     } else {
@@ -117,7 +119,7 @@ export const CylinderAngleViewer: React.FC<CylinderAngleViewerProps> = ({
         <div className="hidden lg:block absolute bottom-4 inset-x-8 h-12 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.85)_0%,transparent_75%)] pointer-events-none rounded-full" />
 
         {/* Selected RAL Color Indicator Badge */}
-        <div className="absolute top-3 start-3 z-20 flex items-center gap-2 bg-slate-900/95 px-2.5 py-1 rounded-full border border-slate-700/80 shadow-md text-[11px] font-mono text-slate-200">
+        <div className="absolute top-3 start-3 z-20 flex items-center gap-2 bg-slate-900 px-2.5 py-1 rounded-full border border-slate-700/80 shadow-md text-[11px] font-mono text-slate-200">
           <span
             className="w-3 h-3 rounded-full border border-white/40 shadow-sm shrink-0"
             style={{ backgroundColor: currentColorHex }}
@@ -136,7 +138,7 @@ export const CylinderAngleViewer: React.FC<CylinderAngleViewerProps> = ({
 
         {/* Angle Badge & Render Mode Switcher */}
         <div className="absolute top-3 end-3 z-20 flex items-center gap-1.5">
-          <div className="bg-slate-900/95 px-2.5 py-1 rounded-full border border-slate-700/80 shadow-md text-[11px] text-slate-300 flex items-center gap-1.5">
+          <div className="bg-slate-900 px-2.5 py-1 rounded-full border border-slate-700/80 shadow-md text-[11px] text-slate-300 flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 lg:animate-pulse" />
             <span>{currentLanguage === 'fa' ? angleLabels[activeAngle].fa : angleLabels[activeAngle].en}</span>
           </div>
@@ -144,7 +146,7 @@ export const CylinderAngleViewer: React.FC<CylinderAngleViewerProps> = ({
           <button
             type="button"
             onClick={() => setRenderMode(renderMode === 'photo' ? 'cad' : 'photo')}
-            className="p-1 rounded-full bg-slate-900/95 hover:bg-slate-800 text-slate-300 hover:text-emerald-400 border border-slate-700/80 shadow-md transition-colors text-[10px] px-2 flex items-center gap-1"
+            className="p-1 rounded-full bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-emerald-400 border border-slate-700/80 shadow-md transition-colors text-[10px] px-2 flex items-center gap-1"
             title={renderMode === 'photo' ? 'Switch to Vector CAD Mode' : 'Switch to Realistic Photo Mode'}
           >
             {renderMode === 'photo' ? <Cpu className="w-3 h-3 text-emerald-400" /> : <ImageIcon className="w-3 h-3 text-amber-400" />}
@@ -158,6 +160,13 @@ export const CylinderAngleViewer: React.FC<CylinderAngleViewerProps> = ({
           {/* ============= PHOTO RENDER MODE (DEFAULT & AUTHENTIC) ============= */}
           {renderMode === 'photo' && (
             <div className="relative w-full h-full flex items-center justify-center p-2 aspect-[4/3]">
+              {/* Subtle Loading Skeleton placeholder before image finishes loading */}
+              {!imageLoaded && (
+                <div className="absolute inset-4 rounded-xl bg-slate-800/40 animate-pulse flex items-center justify-center pointer-events-none">
+                  <div className="w-16 h-28 rounded-2xl bg-slate-700/30 border border-slate-600/20" />
+                </div>
+              )}
+
               <img
                 src={currentImageInfo.src}
                 alt={`${product.locales[currentLanguage]?.name || product.id} - ${activeAngle}`}
@@ -167,13 +176,17 @@ export const CylinderAngleViewer: React.FC<CylinderAngleViewerProps> = ({
                 referrerPolicy="no-referrer"
                 loading="lazy"
                 decoding="async"
+                onLoad={() => setImageLoaded(true)}
                 onError={(e) => {
                   const target = e.currentTarget;
                   if (!target.src.includes('DSC08566-1-scaled.webp')) {
                     target.src = '/products/11 Liter/DSC08566-1-scaled.webp';
                   }
+                  setImageLoaded(true);
                 }}
-                className={`max-w-full max-h-full object-contain ${
+                className={`max-w-full max-h-full object-contain transition-opacity duration-300 ${
+                  imageLoaded ? 'opacity-100' : 'opacity-0'
+                } ${
                   isZoomed
                     ? 'scale-150'
                     : currentImageInfo.isMacroZoom
