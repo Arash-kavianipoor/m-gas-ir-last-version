@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- Primary Canonical Root Page -->
+  <url>
+    <loc>https://mgas.ir/</loc>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://mgas.ir/?lang=fa" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://mgas.ir/?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://mgas.ir/?lang=de" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://mgas.ir/?lang=ur" />
+    <xhtml:link rel="alternate" hreflang="hy" href="https://mgas.ir/?lang=hy" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://mgas.ir/?lang=tr" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://mgas.ir/?lang=ru" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/" />
+
+    <!-- Video 1: Factory Tour by Managing Director Mousa Amooie -->
+    <video:video>
+      <video:thumbnail_loc>https://mgas.ir/videos/factory-tour-manager-thumb.jpg</video:thumbnail_loc>
+      <video:title>بازدید مدیر کارخانه (آقای موسی عمویی Mousa Amooie) از خطوط تولید کپسول گاز ام گاز</video:title>
+      <video:description>نظارت مستقیم مدیریت ارشد کارخانه م گاز بر فرآیند قالب‌گیری، کنترل کیفیت لحظه‌ای خطوط مونتاژ و رعایت سخت‌گیرانه استانداردهای ملی و بین‌المللی کپسول‌های گاز مایع.</video:description>
+      <video:content_loc>https://mgas.ir/videos/factory-tour-manager.mp4</video:content_loc>
+      <video:publication_date>2023-03-03T18:43:00+03:30</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:live>no</video:live>
+    </video:video>
+
+    <!-- Video 2: Paint Curing & Baking Oven -->
+    <video:video>
+      <video:thumbnail_loc>https://mgas.ir/videos/production-line-2-thumb.jpg</video:thumbnail_loc>
+      <video:title>کوره پخت رنگ الکترواستاتیک کپسول‌های گاز مایع با حرارت یکنواخت</video:title>
+      <video:description>عبور پیوسته کپسول‌های گاز مایع از کوره کانوایری پخت رنگ با دمای کنترل‌شده ۲۰۰ درجه سانتی‌گراد جهت ایجاد پوشش مقاوم و ضدخش.</video:description>
+      <video:content_loc>https://mgas.ir/videos/production-line-2.mp4</video:content_loc>
+      <video:publication_date>2023-03-03T18:43:00+03:30</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:live>no</video:live>
+    </video:video>
+
+    <!-- Video 3: Finished Goods Warehouse & Logistics -->
+    <video:video>
+      <video:thumbnail_loc>https://mgas.ir/videos/production-line-3-thumb.jpg</video:thumbnail_loc>
+      <video:title>انبار مکانیزه محصولات نهایی، بسته‌بندی ایمن، بارگیری و تحویل سفارشات به مشتریان</video:title>
+      <video:description>نگهداری استاندارد کپسول‌های گاز تولیدی در انبار کارخانه، بازرسی پیش از بارگیری، بارچینی اصولی با لیفتراک و تحویل سریع به مشتریان داخلی و صادراتی.</video:description>
+      <video:content_loc>https://mgas.ir/videos/production-line-3.mp4</video:content_loc>
+      <video:publication_date>2023-03-03T18:43:00+03:30</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:live>no</video:live>
+    </video:video>
+
+    <!-- Video 4: Shot Blasting & 30-Bar Hydrostatic Testing -->
+    <video:video>
+      <video:thumbnail_loc>https://mgas.ir/videos/production-line-4-thumb.jpg</video:thumbnail_loc>
+      <video:title>شات‌بلاست، رنگ پودری الکترواستاتیک و آزمون‌های هیدرواستاتیک ۳۰ بار</video:title>
+      <video:description>پاک‌سازی سطح فولاد با شات‌بلاست تمام‌اتوماتیک و آزمون فشار هیدرواستاتیک بر روی تک‌تک کپسول‌های گاز ام گاز.</video:description>
+      <video:content_loc>https://mgas.ir/videos/production-line-4.mp4</video:content_loc>
+      <video:publication_date>2023-03-03T18:43:00+03:30</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:live>no</video:live>
+    </video:video>
+  </url>
+
+  <!-- Language-specific Indexable Endpoints with Full hreflang Cross-Referencing -->
+  <url>
+    <loc>https://mgas.ir/?lang=fa</loc>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://mgas.ir/?lang=fa" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://mgas.ir/?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://mgas.ir/?lang=de" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://mgas.ir/?lang=ur" />
+    <xhtml:link rel="alternate" hreflang="hy" href="https://mgas.ir/?lang=hy" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://mgas.ir/?lang=tr" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://mgas.ir/?lang=ru" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/" />
+  </url>
+
+  <url>
+    <loc>https://mgas.ir/?lang=en</loc>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://mgas.ir/?lang=fa" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://mgas.ir/?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://mgas.ir/?lang=de" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://mgas.ir/?lang=ur" />
+    <xhtml:link rel="alternate" hreflang="hy" href="https://mgas.ir/?lang=hy" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://mgas.ir/?lang=tr" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://mgas.ir/?lang=ru" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/" />
+  </url>
+
+  <url>
+    <loc>https://mgas.ir/?lang=ar</loc>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://mgas.ir/?lang=fa" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://mgas.ir/?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://mgas.ir/?lang=de" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://mgas.ir/?lang=ur" />
+    <xhtml:link rel="alternate" hreflang="hy" href="https://mgas.ir/?lang=hy" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://mgas.ir/?lang=tr" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://mgas.ir/?lang=ru" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/" />
+  </url>
+
+  <url>
+    <loc>https://mgas.ir/?lang=tr</loc>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://mgas.ir/?lang=fa" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://mgas.ir/?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://mgas.ir/?lang=de" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://mgas.ir/?lang=ur" />
+    <xhtml:link rel="alternate" hreflang="hy" href="https://mgas.ir/?lang=hy" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://mgas.ir/?lang=tr" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://mgas.ir/?lang=ru" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/" />
+  </url>
+
+  <url>
+    <loc>https://mgas.ir/?lang=ru</loc>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://mgas.ir/?lang=fa" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://mgas.ir/?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://mgas.ir/?lang=de" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://mgas.ir/?lang=ur" />
+    <xhtml:link rel="alternate" hreflang="hy" href="https://mgas.ir/?lang=hy" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://mgas.ir/?lang=tr" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://mgas.ir/?lang=ru" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/" />
+  </url>
+
+  <url>
+    <loc>https://mgas.ir/?lang=de</loc>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://mgas.ir/?lang=fa" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://mgas.ir/?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://mgas.ir/?lang=de" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://mgas.ir/?lang=ur" />
+    <xhtml:link rel="alternate" hreflang="hy" href="https://mgas.ir/?lang=hy" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://mgas.ir/?lang=tr" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://mgas.ir/?lang=ru" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/" />
+  </url>
+
+  <url>
+    <loc>https://mgas.ir/?lang=ur</loc>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://mgas.ir/?lang=fa" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://mgas.ir/?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://mgas.ir/?lang=de" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://mgas.ir/?lang=ur" />
+    <xhtml:link rel="alternate" hreflang="hy" href="https://mgas.ir/?lang=hy" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://mgas.ir/?lang=tr" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://mgas.ir/?lang=ru" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/" />
+  </url>
+
+  <url>
+    <loc>https://mgas.ir/?lang=hy</loc>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://mgas.ir/?lang=fa" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://mgas.ir/?lang=ar" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://mgas.ir/?lang=de" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://mgas.ir/?lang=ur" />
+    <xhtml:link rel="alternate" hreflang="hy" href="https://mgas.ir/?lang=hy" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://mgas.ir/?lang=tr" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://mgas.ir/?lang=ru" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/" />
+  </url>
+</urlset>

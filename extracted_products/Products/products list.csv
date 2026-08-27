@@ -1,0 +1,14 @@
+Name,(Volume):,Weight(Empty) :,circle diameter :,Height(cm) :,minimum order :,unit price($) :
+cylinder .5 Liter,0.5,Kg1.3,13.45,17,7000,5
+cylinder 1 Liter,1,Kg1.45,13.53,20,7000,6
+cylinder 1.5 Liter,1.5,Kg1.7,13.57,23.5,7000,7
+cylinder 10 kilo,10,Kg12,30,51,1800,16
+cylinder 11 kilo,11,Kg14,30,59,1800,16
+cylinder 25 kilo,25,Kg27,30,110,900,36
+cylinder 3 kilo,3,Kg4,22.92,26.5,4800,8
+cylinder 33 kilo,33,Kg27.5,30,150,900,38
+cylinder 45 kilo,45,Kg41.5,36,134,450,57
+cylinder 5 kilo,5,Kg4.95,22.92,34,3600,9
+cylinder 50 kilo,50,Kg42.5,36,139,450,58
+cylinder 60 Liter,60,Kg22.2,31.5,82,800,39
+cylinder 8 kilo,8,Kg7.8,30,37.5,1800,15

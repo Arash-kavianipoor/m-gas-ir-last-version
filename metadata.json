@@ -1,0 +1,6 @@
+{
+  "name": "M Gas - Industrial LPG & Gas Cylinder Manufacturing",
+  "description": "Official website of M Gas (mgas.ir), premier manufacturer and international exporter of LPG cylinders for home, workshops, laboratories, and automotive applications since 1970.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

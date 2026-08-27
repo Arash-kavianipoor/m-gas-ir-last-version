@@ -1,0 +1,10 @@
+category : workshops-factories-labs
+45 (Kg) : (Volume)
+
+Weight(Empty) : Kg 41.5
+
+circle diameter : 36
+
+Height(cm) : 134
+
+minimum order : 450

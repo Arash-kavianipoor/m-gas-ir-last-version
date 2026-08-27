@@ -1,0 +1,10 @@
+
+60 (Liter) : (Volume)
+
+Weight(Empty) : Kg 22.2
+
+circle diameter : 31.5
+
+Height(cm) : 82
+
+minimum order : 800

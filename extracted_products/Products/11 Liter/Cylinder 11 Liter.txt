@@ -1,0 +1,10 @@
+category : Home and Cooking
+11 (Kg) : (Volume)
+
+Weight(Empty) : Kg14
+
+circle diameter : 30
+
+Height(cm) : 59
+
+minimum order : 1800

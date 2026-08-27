@@ -1,0 +1,10 @@
+
+0.5 : (Volume)
+
+Weight(Empty) : Kg1.3
+
+circle diameter : 13.45
+
+Height(cm) : 17
+
+minimum order : 7000

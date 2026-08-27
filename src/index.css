@@ -1,0 +1,196 @@
+@import "tailwindcss";
+
+/* Vazirmatn / Vazir Font Family Setup */
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('/fonts/Vazirmatn[wght].woff2') format('woff2-variations'),
+       url('/fonts/Vazirmatn-Regular.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('/fonts/Vazirmatn-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('/fonts/Vazirmatn-ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('/fonts/Vazirmatn-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Vazir';
+  src: url('/fonts/Vazirmatn[wght].woff2') format('woff2-variations'),
+       url('/fonts/Vazirmatn-Regular.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Vazir';
+  src: url('/fonts/Vazirmatn-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Vazir';
+  src: url('/fonts/Vazirmatn-ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Vazir';
+  src: url('/fonts/Vazirmatn-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  html {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+
+  /* Smooth scroll exclusively for Desktop (removes mobile scroll interpolation jank and compositor lag) */
+  @media (min-width: 1024px) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  @media (max-width: 1023px) {
+    html {
+      scroll-behavior: auto !important;
+    }
+  }
+
+  html[dir="rtl"],
+  html[lang="fa"],
+  html[lang="ar"] {
+    font-family: 'Vazirmatn', 'Vazir', system-ui, -apple-system, sans-serif;
+  }
+
+  /* Specific Heading Typography for Persian (fa) and Arabic (ar) */
+  html[lang="fa"] h1,
+  html[lang="fa"] h2,
+  html[lang="ar"] h1,
+  html[lang="ar"] h2,
+  html[dir="rtl"] h1,
+  html[dir="rtl"] h2,
+  .lang-fa h1,
+  .lang-fa h2,
+  .lang-ar h1,
+  .lang-ar h2,
+  .font-vazir {
+    font-family: 'Vazirmatn', 'Vazir', system-ui, -apple-system, sans-serif !important;
+    letter-spacing: -0.015em;
+  }
+
+  /* Custom dark scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #060f14;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #10b981;
+  }
+}
+
+#root {
+  isolation: isolate;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Mobile GPU Compositor Stabilization & Hardware Offloading for Product Cards */
+@media (max-width: 1023px) {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Isolate product cards layout boundaries & enable lightweight composited rendering on mobile */
+  .product-catalog-grid > * {
+    contain: content;
+    content-visibility: auto;
+    contain-intrinsic-size: auto 540px;
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    will-change: auto;
+  }
+
+  /* Replace heavy layout/filter transitions with lightweight hardware-accelerated property transitions on mobile */
+  .product-catalog-grid,
+  .product-catalog-grid * {
+    transition-property: opacity, transform !important;
+    transition-duration: 0.12s !important;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+
+  /* Eliminate heavy dynamic box-shadows and backdrop-filters inside product cards on mobile */
+  .product-catalog-grid .group\/glowcard,
+  .product-catalog-grid [data-glow] {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* Disable continuous GPU-polling animations inside product cards on mobile devices */
+  .product-catalog-grid .animate-pulse,
+  .product-catalog-grid .animate-bounce,
+  .product-catalog-grid .animate-spin {
+    animation: none !important;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+[data-glow] {
+  position: relative;
+  isolation: isolate;
+}
