@@ -133,45 +133,16 @@
   position: relative;
 }
 
-/* Mobile GPU Compositor Stabilization & Hardware Offloading for Product Cards */
 @media (max-width: 1023px) {
   * {
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* Isolate product cards layout boundaries & enable lightweight composited rendering on mobile */
-  .product-catalog-grid > * {
-    contain: content;
-    content-visibility: auto;
-    contain-intrinsic-size: auto 540px;
-    transform: translate3d(0, 0, 0);
-    -webkit-transform: translate3d(0, 0, 0);
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    will-change: auto;
-  }
-
-  /* Replace heavy layout/filter transitions with lightweight hardware-accelerated property transitions on mobile */
-  .product-catalog-grid,
-  .product-catalog-grid * {
-    transition-property: opacity, transform !important;
-    transition-duration: 0.12s !important;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
-  }
-
-  /* Eliminate heavy dynamic box-shadows and backdrop-filters inside product cards on mobile */
   .product-catalog-grid .group\/glowcard,
   .product-catalog-grid [data-glow] {
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3) !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-  }
-
-  /* Disable continuous GPU-polling animations inside product cards on mobile devices */
-  .product-catalog-grid .animate-pulse,
-  .product-catalog-grid .animate-bounce,
-  .product-catalog-grid .animate-spin {
-    animation: none !important;
   }
 }
 
@@ -192,5 +163,4 @@
 
 [data-glow] {
   position: relative;
-  isolation: isolate;
 }
