@@ -14,6 +14,7 @@ import { FactoryVideoTour } from './components/FactoryVideoTour';
 import { ArticlesSection } from './components/ArticlesSection';
 import { ArticleDetail } from './components/ArticleDetail';
 import { HistoryVision } from './components/HistoryVision';
+import { FaqSection } from './components/FaqSection';
 import { RfqCalculator } from './components/RfqCalculator';
 import { ContactSection } from './components/ContactSection';
 import { HoverFooter } from './components/ui/HoverFooter';
@@ -160,6 +161,9 @@ function MainWebsite() {
 
           {/* 50-Year Heritage (Est. 1970), Vision & 12+ Export Destinational Hubs */}
           <HistoryVision />
+
+          {/* Frequently Asked Questions: Manufacturing, 30-Bar Testing, Shipping & ISO Certifications */}
+          <FaqSection onOpenRfq={handleOpenRfq} />
 
           {/* Interactive RFQ Logistics & Container Estimator with WhatsApp Dispatch */}
           <RfqCalculator
