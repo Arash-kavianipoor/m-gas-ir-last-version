@@ -86,25 +86,58 @@
   }
 
   html[dir="rtl"],
+  html[dir="rtl"] body,
+  html[dir="rtl"] #root,
+  html[dir="rtl"] #root *,
   html[lang="fa"],
-  html[lang="ar"] {
-    font-family: 'Vazirmatn', 'Vazir', system-ui, -apple-system, sans-serif;
+  html[lang="fa"] body,
+  html[lang="fa"] #root,
+  html[lang="fa"] #root *,
+  html[lang="ar"],
+  html[lang="ar"] body,
+  html[lang="ar"] #root,
+  html[lang="ar"] #root *,
+  .lang-fa,
+  .lang-fa *,
+  .lang-ar,
+  .lang-ar *,
+  .rtl-layout,
+  .rtl-layout *,
+  .font-vazir,
+  .font-vazir *,
+  .font-vazirmatn,
+  .font-vazirmatn * {
+    font-family: 'Vazirmatn', 'Vazir', system-ui, -apple-system, sans-serif !important;
   }
 
   /* Specific Heading Typography for Persian (fa) and Arabic (ar) */
   html[lang="fa"] h1,
   html[lang="fa"] h2,
+  html[lang="fa"] h3,
+  html[lang="fa"] h4,
+  html[lang="fa"] h5,
+  html[lang="fa"] h6,
   html[lang="ar"] h1,
   html[lang="ar"] h2,
+  html[lang="ar"] h3,
+  html[lang="ar"] h4,
+  html[lang="ar"] h5,
+  html[lang="ar"] h6,
   html[dir="rtl"] h1,
   html[dir="rtl"] h2,
+  html[dir="rtl"] h3,
+  html[dir="rtl"] h4,
+  html[dir="rtl"] h5,
+  html[dir="rtl"] h6,
   .lang-fa h1,
   .lang-fa h2,
+  .lang-fa h3,
+  .lang-fa h4,
   .lang-ar h1,
   .lang-ar h2,
-  .font-vazir {
+  .lang-ar h3,
+  .lang-ar h4 {
     font-family: 'Vazirmatn', 'Vazir', system-ui, -apple-system, sans-serif !important;
-    letter-spacing: -0.015em;
   }
 
   /* Custom dark scrollbar */
@@ -129,30 +162,64 @@
 
 #root {
   min-height: 100vh;
-  overflow-x: clip;
+  position: relative;
 }
 
 /* ==========================================================================
-   MOBILE & MOBILE CHROME GPU CRASH PREVENTION (GPU SAFE MODE)
+   ANDROID CHROME & TOUCH GPU RENDERING SAFETY (GPU SAFE MODE)
    Disables heavy Skia rasterization passes, offscreen blur buffers, 
-   dynamic backdrop-filter layers, and SVG mask compositing.
+   dynamic backdrop-filter layers, transitions, and transforms on mobile.
    ========================================================================== */
-@media (max-width: 1023px), (hover: none) and (pointer: coarse) {
+@media (max-width: 1023px) and (pointer: coarse) {
   * {
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* 1. Disable all backdrop-filter blurs to prevent GPU tile allocation crashes */
-  header,
-  nav,
-  div,
-  span,
-  section,
-  footer,
-  [data-glow],
-  .group\/glowcard,
+  /* 1. Disable expensive visual effects & blurs in product catalog */
+  .product-catalog-grid [data-glow],
+  .product-catalog-grid .group\/glowcard {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4) !important;
+    background-image: none !important;
+  }
+
+  /* 2. Critical Chrome Android test: Disable all transitions and transforms */
   .product-catalog-grid,
-  .product-catalog-grid *,
+  .product-catalog-grid * {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .product-catalog-grid img {
+    transform: none !important;
+    filter: none !important;
+  }
+
+  .product-catalog-grid button,
+  .product-catalog-grid a {
+    transition: none !important;
+    transform: none !important;
+  }
+
+  .product-catalog-grid .hover\:scale-105,
+  .product-catalog-grid .hover\:scale-110,
+  .product-catalog-grid .hover\:scale-125,
+  .product-catalog-grid .hover\:-translate-y-1,
+  .product-catalog-grid .active\:scale-\[0\.98\] {
+    transform: none !important;
+  }
+
+  /* 3. Hide heavy decorative background Gaussian blur elements */
+  div.blur-3xl,
+  div.blur-2xl,
+  div.blur-xl,
+  .ambient-glow {
+    display: none !important;
+    filter: none !important;
+  }
+
   .backdrop-blur-md,
   .backdrop-blur-lg,
   .backdrop-blur-xl,
@@ -161,47 +228,21 @@
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
   }
-
-  /* 2. Hide heavy decorative background Gaussian blur elements on mobile */
-  .blur-3xl,
-  .blur-2xl,
-  .blur-xl,
-  [class*="blur-["],
-  [class*="blur-3xl"],
-  [class*="blur-2xl"] {
-    display: none !important;
-    filter: none !important;
-  }
-
-  /* 3. Simplify shadows to prevent tile seam tearing and Skia context loss */
-  .product-catalog-grid .group\/glowcard,
-  .product-catalog-grid [data-glow],
-  .glow-card {
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4) !important;
-    background-image: none !important;
-  }
 }
 
 /* Specific class-based protection activated by device detection */
-html.is-mobile-chrome,
-html.gpu-safe-mode,
-html.is-mobile-device {
-  /* Prevent compositor thread overdraw */
-  -webkit-overflow-scrolling: touch;
-}
-
 html.is-mobile-chrome *,
 html.gpu-safe-mode * {
   /* Prevent excessive GPU layer creation */
   will-change: auto !important;
 }
 
-html.is-mobile-chrome .blur-3xl,
-html.is-mobile-chrome .blur-2xl,
-html.is-mobile-chrome [class*="blur-"],
-html.gpu-safe-mode .blur-3xl,
-html.gpu-safe-mode .blur-2xl,
-html.gpu-safe-mode [class*="blur-"] {
+html.is-mobile-chrome div.blur-3xl,
+html.is-mobile-chrome div.blur-2xl,
+html.is-mobile-chrome .ambient-glow,
+html.gpu-safe-mode div.blur-3xl,
+html.gpu-safe-mode div.blur-2xl,
+html.gpu-safe-mode .ambient-glow {
   display: none !important;
   filter: none !important;
 }

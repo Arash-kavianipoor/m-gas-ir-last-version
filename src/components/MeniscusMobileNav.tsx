@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion } from 'motion/react';
 import {
   Flame,
   Layers,
@@ -83,11 +82,8 @@ export const MeniscusMobileNav: React.FC<MeniscusNavProps> = ({
     : navItems;
 
   /*
-   * Track current section.
-   *
-   * Important:
-   * We deliberately avoid expensive IntersectionObserver /
-   * animation calculations here. This keeps mobile scrolling light.
+   * Track current section only when explicitly overridden (e.g. modal/article state)
+   * We avoid listening to scroll events to protect mobile Chrome GPU compositor from frequent layout triggers.
    */
   useEffect(() => {
     if (activeSectionOverride) {
@@ -98,82 +94,7 @@ export const MeniscusMobileNav: React.FC<MeniscusNavProps> = ({
       if (idx !== -1) {
         setActiveIndex(idx);
       }
-
-      return;
     }
-
-    const SECTION_ORDER = [
-      'hero',
-      'products',
-      'quality',
-      'calculator',
-    ];
-
-    let lastScrollTime = 0;
-    let scrollTimeout: NodeJS.Timeout | null = null;
-
-    const performSectionCheck = () => {
-      const windowHeight = window.innerHeight;
-      const scrollY = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight;
-
-      /*
-       * Bottom of page.
-       */
-      if (scrollY + windowHeight >= docHeight - 140) {
-        const calcIdx = items.findIndex((item) => item.id === 'calculator');
-        if (calcIdx !== -1) {
-          setActiveIndex(calcIdx);
-        }
-        return;
-      }
-
-      let currentSectionId = 'hero';
-      for (let i = SECTION_ORDER.length - 1; i >= 0; i--) {
-        const sectionId = SECTION_ORDER[i];
-        const element = document.getElementById(sectionId);
-        if (!element) continue;
-
-        const rect = element.getBoundingClientRect();
-        if (rect.top <= windowHeight * 0.45 && rect.bottom > 80) {
-          currentSectionId = sectionId;
-          break;
-        }
-      }
-
-      const index = items.findIndex((item) => item.id === currentSectionId);
-      if (index !== -1 && index !== activeIndex) {
-        setActiveIndex(index);
-      }
-    };
-
-    const handleScroll = () => {
-      const now = Date.now();
-      // Throttle to at most once per 120ms to prevent GPU compositor lockup
-      if (now - lastScrollTime > 120) {
-        lastScrollTime = now;
-        performSectionCheck();
-      } else {
-        if (scrollTimeout) clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(performSectionCheck, 120);
-      }
-    };
-
-    window.addEventListener(
-      'scroll',
-      handleScroll,
-      { passive: true }
-    );
-
-    performSectionCheck();
-
-    return () => {
-      window.removeEventListener(
-        'scroll',
-        handleScroll
-      );
-      if (scrollTimeout) clearTimeout(scrollTimeout);
-    };
   }, [activeSectionOverride, isRTL]);
 
   /*
@@ -258,6 +179,8 @@ export const MeniscusMobileNav: React.FC<MeniscusNavProps> = ({
   const ActiveIcon =
     activeItem.icon;
 
+  const activeLeftPercent = ((activeIndex + 0.5) / items.length) * 100;
+
   return (
     <nav
       id="meniscus-mobile-nav"
@@ -322,9 +245,9 @@ export const MeniscusMobileNav: React.FC<MeniscusNavProps> = ({
         />
 
         {/*
-         * Active notch.
+         * Active notch without motion spring.
          */}
-        <motion.div
+        <div
           className="
             absolute
             -top-[3px]
@@ -334,19 +257,8 @@ export const MeniscusMobileNav: React.FC<MeniscusNavProps> = ({
             pointer-events-none
             z-10
           "
-          initial={false}
-          animate={{
-            left: `${
-              ((activeIndex + 0.5) /
-                items.length) *
-              100
-            }%`,
-          }}
-          transition={{
-            type: 'spring',
-            stiffness: 320,
-            damping: 30,
-            mass: 0.8,
+          style={{
+            left: `${activeLeftPercent}%`,
           }}
         >
           <svg
@@ -361,12 +273,12 @@ export const MeniscusMobileNav: React.FC<MeniscusNavProps> = ({
           >
             <path d="M0,0 C15,0 19,16 30,16 C41,16 45,0 60,0 Z" />
           </svg>
-        </motion.div>
+        </div>
 
         {/*
-         * Active floating icon.
+         * Active floating icon without motion spring.
          */}
-        <motion.div
+        <div
           className="
             absolute
             -top-[30px]
@@ -380,35 +292,12 @@ export const MeniscusMobileNav: React.FC<MeniscusNavProps> = ({
             pointer-events-none
             z-20
           "
-          initial={false}
-          animate={{
-            left: `${
-              ((activeIndex + 0.5) /
-                items.length) *
-              100
-            }%`,
-          }}
-          transition={{
-            type: 'spring',
-            stiffness: 320,
-            damping: 30,
-            mass: 0.8,
+          style={{
+            left: `${activeLeftPercent}%`,
           }}
         >
-          <motion.div
+          <div
             key={`active-${activeItem.id}`}
-            initial={{
-              scale: 0.9,
-              opacity: 0,
-            }}
-            animate={{
-              scale: 1,
-              opacity: 1,
-            }}
-            transition={{
-              duration: 0.16,
-              ease: 'easeOut',
-            }}
             className={`
               w-full
               h-full
@@ -445,8 +334,8 @@ export const MeniscusMobileNav: React.FC<MeniscusNavProps> = ({
                 "
               />
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
         {/* Navigation tabs */}
         {items.map((item, index) => {
@@ -483,7 +372,6 @@ export const MeniscusMobileNav: React.FC<MeniscusNavProps> = ({
                 rounded-full
                 focus:outline-none
                 select-none
-                active:scale-[0.98]
                 group
                 px-1
               "
@@ -494,8 +382,6 @@ export const MeniscusMobileNav: React.FC<MeniscusNavProps> = ({
                 className={`
                   text-[12px]
                   tracking-tight
-                  transition-all
-                  duration-150
                   line-clamp-1
                   truncate
                   max-w-[76px]

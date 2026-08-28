@@ -174,8 +174,8 @@ export const CylinderAngleViewer: React.FC<CylinderAngleViewerProps> = ({
                 height={300}
                 style={{ aspectRatio: '4/3' }}
                 referrerPolicy="no-referrer"
-                loading="lazy"
-                decoding="async"
+                loading="eager"
+                decoding="sync"
                 onLoad={() => setImageLoaded(true)}
                 onError={(e) => {
                   const target = e.currentTarget;
@@ -184,7 +184,7 @@ export const CylinderAngleViewer: React.FC<CylinderAngleViewerProps> = ({
                   }
                   setImageLoaded(true);
                 }}
-                className={`max-w-full max-h-full object-contain transition-opacity duration-300 ${
+                className={`max-w-full max-h-full object-contain ${
                   imageLoaded ? 'opacity-100' : 'opacity-0'
                 } ${
                   isZoomed

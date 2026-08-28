@@ -21,7 +21,8 @@ import { HoverFooter } from './components/ui/HoverFooter';
 import { TechnicalSpecsModal } from './components/TechnicalSpecsModal';
 import { MeniscusMobileNav } from './components/MeniscusMobileNav';
 import { Product, RfqItem } from './types';
-import { MessageCircle, Phone, ArrowUp } from 'lucide-react';
+import { Phone, ArrowUp } from 'lucide-react';
+import { WhatsAppIcon } from './components/WhatsAppIcon';
 import { COMPANY_INFO } from './data/company';
 import { TECHNICAL_ARTICLES, Article } from './data/articles';
 import { SeoHead } from './seo/SeoHead';
@@ -117,8 +118,10 @@ function MainWebsite() {
     smoothOrInstantScrollToTop();
   };
 
+  const isVazir = isRTL || currentLanguage === 'fa' || currentLanguage === 'ar';
+
   return (
-    <div className={`min-h-screen bg-[#050D12] text-slate-100 font-sans selection:bg-emerald-500 selection:text-slate-950 ${isRTL ? 'font-vazirmatn' : ''}`}>
+    <div className={`min-h-screen bg-[#050D12] text-slate-100 selection:bg-emerald-500 selection:text-slate-950 ${isVazir ? 'font-vazirmatn' : 'font-sans'}`}>
       {/* Centralized Multilingual SEO Engine & JSON-LD Syncer */}
       <SeoHead activeArticle={selectedArticle} />
       
@@ -216,14 +219,14 @@ function MainWebsite() {
           href={`https://wa.me/${COMPANY_INFO.contacts.internationalSalesManager.whatsapp.replace('+', '')}?text=Hello%20M%20Gas%20International%20Sales`}
           target="_blank"
           rel="noopener noreferrer"
-          className="group relative flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-2xl shadow-emerald-500/40 transition-all transform hover:scale-105 active:scale-95"
+          className="group relative flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-slate-950 shadow-2xl shadow-[#25D366]/40 transition-all transform hover:scale-105 active:scale-95"
           title={t.salesManagerWhatsApp}
         >
           <span className="absolute -top-1 -right-1 flex h-3 w-3">
-            <span className="hidden lg:inline-flex animate-ping absolute h-full w-full rounded-full bg-emerald-300 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-600"></span>
+            <span className="hidden lg:inline-flex animate-ping absolute h-full w-full rounded-full bg-[#25D366] opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-[#128C7E]"></span>
           </span>
-          <MessageCircle className="w-6 h-6 sm:w-7 sm:h-7 fill-slate-950" />
+          <WhatsAppIcon className="w-6 h-6 sm:w-7 sm:h-7 text-slate-950" />
         </a>
       </div>
 

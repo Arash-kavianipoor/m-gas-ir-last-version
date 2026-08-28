@@ -99,7 +99,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenRfq, onExploreProducts }) => {
   return (
     <section
       id="hero"
-      className="relative w-full pt-16 sm:pt-20 md:pt-24 pb-8 sm:pb-12 overflow-hidden bg-[#071116] border-b border-emerald-950/60"
+      className="relative w-full pt-20 sm:pt-24 md:pt-28 pb-8 sm:pb-12 overflow-hidden bg-[#071116] border-b border-emerald-950/60"
       onMouseEnter={() => setIsPlaying(false)}
       onMouseLeave={() => setIsPlaying(true)}
       onTouchStart={handleTouchStart}

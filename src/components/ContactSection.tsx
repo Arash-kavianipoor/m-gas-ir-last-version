@@ -5,12 +5,12 @@ import {
   MapPin,
   Clock,
   Send,
-  MessageCircle,
   ExternalLink,
   ShieldCheck,
   Building,
   CheckCircle2,
 } from 'lucide-react';
+import { WhatsAppIcon } from './WhatsAppIcon';
 import { useLanguage } from '../i18n/LanguageContext';
 import { COMPANY_INFO } from '../data/company';
 
@@ -68,7 +68,7 @@ export const ContactSection: React.FC = () => {
             <div className="p-6 rounded-3xl bg-slate-900/70 border border-emerald-500/30 backdrop-blur-xl space-y-4 shadow-xl">
               <div className="flex items-center justify-between border-b border-slate-800 pb-3">
                 <h3 className="text-base font-bold text-white flex items-center gap-2">
-                  <MessageCircle className="w-5 h-5 text-emerald-400" />
+                  <WhatsAppIcon className="w-5 h-5 text-[#25D366]" />
                   <span>{t.contactInternationalSales}</span>
                 </h3>
                 <span className="text-[11px] text-emerald-400 font-semibold bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/40">
@@ -97,7 +97,7 @@ export const ContactSection: React.FC = () => {
                 className="w-full flex items-center justify-between p-3 rounded-2xl bg-emerald-950/50 hover:bg-emerald-900/60 border border-emerald-700/40 text-emerald-300 transition-colors"
               >
                 <div className="flex items-center gap-2.5">
-                  <MessageCircle className="w-4 h-4 text-emerald-400" />
+                  <WhatsAppIcon className="w-4 h-4 text-[#25D366]" />
                   <span className="font-mono text-xs font-bold isolate">
                     {COMPANY_INFO.contacts.internationalSalesManager.whatsappDisplay}
                   </span>
@@ -169,23 +169,50 @@ export const ContactSection: React.FC = () => {
                 <p className="text-emerald-400">{t.contactFridayStatus}</p>
               </div>
 
-              <div className="pt-2 border-t border-slate-800/80 space-y-2">
-                <span className="text-xs text-slate-400 flex items-center gap-1.5 font-medium">
-                  <MapPin className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>{t.addressTitle}</span>
-                </span>
+              <div className="pt-2 border-t border-slate-800/80 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-slate-400 flex items-center gap-1.5 font-medium">
+                    <MapPin className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>{t.addressTitle}</span>
+                  </span>
+                  <span className="font-mono text-[10px] text-emerald-400 font-bold px-2 py-0.5 rounded bg-emerald-950/80 border border-emerald-800/50">
+                    QX6W+RX6
+                  </span>
+                </div>
+
                 <p className="text-xs text-slate-300 leading-relaxed">
                   {currentLanguage === 'fa' ? COMPANY_INFO.address.fullPersian : COMPANY_INFO.address.fullEnglish}
                 </p>
-                <a
-                  href={COMPANY_INFO.address.googleMapDirectUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs text-emerald-400 hover:text-emerald-300 font-semibold pt-1"
-                >
-                  <span>{t.getDirections}</span>
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </a>
+
+                {/* Live Rectangular Google Map Container */}
+                <div className="relative rounded-2xl overflow-hidden border border-emerald-500/30 bg-slate-950 shadow-xl group">
+                  <iframe
+                    title="M Gas Factory Live Google Map"
+                    src={COMPANY_INFO.address.googleMapEmbedUrl}
+                    width="100%"
+                    height="190"
+                    style={{ border: 0 }}
+                    allowFullScreen={false}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="w-full h-48 filter contrast-[1.05] grayscale-[15%] group-hover:grayscale-0 transition-all duration-300"
+                  />
+                  <div className="p-2.5 bg-slate-900/95 border-t border-slate-800 flex items-center justify-between gap-2 text-xs">
+                    <div className="flex items-center gap-1.5 text-slate-300 text-[11px]">
+                      <MapPin className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                      <span className="truncate">{COMPANY_INFO.address.locationCode}</span>
+                    </div>
+                    <a
+                      href={COMPANY_INFO.address.googleMapDirectUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs shadow transition-all shrink-0"
+                    >
+                      <span>{t.getDirections}</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -284,7 +311,7 @@ export const ContactSection: React.FC = () => {
                   type="submit"
                   className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-sm shadow-xl shadow-emerald-950/50 flex items-center justify-center gap-2.5 transition-all transform hover:-translate-y-0.5"
                 >
-                  <MessageCircle className="w-4 h-4" />
+                  <WhatsAppIcon className="w-4 h-4 text-white" />
                   <span>{t.formSubmitWhatsApp}</span>
                 </button>
 

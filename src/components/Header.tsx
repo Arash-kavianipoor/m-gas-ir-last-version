@@ -32,6 +32,7 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
   const { currentLanguage, setLanguage, t, isRTL, geoInfo } = useLanguage();
+  const isVazir = currentLanguage === 'fa' || currentLanguage === 'ar' || isRTL;
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
@@ -223,55 +224,53 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
       <header
         id="main-header"
         ref={headerRef}
-        className="fixed top-2 sm:top-3 left-0 right-0 z-50 px-2 sm:px-4 lg:px-6 transition-all duration-300 pointer-events-none"
+        className={`fixed top-0 left-0 right-0 z-[100] w-full transition-all duration-200 ${
+          isVazir ? 'font-vazir' : ''
+        } ${
+          isScrolled
+            ? 'bg-[#061017]/98 backdrop-blur-xl border-b border-emerald-500/30 shadow-[0_8px_30px_rgba(0,0,0,0.7)] py-2 sm:py-2.5'
+            : 'bg-[#061017]/90 backdrop-blur-lg border-b border-slate-800/80 shadow-[0_4px_20px_rgba(0,0,0,0.5)] py-2.5 sm:py-3.5'
+        }`}
       >
-        {/* Floating Desktop Container */}
-        <div
-          className={`pointer-events-auto max-w-6xl mx-auto transition-all duration-300 rounded-full border relative overflow-visible ${
-            isScrolled
-              ? 'bg-[#081219]/95 lg:bg-slate-900/80 lg:backdrop-blur-xl border-slate-700/80 lg:border-white/30 shadow-[0_12px_32px_rgba(0,0,0,0.5)] py-1.5 px-3 sm:px-4'
-              : 'bg-[#081219]/95 lg:bg-slate-900/70 lg:backdrop-blur-lg border-slate-700/60 lg:border-white/30 shadow-[0_16px_40px_rgba(0,0,0,0.45)] py-2 px-3 sm:px-5'
-          }`}
-        >
-          {/* Subtle top reflection line */}
-          <div className="absolute inset-x-8 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/80 to-transparent pointer-events-none rounded-full" />
-          
-          <div className="flex items-center justify-between gap-1.5 sm:gap-3 relative z-10">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between gap-2 sm:gap-4 relative z-10">
             
-            {/* Brand Logo */}
+            {/* Brand Logo & Title */}
             <a
               href="#hero"
               onClick={(e) => handleNavClick(e, '#hero')}
-              className="flex items-center gap-2 group focus:outline-none shrink-0"
+              className="flex items-center gap-2.5 group focus:outline-none shrink-0"
               aria-label="M Gas Official Website"
             >
-              <div className="flex items-center justify-center p-1 rounded-xl bg-white/20 border border-white/40 group-hover:bg-white/30 transition-all duration-200">
+              <div className="flex items-center justify-center p-1.5 sm:p-2 min-w-[100px] sm:min-w-[130px] h-12 sm:h-14 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-teal-500/10 border border-emerald-500/40 group-hover:border-emerald-400 group-hover:bg-emerald-500/25 transition-all shadow-sm">
                 <img
                   src="/logo/new-logo-mgas-2(1)_fixed.svg"
                   alt="M Gas Logo"
-                  width={36}
-                  height={36}
-                  style={{ aspectRatio: '1/1' }}
+                  width={130}
+                  height={56}
                   decoding="async"
-                  className={`object-contain transition-all duration-200 ${
-                    isScrolled ? 'h-6 sm:h-7' : 'h-7 sm:h-8'
-                  }`}
+                  className="w-auto h-9 sm:h-11 max-w-[120px] sm:max-w-[130px] object-contain transition-transform group-hover:scale-105"
                   referrerPolicy="no-referrer"
                 />
               </div>
-              <span className="hidden xl:inline text-xs font-bold text-white tracking-wide">
-                {t.brandName}
-              </span>
+              <div className="flex flex-col">
+                <span className="text-sm sm:text-base font-black text-white tracking-wide group-hover:text-emerald-300 transition-colors">
+                  {t.brandName}
+                </span>
+                <span className="text-[10px] text-emerald-400/80 font-medium hidden sm:inline">
+                  {t.sinceYear}
+                </span>
+              </div>
             </a>
 
-            {/* Compact Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1">
+            {/* Desktop Navigation Links */}
+            <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5">
               
               {/* Home Direct Link */}
               <a
                 href="#hero"
                 onClick={(e) => handleNavClick(e, '#hero')}
-                className="px-2.5 py-1 rounded-full text-xs font-semibold text-white/90 hover:text-white hover:bg-white/20 transition-all duration-150"
+                className="px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-200 hover:text-white hover:bg-slate-800/80 transition-colors"
               >
                 {t.navHome}
               </a>
@@ -298,32 +297,27 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
                     <button
                       type="button"
                       onClick={() => toggleNavDropdown(category.id)}
-                      className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold transition-all duration-150 ${
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-colors ${
                         isOpen
-                          ? 'bg-white/25 text-white shadow-sm ring-1 ring-white/40'
-                          : 'text-white/90 hover:text-white hover:bg-white/20'
+                          ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm'
+                          : 'text-slate-200 hover:text-white hover:bg-slate-800/80 border border-transparent'
                       }`}
                     >
                       <IconComp className="w-3.5 h-3.5 text-emerald-400" />
                       <span>{category.title}</span>
                       <ChevronDown
-                        className={`w-3 h-3 text-white/70 transition-transform duration-200 ${
-                          isOpen ? 'rotate-180 text-white' : ''
+                        className={`w-3 h-3 text-slate-400 transition-transform duration-200 ${
+                          isOpen ? 'rotate-180 text-emerald-400' : ''
                         }`}
                       />
                     </button>
 
-                    {/* Compact Glass Dropdown Panel */}
+                    {/* Glass Dropdown Panel */}
                     {isOpen && (
                       <div
-                        className={`absolute top-full mt-2 w-64 rounded-2xl p-2 border border-white/30 shadow-[0_16px_40px_rgba(0,0,0,0.6)] z-50 animate-in fade-in slide-in-from-top-1 duration-150 ${
+                        className={`absolute top-full mt-2 w-64 rounded-2xl p-2 bg-[#09151F]/98 border border-emerald-500/30 shadow-[0_16px_40px_rgba(0,0,0,0.8)] z-50 animate-in fade-in slide-in-from-top-1 duration-150 ${
                           isRTL ? 'right-0' : 'left-0'
                         }`}
-                        style={{
-                          background: 'rgba(15, 23, 42, 0.95)',
-                          backdropFilter: 'blur(28px)',
-                          WebkitBackdropFilter: 'blur(28px)',
-                        }}
                       >
                         <div className="space-y-0.5">
                           {category.items.map((item, idx) => {
@@ -333,16 +327,16 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
                                 key={idx}
                                 href={item.href}
                                 onClick={(e) => handleNavClick(e, item.href)}
-                                className="group flex items-center gap-2.5 p-1.5 px-2 rounded-xl hover:bg-white/15 transition-all duration-150"
+                                className="group flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-800/80 transition-colors"
                               >
-                                <div className="p-1.5 rounded-lg bg-white/10 text-emerald-400 group-hover:bg-emerald-500 group-hover:text-slate-950 transition-colors shrink-0">
+                                <div className="p-1.5 rounded-lg bg-emerald-950/60 border border-emerald-800/40 text-emerald-400 group-hover:bg-emerald-500 group-hover:text-slate-950 transition-colors shrink-0">
                                   <ItemIcon className="w-3.5 h-3.5" />
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                  <div className="text-xs font-bold text-white group-hover:text-emerald-300 transition-colors truncate">
+                                  <div className="text-xs font-bold text-slate-100 group-hover:text-emerald-300 transition-colors truncate">
                                     {item.label}
                                   </div>
-                                  <div className="text-[10px] text-slate-300 truncate">
+                                  <div className="text-[10px] text-slate-400 truncate">
                                     {item.desc}
                                   </div>
                                 </div>
@@ -360,20 +354,20 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
               <a
                 href="#contact"
                 onClick={(e) => handleNavClick(e, '#contact')}
-                className="px-2.5 py-1 rounded-full text-xs font-semibold text-white/90 hover:text-white hover:bg-white/20 transition-all duration-150"
+                className="px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-200 hover:text-white hover:bg-slate-800/80 transition-colors"
               >
                 {t.navContact}
               </a>
             </nav>
 
             {/* Right Action Elements */}
-            <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
               
               {/* Download Catalog PDF Button */}
               <button
                 type="button"
                 onClick={() => setCatalogModalOpen(true)}
-                className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-slate-900/80 hover:bg-slate-800 text-amber-300 hover:text-amber-200 border border-amber-500/40 px-2.5 py-1 text-xs font-semibold transition-all lg:backdrop-blur-md shrink-0 shadow-sm"
+                className="hidden sm:inline-flex items-center gap-1.5 rounded-xl bg-amber-950/40 hover:bg-amber-900/60 text-amber-300 hover:text-amber-200 border border-amber-500/40 px-2.5 sm:px-3 py-1.5 text-xs font-semibold transition-colors shadow-sm"
                 title={t.navDownloadCatalog}
               >
                 <FileDown className="w-3.5 h-3.5 text-amber-400" />
@@ -386,44 +380,39 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
                 href={`https://wa.me/${COMPANY_INFO.contacts.internationalSalesManager.whatsapp.replace('+', '')}?text=Hello%20M%20Gas%20Sales`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 rounded-full bg-emerald-500/20 hover:bg-emerald-500/35 text-emerald-200 border border-emerald-400/40 px-2.5 py-1 text-xs font-semibold transition-all lg:backdrop-blur-md"
+                className="hidden xs:inline-flex items-center gap-1 rounded-xl bg-emerald-950/50 hover:bg-emerald-900/70 text-emerald-300 border border-emerald-500/40 px-2.5 py-1.5 text-xs font-semibold transition-colors"
                 title={t.salesManagerWhatsApp}
               >
                 <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
-                <span className="hidden sm:inline">WhatsApp</span>
+                <span className="hidden md:inline">WhatsApp</span>
               </a>
 
-              {/* Language Selector Dropdown - Showing visual Flag icon initially as requested */}
+              {/* Language Selector Dropdown */}
               <div className="relative" ref={langDropdownRef}>
                 <button
                   type="button"
                   onClick={toggleLangDropdown}
-                  className={`inline-flex items-center justify-center gap-1.5 rounded-full transition-all lg:backdrop-blur-md border ${
+                  className={`inline-flex items-center justify-center gap-1.5 rounded-xl transition-colors border ${
                     langDropdownOpen
-                      ? 'bg-white/30 text-white border-white/60 shadow-sm ring-1 ring-white/30'
-                      : 'bg-white/20 hover:bg-white/30 text-white border-white/40'
-                  } px-2.5 py-1 text-xs`}
+                      ? 'bg-slate-800 text-white border-emerald-500 shadow-sm ring-1 ring-emerald-500/40'
+                      : 'bg-slate-900/90 hover:bg-slate-800 text-slate-200 border-slate-700/80'
+                  } px-2.5 py-1.5 text-xs`}
                   aria-expanded={langDropdownOpen}
                   aria-label="Select Language"
                 >
                   <FlagIcon code={currentLangInfo.code} size="sm" className="shadow-sm" />
                   <ChevronDown
-                    className={`w-3 h-3 text-white/80 transition-transform duration-200 ${
-                      langDropdownOpen ? 'rotate-180 text-white' : ''
+                    className={`w-3 h-3 text-slate-400 transition-transform duration-200 ${
+                      langDropdownOpen ? 'rotate-180 text-emerald-400' : ''
                     }`}
                   />
                 </button>
 
                 {langDropdownOpen && (
                   <div
-                    className={`absolute top-full mt-2 w-56 rounded-2xl p-1.5 border border-white/40 shadow-[0_16px_40px_rgba(0,0,0,0.6)] z-50 animate-in fade-in duration-150 ${
+                    className={`absolute top-full mt-2 w-56 rounded-2xl p-1.5 bg-[#09151F]/98 border border-emerald-500/30 shadow-[0_16px_40px_rgba(0,0,0,0.8)] z-50 animate-in fade-in duration-150 ${
                       isRTL ? 'left-0' : 'right-0'
                     }`}
-                    style={{
-                      background: 'rgba(15, 23, 42, 0.95)',
-                      backdropFilter: 'blur(28px)',
-                      WebkitBackdropFilter: 'blur(28px)',
-                    }}
                   >
                     {geoInfo?.countryCode && (
                       <div className="px-2.5 py-1.5 mb-1 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-[10px] text-emerald-300 flex items-center justify-between">
@@ -437,10 +426,10 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
                           key={lang.code}
                           type="button"
                           onClick={() => handleLanguageSelect(lang.code)}
-                          className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl text-xs transition-all ${
+                          className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl text-xs transition-colors ${
                             currentLanguage === lang.code
                               ? 'bg-emerald-500 text-slate-950 font-bold shadow-sm'
-                              : 'text-slate-200 hover:bg-white/15 hover:text-white'
+                              : 'text-slate-200 hover:bg-slate-800 hover:text-white'
                           }`}
                         >
                           <div className="flex items-center gap-2">
@@ -451,7 +440,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
                             className={`text-[10px] font-mono px-1 py-0.5 rounded ${
                               currentLanguage === lang.code
                                 ? 'bg-slate-950/20 text-slate-950'
-                                : 'bg-white/10 text-slate-400'
+                                : 'bg-slate-800 text-slate-400'
                             }`}
                           >
                             {lang.code.toUpperCase()}
@@ -467,7 +456,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
               <button
                 type="button"
                 onClick={onOpenRfq}
-                className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-emerald-400 to-teal-400 hover:from-emerald-300 hover:to-teal-300 text-slate-950 font-bold px-3 py-1 text-xs shadow-md shadow-emerald-500/20 transition-all hover:scale-105 active:scale-95 shrink-0"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold px-2.5 sm:px-3 py-1.5 text-xs shadow-md shadow-emerald-500/20 transition-colors shrink-0"
               >
                 <Calculator className="w-3.5 h-3.5 text-slate-950" />
                 <span className="truncate">{t.navCalculator}</span>
@@ -477,10 +466,10 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="lg:hidden p-1.5 rounded-full bg-white/20 border border-white/40 text-white hover:bg-white/30 transition-colors"
+                className="lg:hidden p-2 rounded-xl bg-slate-900/90 border border-slate-700 text-slate-200 hover:text-white hover:bg-slate-800 transition-colors"
                 aria-label="Open Navigation Menu"
               >
-                {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+                {mobileMenuOpen ? <X className="w-4 h-4 text-emerald-400" /> : <Menu className="w-4 h-4" />}
               </button>
             </div>
           </div>
@@ -489,7 +478,12 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-40 bg-slate-950/95 backdrop-blur-2xl lg:hidden pt-20 px-5 pb-6 flex flex-col justify-between overflow-y-auto animate-fadeIn">
+        <div
+          data-header-drawer
+          className={`fixed inset-0 z-40 bg-slate-950/95 backdrop-blur-2xl lg:hidden pt-20 px-5 pb-6 flex flex-col justify-between overflow-y-auto animate-fadeIn ${
+            isVazir ? 'font-vazir' : ''
+          }`}
+        >
           <div className="space-y-4">
             
             {/* Mobile Header Brand */}
@@ -504,7 +498,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
                 className="h-8 w-auto object-contain"
                 referrerPolicy="no-referrer"
               />
-              <span className="text-xs text-slate-400 font-sans">
+              <span className={`text-xs text-slate-400 ${isVazir ? 'font-vazir' : 'font-sans'}`}>
                 {t.sinceYear}
               </span>
             </div>
