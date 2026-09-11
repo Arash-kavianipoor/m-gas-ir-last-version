@@ -174,8 +174,8 @@ export const CylinderAngleViewer: React.FC<CylinderAngleViewerProps> = ({
                 height={300}
                 style={{ aspectRatio: '4/3' }}
                 referrerPolicy="no-referrer"
-                loading="eager"
-                decoding="sync"
+                loading="lazy"
+                decoding="async"
                 onLoad={() => setImageLoaded(true)}
                 onError={(e) => {
                   const target = e.currentTarget;

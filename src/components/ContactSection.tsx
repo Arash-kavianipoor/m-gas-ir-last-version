@@ -235,10 +235,12 @@ export const ContactSection: React.FC = () => {
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label className="text-xs text-slate-400 font-medium block">
+                    <label htmlFor="contact-form-name" className="text-xs text-slate-300 font-medium block">
                       {t.formName} *
                     </label>
                     <input
+                      id="contact-form-name"
+                      aria-label={t.formName}
                       type="text"
                       required
                       value={name}
@@ -249,10 +251,12 @@ export const ContactSection: React.FC = () => {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs text-slate-400 font-medium block">
+                    <label htmlFor="contact-form-phone" className="text-xs text-slate-300 font-medium block">
                       {t.formPhone} *
                     </label>
                     <input
+                      id="contact-form-phone"
+                      aria-label={t.formPhone}
                       type="text"
                       dir="ltr"
                       required
@@ -266,10 +270,12 @@ export const ContactSection: React.FC = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label className="text-xs text-slate-400 font-medium block">
+                    <label htmlFor="contact-form-email" className="text-xs text-slate-300 font-medium block">
                       {t.formEmail}
                     </label>
                     <input
+                      id="contact-form-email"
+                      aria-label={t.formEmail}
                       type="email"
                       dir="ltr"
                       value={email}
@@ -280,10 +286,12 @@ export const ContactSection: React.FC = () => {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs text-slate-400 font-medium block">
+                    <label htmlFor="contact-form-company" className="text-xs text-slate-300 font-medium block">
                       {t.formCompany}
                     </label>
                     <input
+                      id="contact-form-company"
+                      aria-label={t.formCompany}
                       type="text"
                       value={company}
                       onChange={(e) => setCompany(e.target.value)}
@@ -294,15 +302,17 @@ export const ContactSection: React.FC = () => {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs text-slate-400 font-medium block">
+                  <label htmlFor="contact-form-message" className="text-xs text-slate-300 font-medium block">
                     {t.formMessage} *
                   </label>
                   <textarea
+                    id="contact-form-message"
+                    aria-label={t.formMessage}
                     rows={4}
                     required
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Specify cylinder capacities, quantity requirements, destination port, or specific standard requirements..."
+                    placeholder={currentLanguage === 'fa' ? 'لطفاً تناژ، ظرفیت مخازن یا مشخصات سفارش خود را بنویسید...' : 'Please specify cylinder capacities, quantity, or requirements...'}
                     className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-emerald-500 transition-colors resize-none"
                   />
                 </div>

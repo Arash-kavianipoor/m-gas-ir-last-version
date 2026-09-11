@@ -194,10 +194,12 @@ export const RfqCalculator: React.FC<RfqCalculatorProps> = ({
                 
                 {/* Cylinder Dropdown */}
                 <div className="space-y-1.5">
-                  <label className="text-xs text-slate-400 font-medium block">
+                  <label htmlFor="rfq-product-select" className="text-xs text-slate-300 font-medium block">
                     {t.navProducts}
                   </label>
                   <select
+                    id="rfq-product-select"
+                    aria-label={t.navProducts}
                     value={selectedProductId}
                     onChange={(e) => handleProductSelectChange(e.target.value)}
                     className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-emerald-500 transition-colors"
@@ -215,10 +217,12 @@ export const RfqCalculator: React.FC<RfqCalculatorProps> = ({
 
                 {/* Quantity Input */}
                 <div className="space-y-1.5">
-                  <label className="text-xs text-slate-400 font-medium block">
+                  <label htmlFor="rfq-quantity-input" className="text-xs text-slate-300 font-medium block">
                     {t.enterQuantity}
                   </label>
                   <input
+                    id="rfq-quantity-input"
+                    aria-label={t.enterQuantity}
                     type="number"
                     min={PRODUCTS.find((p) => p.id === selectedProductId)?.minOrder || 100}
                     step={100}
@@ -306,10 +310,12 @@ export const RfqCalculator: React.FC<RfqCalculatorProps> = ({
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="text-xs text-slate-400 font-medium block">
+                  <label htmlFor="rfq-customer-name" className="text-xs text-slate-300 font-medium block">
                     {t.formName}
                   </label>
                   <input
+                    id="rfq-customer-name"
+                    aria-label={t.formName}
                     type="text"
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
@@ -319,10 +325,12 @@ export const RfqCalculator: React.FC<RfqCalculatorProps> = ({
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-xs text-slate-400 font-medium block">
+                  <label htmlFor="rfq-customer-phone" className="text-xs text-slate-300 font-medium block">
                     {t.formPhone}
                   </label>
                   <input
+                    id="rfq-customer-phone"
+                    aria-label={t.formPhone}
                     type="text"
                     dir="ltr"
                     value={customerPhone}
@@ -334,10 +342,12 @@ export const RfqCalculator: React.FC<RfqCalculatorProps> = ({
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs text-slate-400 font-medium block">
+                <label htmlFor="rfq-destination-country" className="text-xs text-slate-300 font-medium block">
                   {t.destinationCountry}
                 </label>
                 <input
+                  id="rfq-destination-country"
+                  aria-label={t.destinationCountry}
                   type="text"
                   value={destinationCountry}
                   onChange={(e) => setDestinationCountry(e.target.value)}
@@ -347,10 +357,12 @@ export const RfqCalculator: React.FC<RfqCalculatorProps> = ({
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs text-slate-400 font-medium block">
+                <label htmlFor="rfq-notes" className="text-xs text-slate-300 font-medium block">
                   {t.formMessage}
                 </label>
                 <textarea
+                  id="rfq-notes"
+                  aria-label={t.formMessage}
                   rows={2}
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}

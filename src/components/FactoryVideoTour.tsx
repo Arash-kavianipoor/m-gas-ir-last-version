@@ -129,6 +129,7 @@ export const FactoryVideoTour: React.FC = () => {
                   ref={videoRef}
                   src={selectedVideo.videoSrc}
                   poster={selectedVideo.thumbnail}
+                  preload="none"
                   playsInline
                   muted={isMuted}
                   loop
@@ -136,7 +137,9 @@ export const FactoryVideoTour: React.FC = () => {
                   onPlay={() => setIsPlaying(true)}
                   onPause={() => setIsPlaying(false)}
                   onClick={togglePlay}
-                />
+                >
+                  <track kind="captions" srcLang="fa" label="فارسی" />
+                </video>
 
                 {/* Video screen area (clicking video toggles play/pause) */}
 
