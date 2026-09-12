@@ -18,6 +18,7 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 const STORAGE_KEY = 'mgas_selected_lang';
+const MANUAL_LOCK_KEY = 'mgas_manual_lang_locked';
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [geoInfo, setGeoInfo] = useState<GeolocationResult | null>(null);
@@ -34,37 +35,43 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
         }
       } catch {}
 
-      // 2. Priority 2: Check localStorage user-selected language
+      // 2. Priority 2: Check localStorage user-selected language if manually locked
+      const isManual = localStorage.getItem(MANUAL_LOCK_KEY) === 'true';
       const saved = localStorage.getItem(STORAGE_KEY) as LanguageCode | null;
-      if (saved && SUPPORTED_LANGUAGES[saved]) {
+      if (isManual && saved && SUPPORTED_LANGUAGES[saved]) {
         return saved;
       }
     }
     return DEFAULT_LANGUAGE;
   });
 
-  // Geolocation auto-detection for first-time visitors (if no manual choice in localStorage and no URL param)
+  // Geolocation auto-detection on load & IP changes (e.g. testing with VPN)
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    const saved = localStorage.getItem(STORAGE_KEY);
     const urlParams = new URLSearchParams(window.location.search);
     const hasUrlLang = urlParams.has('lang');
+    const isManualLocked = localStorage.getItem(MANUAL_LOCK_KEY) === 'true';
 
-    // Run geolocation detection
+    // Run rapid geolocation detection
     detectVisitorLanguage().then((result) => {
       setGeoInfo(result);
 
-      // If user hasn't explicitly chosen a language yet and no url parameter exists
-      if (!saved && !hasUrlLang && result.detectedLanguage) {
-        setCurrentLanguageState(result.detectedLanguage);
-        
-        // Auto-sync query parameter or state
-        try {
-          const url = new URL(window.location.href);
-          url.searchParams.set('lang', result.detectedLanguage);
-          window.history.replaceState({}, '', url.toString());
-        } catch {}
+      // Auto-apply detected language if:
+      // 1. A new IP or country is detected (e.g. VPN turned on or switched)
+      // 2. OR user hasn't manually locked a language and no explicit URL parameter is present
+      if (result.detectedLanguage && SUPPORTED_LANGUAGES[result.detectedLanguage]) {
+        if (result.isNewIpDetected || (!isManualLocked && !hasUrlLang)) {
+          setCurrentLanguageState(result.detectedLanguage);
+          localStorage.setItem(STORAGE_KEY, result.detectedLanguage);
+
+          // Auto-sync query parameter without page reload
+          try {
+            const url = new URL(window.location.href);
+            url.searchParams.set('lang', result.detectedLanguage);
+            window.history.replaceState({}, '', url.toString());
+          } catch {}
+        }
       }
     });
   }, []);
@@ -102,8 +109,9 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
       setCurrentLanguageState(lang);
       if (typeof window !== 'undefined') {
         localStorage.setItem(STORAGE_KEY, lang);
+        localStorage.setItem(MANUAL_LOCK_KEY, 'true');
         
-        // Optionally update URL query param without refreshing
+        // Update URL query param without refreshing
         try {
           const url = new URL(window.location.href);
           url.searchParams.set('lang', lang);

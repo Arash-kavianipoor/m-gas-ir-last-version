@@ -148,10 +148,6 @@ export const TechnicalSpecsModal: React.FC<TechnicalSpecsModalProps> = ({
               <div className="lg:col-span-7">
                 <CylinderAngleViewer
                   product={product}
-                  selectedColor={selectedColor}
-                  activeAngle={activeAngle}
-                  onAngleChange={setActiveAngle}
-                  showControls={true}
                 />
               </div>
 

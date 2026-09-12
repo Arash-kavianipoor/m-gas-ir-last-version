@@ -15,7 +15,7 @@ export const FACTORY_VIDEOS: FactoryVideo[] = [
   {
     id: 'video-manager-inspection',
     videoSrc: '/videos/avc_XRecorder_Compressed_03032023_184301.mp4',
-    thumbnail: '/founder/DSC0854234bc.png',
+    thumbnail: '/founder/DSC0854234bc.webp',
     isManagerTour: true,
     badge: {
       fa: 'بازدید مدیریت ارشد',
@@ -104,7 +104,7 @@ export const FACTORY_VIDEOS: FactoryVideo[] = [
   {
     id: 'video-paint-curing-oven',
     videoSrc: '/videos/production-line-2.mp4',
-    thumbnail: '/videos/production-line-2-thumb.jpg',
+    thumbnail: '/videos/production-line-2-thumb.webp',
     badge: {
       fa: 'کوره پخت رنگ کپسول',
       en: 'Paint Curing & Baking Oven',
@@ -150,7 +150,7 @@ export const FACTORY_VIDEOS: FactoryVideo[] = [
   {
     id: 'video-warehouse-delivery',
     videoSrc: '/videos/production-line-3.mp4',
-    thumbnail: '/videos/production-line-3-thumb.jpg',
+    thumbnail: '/videos/production-line-3-thumb.webp',
     badge: {
       fa: 'انبار و تحویل به مشتری',
       en: 'Storage & Customer Dispatch',
@@ -196,7 +196,7 @@ export const FACTORY_VIDEOS: FactoryVideo[] = [
   {
     id: 'video-production-testing',
     videoSrc: '/videos/production-line-4.mp4',
-    thumbnail: '/videos/production-line-4-thumb.jpg',
+    thumbnail: '/videos/production-line-4-thumb.webp',
     badge: {
       fa: 'شات‌بلاست، رنگ و تست',
       en: 'Finishing & Testing',

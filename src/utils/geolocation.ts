@@ -52,7 +52,7 @@ export const COUNTRY_TO_LANGUAGE: Record<string, LanguageCode> = {
   LI: 'de', // Liechtenstein
   LU: 'de', // Luxembourg
 
-  // Urdu (ur) - South Asia
+  // Urdu (ur) - South Asia (Pakistan prioritized)
   PK: 'ur', // Pakistan
   IN: 'ur', // India
 
@@ -136,113 +136,198 @@ export interface GeolocationResult {
   countryCode: string | null;
   countryName: string | null;
   detectedLanguage: LanguageCode;
-  source: 'ip_api' | 'timezone' | 'navigator' | 'default';
+  source: 'cloudflare' | 'country_is' | 'ipwhois' | 'ipapi' | 'timezone' | 'navigator' | 'default';
   isAutoApplied?: boolean;
+  isNewIpDetected?: boolean;
 }
 
-const CACHE_KEY = 'mgas_geo_cache';
+const LAST_DETECTED_IP_KEY = 'mgas_last_detected_ip';
+const LAST_DETECTED_COUNTRY_KEY = 'mgas_last_detected_country';
 
 /**
- * Multi-layer GeoIP Detection:
- * Layer 1: Fast IP Lookup service 1 (api.country.is)
- * Layer 2: Secondary IP Lookup fallback (ipapi.co or ip-api / ipwho.is)
- * Layer 3: System Timezone mapping
- * Layer 4: Browser navigator.language
- * Layer 5: Default (fa)
+ * Multi-layer, ultra-fast GeoIP Detection:
+ * Layer 1: Cloudflare trace (fastest, universally accessible, SSL, works behind any VPN)
+ * Layer 2: api.country.is
+ * Layer 3: ipwho.is
+ * Layer 4: ipapi.co
+ * Layer 5: Timezone inference
+ * Layer 6: Browser navigator.language
+ * Layer 7: Default (fa)
  */
-export async function detectVisitorLanguage(): Promise<GeolocationResult> {
-  // Check session cache first
-  if (typeof window !== 'undefined') {
-    try {
-      const cached = sessionStorage.getItem(CACHE_KEY);
-      if (cached) {
-        const parsed = JSON.parse(cached) as GeolocationResult;
-        if (parsed.detectedLanguage && SUPPORTED_LANGUAGES[parsed.detectedLanguage]) {
-          return parsed;
-        }
-      }
-    } catch {}
-  }
+export async function detectVisitorLanguage(forceRefresh = false): Promise<GeolocationResult> {
+  const previousIp = typeof window !== 'undefined' ? localStorage.getItem(LAST_DETECTED_IP_KEY) : null;
+  const previousCountry = typeof window !== 'undefined' ? localStorage.getItem(LAST_DETECTED_COUNTRY_KEY) : null;
 
-  // 1. Primary: Fast IP Geolocation with Promise.race & timeout
+  // Layer 1: Cloudflare Trace (extremely fast, zero rate limit, returns accurate edge IP and loc=XX)
   try {
-    const fetchCountryIs = async (): Promise<string | null> => {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 2000);
-      try {
-        const res = await fetch('https://api.country.is', {
-          signal: controller.signal,
-          headers: { Accept: 'application/json' },
-        });
-        clearTimeout(timeoutId);
-        if (res.ok) {
-          const data = await res.json();
-          return (data.country || '').toUpperCase() || null;
+    const cfController = new AbortController();
+    const cfTimeout = setTimeout(() => cfController.abort(), 2500);
+    const cfRes = await fetch('https://www.cloudflare.com/cdn-cgi/trace', {
+      signal: cfController.signal,
+      cache: 'no-store',
+    });
+    clearTimeout(cfTimeout);
+    
+    if (cfRes.ok) {
+      const text = await cfRes.text();
+      const lines = text.split('\n');
+      const data: Record<string, string> = {};
+      lines.forEach((line) => {
+        const [k, v] = line.split('=');
+        if (k && v) data[k.trim()] = v.trim();
+      });
+
+      const countryCode = (data.loc || '').toUpperCase();
+      const currentIp = data.ip || '';
+
+      if (countryCode && countryCode !== 'XX') {
+        const matchedLang = COUNTRY_TO_LANGUAGE[countryCode] || 'en';
+        const isNewIp = Boolean(previousIp && previousIp !== currentIp) || Boolean(previousCountry && previousCountry !== countryCode);
+
+        if (typeof window !== 'undefined') {
+          localStorage.setItem(LAST_DETECTED_IP_KEY, currentIp);
+          localStorage.setItem(LAST_DETECTED_COUNTRY_KEY, countryCode);
         }
-      } catch {
-        clearTimeout(timeoutId);
+
+        return {
+          ip: currentIp,
+          countryCode,
+          countryName: countryCode,
+          detectedLanguage: matchedLang,
+          source: 'cloudflare',
+          isAutoApplied: true,
+          isNewIpDetected: isNewIp,
+        };
       }
-      return null;
-    };
-
-    const fetchIpWhoIs = async (): Promise<string | null> => {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 2000);
-      try {
-        const res = await fetch('https://ipwho.is/?fields=country_code', {
-          signal: controller.signal,
-          headers: { Accept: 'application/json' },
-        });
-        clearTimeout(timeoutId);
-        if (res.ok) {
-          const data = await res.json();
-          return (data.country_code || '').toUpperCase() || null;
-        }
-      } catch {
-        clearTimeout(timeoutId);
-      }
-      return null;
-    };
-
-    // Try primary, then secondary
-    let countryCode = await fetchCountryIs();
-    if (!countryCode) {
-      countryCode = await fetchIpWhoIs();
-    }
-
-    if (countryCode) {
-      const matchedLang = COUNTRY_TO_LANGUAGE[countryCode] || 'en';
-      const result: GeolocationResult = {
-        countryCode,
-        countryName: countryCode,
-        detectedLanguage: matchedLang,
-        source: 'ip_api',
-        isAutoApplied: true,
-      };
-
-      try {
-        sessionStorage.setItem(CACHE_KEY, JSON.stringify(result));
-      } catch {}
-      return result;
     }
   } catch {}
 
-  // 2. Secondary Fallback: System Timezone inference
+  // Layer 2: api.country.is
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 2000);
+    const res = await fetch('https://api.country.is', {
+      signal: controller.signal,
+      cache: 'no-store',
+      headers: { Accept: 'application/json' },
+    });
+    clearTimeout(timeoutId);
+    if (res.ok) {
+      const data = await res.json();
+      const countryCode = (data.country || '').toUpperCase();
+      const currentIp = data.ip || '';
+      if (countryCode) {
+        const matchedLang = COUNTRY_TO_LANGUAGE[countryCode] || 'en';
+        const isNewIp = Boolean(previousIp && previousIp !== currentIp) || Boolean(previousCountry && previousCountry !== countryCode);
+
+        if (typeof window !== 'undefined') {
+          localStorage.setItem(LAST_DETECTED_IP_KEY, currentIp);
+          localStorage.setItem(LAST_DETECTED_COUNTRY_KEY, countryCode);
+        }
+
+        return {
+          ip: currentIp,
+          countryCode,
+          countryName: countryCode,
+          detectedLanguage: matchedLang,
+          source: 'country_is',
+          isAutoApplied: true,
+          isNewIpDetected: isNewIp,
+        };
+      }
+    }
+  } catch {}
+
+  // Layer 3: ipwho.is
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 2000);
+    const res = await fetch('https://ipwho.is/', {
+      signal: controller.signal,
+      cache: 'no-store',
+      headers: { Accept: 'application/json' },
+    });
+    clearTimeout(timeoutId);
+    if (res.ok) {
+      const data = await res.json();
+      const countryCode = (data.country_code || '').toUpperCase();
+      const currentIp = data.ip || '';
+      const countryName = data.country || countryCode;
+      if (countryCode) {
+        const matchedLang = COUNTRY_TO_LANGUAGE[countryCode] || 'en';
+        const isNewIp = Boolean(previousIp && previousIp !== currentIp) || Boolean(previousCountry && previousCountry !== countryCode);
+
+        if (typeof window !== 'undefined') {
+          localStorage.setItem(LAST_DETECTED_IP_KEY, currentIp);
+          localStorage.setItem(LAST_DETECTED_COUNTRY_KEY, countryCode);
+        }
+
+        return {
+          ip: currentIp,
+          countryCode,
+          countryName,
+          detectedLanguage: matchedLang,
+          source: 'ipwhois',
+          isAutoApplied: true,
+          isNewIpDetected: isNewIp,
+        };
+      }
+    }
+  } catch {}
+
+  // Layer 4: ipapi.co
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 2000);
+    const res = await fetch('https://ipapi.co/json/', {
+      signal: controller.signal,
+      cache: 'no-store',
+      headers: { Accept: 'application/json' },
+    });
+    clearTimeout(timeoutId);
+    if (res.ok) {
+      const data = await res.json();
+      const countryCode = (data.country_code || '').toUpperCase();
+      const currentIp = data.ip || '';
+      const countryName = data.country_name || countryCode;
+      if (countryCode) {
+        const matchedLang = COUNTRY_TO_LANGUAGE[countryCode] || 'en';
+        const isNewIp = Boolean(previousIp && previousIp !== currentIp) || Boolean(previousCountry && previousCountry !== countryCode);
+
+        if (typeof window !== 'undefined') {
+          localStorage.setItem(LAST_DETECTED_IP_KEY, currentIp);
+          localStorage.setItem(LAST_DETECTED_COUNTRY_KEY, countryCode);
+        }
+
+        return {
+          ip: currentIp,
+          countryCode,
+          countryName,
+          detectedLanguage: matchedLang,
+          source: 'ipapi',
+          isAutoApplied: true,
+          isNewIpDetected: isNewIp,
+        };
+      }
+    }
+  } catch {}
+
+  // Layer 5: Timezone inference fallback
   try {
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
     if (tz && TIMEZONE_TO_LANGUAGE[tz]) {
-      const result: GeolocationResult = {
+      return {
         countryCode: null,
         countryName: tz,
         detectedLanguage: TIMEZONE_TO_LANGUAGE[tz],
         source: 'timezone',
         isAutoApplied: true,
+        isNewIpDetected: false,
       };
-      return result;
     }
   } catch {}
 
-  // 3. Fallback: Browser navigator.language
+  // Layer 6: Browser navigator.language fallback
   try {
     if (typeof navigator !== 'undefined' && navigator.language) {
       const navLang = navigator.language.split('-')[0].toLowerCase() as LanguageCode;
@@ -253,17 +338,19 @@ export async function detectVisitorLanguage(): Promise<GeolocationResult> {
           detectedLanguage: navLang,
           source: 'navigator',
           isAutoApplied: true,
+          isNewIpDetected: false,
         };
       }
     }
   } catch {}
 
-  // 4. Default: Persian ('fa')
+  // Default: Persian ('fa')
   return {
     countryCode: 'IR',
     countryName: 'Iran',
     detectedLanguage: DEFAULT_LANGUAGE,
     source: 'default',
     isAutoApplied: false,
+    isNewIpDetected: false,
   };
 }

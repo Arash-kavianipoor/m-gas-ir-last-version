@@ -60,9 +60,9 @@ export const TECHNICAL_ARTICLES: Article[] = [
         tr: 'Genel Müdür ve Metalurji & Basınçlı Kap Güvenliği Mühendislik Ekibi',
         ru: 'Генеральный директор и инженерная группа по металлургии и сосудам под давлением',
       },
-      avatar: '/founder/mousa-amooie.png',
+      avatar: '/founder/mousa-amooie.webp',
     },
-    coverImage: '/articles/engineering.png',
+    coverImage: '/articles/engineering.webp',
     category: {
       fa: 'استانداردهای مهندسی و ساخت',
       en: 'Engineering & Manufacturing Standards',
@@ -420,9 +420,9 @@ export const TECHNICAL_ARTICLES: Article[] = [
         tr: 'Genel Müdür ve Tehlikeli Madde Lojistiği & Endüstriyel Güvenlik Direktörlüğü',
         ru: 'Генеральный директор и дирекция по безопасности опасных грузов и промышленному хранению',
       },
-      avatar: '/founder/mousa-amooie.png',
+      avatar: '/founder/mousa-amooie.webp',
     },
-    coverImage: '/articles/technical.png',
+    coverImage: '/articles/technical.webp',
     category: {
       fa: 'پروتکل‌های ایمنی، انبارداری و لجستیک',
       en: 'Safety Protocols, Storage & Logistics',

@@ -29,6 +29,8 @@ export const SeoHead: React.FC<SeoHeadProps> = ({ activeArticle }) => {
 
     const currentUrl = activeArticle
       ? `${baseSiteUrl}/?lang=${currentLanguage}#article=${activeArticle.slug}`
+      : currentLanguage === 'fa'
+      ? `${baseSiteUrl}/`
       : `${baseSiteUrl}/?lang=${currentLanguage}`;
 
     const pageTitle = activeArticle
@@ -89,13 +91,21 @@ export const SeoHead: React.FC<SeoHeadProps> = ({ activeArticle }) => {
     // Canonical Link
     setLinkTag('canonical', currentUrl);
 
-    // Hreflang Multi-language Alternate Links
+    // Hreflang Multi-language Alternate Links with Regional Variants
     Object.keys(SUPPORTED_LANGUAGES).forEach((langKey) => {
       const code = langKey as LanguageCode;
+      const info = SUPPORTED_LANGUAGES[code];
       const targetUrl = activeArticle
         ? `${baseSiteUrl}/?lang=${code}#article=${activeArticle.slug}`
         : `${baseSiteUrl}/?lang=${code}`;
+      
+      // Generic language code (e.g., "ur", "fa", "en")
       setLinkTag('alternate', targetUrl, code);
+
+      // Regional locale variant (e.g., "ur-PK", "fa-IR", "en-US")
+      if (info && info.locale && info.locale !== code) {
+        setLinkTag('alternate', targetUrl, info.locale);
+      }
     });
     // x-default hreflang pointing to canonical site origin
     setLinkTag(

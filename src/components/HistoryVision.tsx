@@ -107,7 +107,7 @@ export const HistoryVision: React.FC = () => {
                 <div className="hidden lg:block absolute bottom-4 inset-x-8 h-72 bg-emerald-500/15 rounded-full blur-2xl pointer-events-none" />
 
                 <img
-                  src="/founder/mousa-amooie.png"
+                  src="/founder/mousa-amooie.webp"
                   alt={getLoc(founderContent.name)}
                   width={400}
                   height={540}

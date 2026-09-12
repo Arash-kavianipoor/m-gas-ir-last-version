@@ -302,7 +302,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenRfq, onExploreProducts }) => {
               <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />
               ۳ بنر اصلی هیروسکشن (برای انتخاب بنر کلیک کنید):
             </span>
-            <span className="text-[11px] text-slate-500 font-mono">
+            <span className="text-[11px] text-slate-300 font-mono font-medium">
               بنر فعال: {currentSlideIndex + 1} از {totalSlides}
             </span>
           </div>

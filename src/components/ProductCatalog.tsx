@@ -120,13 +120,13 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
             {t.productsSectionSubtitle}
           </p>
 
-          {/* 3-Angle & Color Feature Callout */}
+          {/* Feature Callout */}
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-xl bg-slate-900/80 border border-slate-700/60 text-xs text-slate-300">
             <Sparkles className="w-3.5 h-3.5 text-amber-400" />
             <span>
               {currentLanguage === 'fa'
-                ? 'قابلیت مشاهده در ۳ زاویه استاندارد (4:3) و تغییر رنگ پوشش کوره ای با کاتالوگ بین‌المللی RAL'
-                : 'Interactive 3-Angle 4:3 views & instant powder coating RAL color selection'}
+                ? 'مشاهده تصاویر واقعی با کیفیت بالا در ۱۰۰٪ ارتفاع نمایشگر با قرار دادن موس روی هر تصویر'
+                : 'Hover over any cylinder photo to view instant 100% full-height high-resolution preview & 30-bar test specs'}
             </span>
           </div>
         </div>
@@ -275,45 +275,10 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
                       </div>
                     </div>
 
-                    {/* 4:3 Ratio 3-Angle & Real Photo Visualizer */}
+                    {/* 4:3 Aspect Ratio Product Photo Visualizer with Instant Fullscreen Lightbox */}
                     <CylinderAngleViewer
                       product={product}
-                      selectedColor={selectedColor}
-                      showControls={true}
-                      onOpenColorPicker={() => setActiveColorPickerProduct(product)}
                     />
-
-                    {/* Quick RAL Color Swatches row under the visualizer */}
-                    <div className="flex items-center justify-between gap-2 px-1 pt-1">
-                      <div className="flex items-center gap-2 py-1">
-                        {RAL_POPULAR_COLORS.slice(0, 5).map((color) => {
-                          const isSelected = (selectedColor?.code || product.defaultRalCode) === color.code;
-                          return (
-                            <button
-                              key={color.code}
-                              type="button"
-                              onClick={() => handleSetProductColor(product.id, color)}
-                              title={`${color.code} - ${currentLanguage === 'fa' ? color.nameFa : color.nameEn}`}
-                              className={`w-5 h-5 rounded-full ${
-                                isSelected
-                                  ? 'border-2 border-amber-400 lg:scale-125 lg:ring-2 lg:ring-amber-500/50'
-                                  : 'border border-slate-700/80 lg:hover:scale-110'
-                              }`}
-                              style={{ backgroundColor: color.hex }}
-                            />
-                          );
-                        })}
-                      </div>
-
-                      <button
-                        type="button"
-                        onClick={() => setActiveColorPickerProduct(product)}
-                        className="text-[11px] text-amber-400 hover:text-amber-300 flex items-center gap-1 font-medium lg:transition-colors shrink-0"
-                      >
-                        <Palette className="w-3 h-3" />
-                        <span>{currentLanguage === 'fa' ? 'رنگ‌های بیشتر' : 'More Colors'}</span>
-                      </button>
-                    </div>
 
                     {/* Cylinder Name & Capacity Highlight */}
                     <div>

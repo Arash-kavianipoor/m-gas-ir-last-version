@@ -43,7 +43,7 @@ export const TextHoverEffect: React.FC<{ text: string; className?: string }> = (
   if (!isDesktop) {
     return (
       <div className={`relative w-full flex items-center justify-center select-none overflow-hidden py-2 ${className}`}>
-        <span className="font-black text-4xl sm:text-6xl tracking-widest uppercase font-mono text-slate-800/80 hover:text-emerald-500/30 transition-colors">
+        <span className="font-black text-3xl sm:text-5xl md:text-6xl tracking-widest uppercase font-mono text-slate-500 hover:text-emerald-400 transition-colors">
           {text}
         </span>
       </div>
@@ -376,30 +376,30 @@ export const HoverFooter: React.FC = () => {
         </div>
 
         {/* Copyright & Bottom Bar */}
-        <div className="pt-6 border-t border-slate-800/80 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <div className="pt-6 border-t border-slate-800/80 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-300">
           <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-center sm:text-start">
-            <p>
+            <p className="text-slate-300">
               &copy; 1970 - {new Date().getFullYear()} {t.footerRights}
             </p>
-            <span className="hidden sm:inline text-slate-700">|</span>
-            <p className="text-slate-400">
+            <span className="hidden sm:inline text-slate-500">|</span>
+            <p className="text-slate-300">
               Website designed by{' '}
               <a
                 href="https://sorena-it.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-emerald-400 hover:text-emerald-300 transition-colors font-medium underline underline-offset-2"
+                className="text-emerald-400 hover:text-emerald-300 transition-colors font-semibold underline underline-offset-2"
               >
                 Sorena-IT
               </a>
             </p>
           </div>
           <div className="flex items-center gap-4 text-xs">
-            <span className="text-slate-600">mgas.ir</span>
-            <span>•</span>
-            <span className="text-slate-400">Karaj, Alborz, IRAN</span>
-            <span>•</span>
-            <span className="text-emerald-400/80 font-mono isolate" dir="ltr">+44 7833 783825</span>
+            <span className="text-slate-300 font-mono">mgas.ir</span>
+            <span className="text-slate-500">•</span>
+            <span className="text-slate-300">Karaj, Alborz, IRAN</span>
+            <span className="text-slate-500">•</span>
+            <span className="text-emerald-400 font-mono font-medium isolate" dir="ltr">+44 7833 783825</span>
           </div>
         </div>
       </div>
