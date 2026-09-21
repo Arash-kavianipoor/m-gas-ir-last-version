@@ -1,7 +1,7 @@
 import { LanguageCode } from '../types';
 import { SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE } from '../i18n/languages';
 
-// Comprehensive Country ISO2 code to LanguageCode mapping
+// Comprehensive Country ISO2 code to LanguageCode mapping covering all Search Console regions
 export const COUNTRY_TO_LANGUAGE: Record<string, LanguageCode> = {
   // Persian / Farsi (fa)
   IR: 'fa', // Iran
@@ -32,7 +32,7 @@ export const COUNTRY_TO_LANGUAGE: Record<string, LanguageCode> = {
 
   // Turkish (tr) - Turkey & Turkic regions
   TR: 'tr', // Turkey
-  AZ: 'tr', // Azerbaijan (Turkic)
+  AZ: 'tr', // Azerbaijan
   CY: 'tr', // Cyprus
   TM: 'tr', // Turkmenistan
 
@@ -55,6 +55,7 @@ export const COUNTRY_TO_LANGUAGE: Record<string, LanguageCode> = {
   // Urdu (ur) - South Asia (Pakistan prioritized)
   PK: 'ur', // Pakistan
   IN: 'ur', // India
+  BD: 'ur', // Bangladesh
 
   // Armenian (hy) - Caucasus
   AM: 'hy', // Armenia
@@ -85,6 +86,16 @@ export const COUNTRY_TO_LANGUAGE: Record<string, LanguageCode> = {
   JP: 'en', // Japan
   KR: 'en', // South Korea
   CN: 'en', // China
+  HK: 'en', // Hong Kong
+  TH: 'en', // Thailand
+  ID: 'en', // Indonesia
+  PH: 'en', // Philippines
+  GT: 'en', // Guatemala
+  IL: 'en', // Israel
+  RO: 'en', // Romania
+  EE: 'en', // Estonia
+  NG: 'en', // Nigeria
+  AR: 'en', // Argentina
 };
 
 // Fallback Timezone to Language mapping
@@ -121,6 +132,7 @@ export const TIMEZONE_TO_LANGUAGE: Record<string, LanguageCode> = {
   'Europe/Zurich': 'de',
   'Asia/Karachi': 'ur',
   'Asia/Kolkata': 'ur',
+  'Asia/Dhaka': 'ur',
   'Asia/Yerevan': 'hy',
   'Asia/Tbilisi': 'hy',
   'America/New_York': 'en',
@@ -128,7 +140,18 @@ export const TIMEZONE_TO_LANGUAGE: Record<string, LanguageCode> = {
   'America/Los_Angeles': 'en',
   'America/Toronto': 'en',
   'Europe/London': 'en',
+  'Europe/Amsterdam': 'en',
+  'Europe/Rome': 'en',
+  'Europe/Paris': 'en',
+  'Europe/Madrid': 'en',
+  'Europe/Stockholm': 'en',
   'Australia/Sydney': 'en',
+  'Asia/Tokyo': 'en',
+  'Asia/Seoul': 'en',
+  'Asia/Singapore': 'en',
+  'Asia/Jakarta': 'en',
+  'Asia/Manila': 'en',
+  'Asia/Bangkok': 'en',
 };
 
 export interface GeolocationResult {
@@ -136,7 +159,7 @@ export interface GeolocationResult {
   countryCode: string | null;
   countryName: string | null;
   detectedLanguage: LanguageCode;
-  source: 'cloudflare' | 'country_is' | 'ipwhois' | 'ipapi' | 'timezone' | 'navigator' | 'default';
+  source: 'cloudflare' | 'country_is' | 'ipwhois' | 'ipapi' | 'freeipapi' | 'timezone' | 'navigator' | 'default';
   isAutoApplied?: boolean;
   isNewIpDetected?: boolean;
 }
@@ -148,20 +171,21 @@ const LAST_DETECTED_COUNTRY_KEY = 'mgas_last_detected_country';
  * Multi-layer, ultra-fast GeoIP Detection:
  * Layer 1: Cloudflare trace (fastest, universally accessible, SSL, works behind any VPN)
  * Layer 2: api.country.is
- * Layer 3: ipwho.is
- * Layer 4: ipapi.co
- * Layer 5: Timezone inference
- * Layer 6: Browser navigator.language
- * Layer 7: Default (fa)
+ * Layer 3: freeipapi.com
+ * Layer 4: ipwho.is
+ * Layer 5: ipapi.co
+ * Layer 6: Timezone inference
+ * Layer 7: Browser navigator.language
+ * Layer 8: Default (fa)
  */
-export async function detectVisitorLanguage(forceRefresh = false): Promise<GeolocationResult> {
+export async function detectVisitorLanguage(): Promise<GeolocationResult> {
   const previousIp = typeof window !== 'undefined' ? localStorage.getItem(LAST_DETECTED_IP_KEY) : null;
   const previousCountry = typeof window !== 'undefined' ? localStorage.getItem(LAST_DETECTED_COUNTRY_KEY) : null;
 
-  // Layer 1: Cloudflare Trace (extremely fast, zero rate limit, returns accurate edge IP and loc=XX)
+  // Layer 1: Cloudflare Trace (fast, zero rate limit, returns edge IP and loc=XX)
   try {
     const cfController = new AbortController();
-    const cfTimeout = setTimeout(() => cfController.abort(), 2500);
+    const cfTimeout = setTimeout(() => cfController.abort(), 1800);
     const cfRes = await fetch('https://www.cloudflare.com/cdn-cgi/trace', {
       signal: cfController.signal,
       cache: 'no-store',
@@ -205,7 +229,7 @@ export async function detectVisitorLanguage(forceRefresh = false): Promise<Geolo
   // Layer 2: api.country.is
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 2000);
+    const timeoutId = setTimeout(() => controller.abort(), 1800);
     const res = await fetch('https://api.country.is', {
       signal: controller.signal,
       cache: 'no-store',
@@ -238,10 +262,47 @@ export async function detectVisitorLanguage(forceRefresh = false): Promise<Geolo
     }
   } catch {}
 
-  // Layer 3: ipwho.is
+  // Layer 3: freeipapi.com
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 2000);
+    const timeoutId = setTimeout(() => controller.abort(), 1800);
+    const res = await fetch('https://freeipapi.com/api/json', {
+      signal: controller.signal,
+      cache: 'no-store',
+      headers: { Accept: 'application/json' },
+    });
+    clearTimeout(timeoutId);
+    if (res.ok) {
+      const data = await res.json();
+      const countryCode = (data.countryCode || '').toUpperCase();
+      const currentIp = data.ipAddress || '';
+      const countryName = data.countryName || countryCode;
+      if (countryCode) {
+        const matchedLang = COUNTRY_TO_LANGUAGE[countryCode] || 'en';
+        const isNewIp = Boolean(previousIp && previousIp !== currentIp) || Boolean(previousCountry && previousCountry !== countryCode);
+
+        if (typeof window !== 'undefined') {
+          localStorage.setItem(LAST_DETECTED_IP_KEY, currentIp);
+          localStorage.setItem(LAST_DETECTED_COUNTRY_KEY, countryCode);
+        }
+
+        return {
+          ip: currentIp,
+          countryCode,
+          countryName,
+          detectedLanguage: matchedLang,
+          source: 'freeipapi',
+          isAutoApplied: true,
+          isNewIpDetected: isNewIp,
+        };
+      }
+    }
+  } catch {}
+
+  // Layer 4: ipwho.is
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 1800);
     const res = await fetch('https://ipwho.is/', {
       signal: controller.signal,
       cache: 'no-store',
@@ -275,10 +336,10 @@ export async function detectVisitorLanguage(forceRefresh = false): Promise<Geolo
     }
   } catch {}
 
-  // Layer 4: ipapi.co
+  // Layer 5: ipapi.co
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 2000);
+    const timeoutId = setTimeout(() => controller.abort(), 1800);
     const res = await fetch('https://ipapi.co/json/', {
       signal: controller.signal,
       cache: 'no-store',
@@ -312,7 +373,7 @@ export async function detectVisitorLanguage(forceRefresh = false): Promise<Geolo
     }
   } catch {}
 
-  // Layer 5: Timezone inference fallback
+  // Layer 6: Timezone inference fallback
   try {
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
     if (tz && TIMEZONE_TO_LANGUAGE[tz]) {
@@ -327,7 +388,7 @@ export async function detectVisitorLanguage(forceRefresh = false): Promise<Geolo
     }
   } catch {}
 
-  // Layer 6: Browser navigator.language fallback
+  // Layer 7: Browser navigator.language fallback
   try {
     if (typeof navigator !== 'undefined' && navigator.language) {
       const navLang = navigator.language.split('-')[0].toLowerCase() as LanguageCode;

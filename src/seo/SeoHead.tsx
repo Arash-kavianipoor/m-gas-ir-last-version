@@ -4,10 +4,12 @@ import { SEO_CONFIG } from './config';
 import { SUPPORTED_LANGUAGES } from '../i18n/languages';
 import {
   generateOrganizationSchema,
+  generateLocalBusinessSchema,
   generateWebSiteSchema,
   generateBreadcrumbSchema,
   generateVideosSchema,
   generateProductsSchema,
+  generateFaqSchema,
   generateArticleSchema,
   generateAllArticlesSchema,
 } from './schemas';
@@ -147,10 +149,12 @@ export const SeoHead: React.FC<SeoHeadProps> = ({ activeArticle }) => {
     // Structured Data (JSON-LD) Injections
     const structuredDataScripts = [
       { id: 'schema-org', data: generateOrganizationSchema() },
+      { id: 'schema-localbusiness', data: generateLocalBusinessSchema(currentLanguage) },
       { id: 'schema-website', data: generateWebSiteSchema(currentLanguage) },
       { id: 'schema-breadcrumbs', data: generateBreadcrumbSchema(currentLanguage, activeArticle || undefined) },
       { id: 'schema-videos', data: generateVideosSchema(currentLanguage) },
       { id: 'schema-products', data: generateProductsSchema(currentLanguage) },
+      { id: 'schema-faq', data: generateFaqSchema(currentLanguage) },
       {
         id: 'schema-articles',
         data: activeArticle
