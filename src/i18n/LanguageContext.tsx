@@ -95,20 +95,8 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
       setGeoInfo(result);
 
       if (result.detectedLanguage && SUPPORTED_LANGUAGES[result.detectedLanguage]) {
-        const isBot = /bot|crawl|spider|slurp|facebook|google|bing/i.test(navigator.userAgent || '');
-
-        // In production on the main root domain (mgas.ir):
-        // If visitor is from a non-English country (e.g. Germany -> de, Iran -> fa, Pakistan -> ur, etc.)
-        // and has not manually chosen a language, redirect to that language's subdomain with clean URL!
-        if (isProd && !isBot && !isManualLocked && result.detectedLanguage !== DEFAULT_LANGUAGE) {
-          const { url, shouldNavigate } = buildSwitchLanguageUrl(result.detectedLanguage);
-          if (shouldNavigate) {
-            window.location.replace(url);
-            return;
-          }
-        }
-
-        // In dev / preview environments:
+        // In dev, preview, or production:
+        // Automatically switch language state if not manually locked by the user
         if (result.isNewIpDetected || (!isManualLocked && !hostLang)) {
           setCurrentLanguageState(result.detectedLanguage);
           localStorage.setItem(STORAGE_KEY, result.detectedLanguage);
@@ -151,23 +139,16 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
 
   const setLanguage = (lang: LanguageCode) => {
     if (SUPPORTED_LANGUAGES[lang]) {
+      // 1. Instant client-side state update (0ms lag, guaranteed to never fail or blank the screen)
       setCurrentLanguageState(lang);
+      
       if (typeof window !== 'undefined') {
         localStorage.setItem(STORAGE_KEY, lang);
         localStorage.setItem(MANUAL_LOCK_KEY, 'true');
 
-        // Clean any existing query params from URL
-        const cleanSearch = stripLangQueryParam(window.location.search);
-
-        // Check if we should navigate to the subdomain in production
-        const { url, shouldNavigate } = buildSwitchLanguageUrl(lang);
-        if (shouldNavigate) {
-          window.location.href = url;
-          return;
-        }
-
-        // In dev/preview or same-domain, ensure URL is completely clean of '?lang=' query parameters
+        // 2. Clean URL: strip any '?lang=' query parameters so URL remains clean
         try {
+          const cleanSearch = stripLangQueryParam(window.location.search);
           const cleanUrl = `${window.location.pathname}${cleanSearch}${window.location.hash}`;
           window.history.replaceState({}, '', cleanUrl);
         } catch {}

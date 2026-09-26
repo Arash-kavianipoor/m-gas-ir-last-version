@@ -30,7 +30,7 @@ export function getBaseUrlForLanguage(lang: LanguageCode): string {
 }
 
 /**
- * Parses language code from hostname (e.g., 'fa.mgas.ir' -> 'fa', 'mgas.ir' -> 'en')
+ * Parses language code from hostname (e.g., 'fa.mgas.ir' -> 'fa', 'de.mgas.ir' -> 'de', 'mgas.ir' -> 'en')
  */
 export function getLanguageFromHostname(hostname: string): LanguageCode | null {
   if (!hostname) return null;
@@ -38,14 +38,15 @@ export function getLanguageFromHostname(hostname: string): LanguageCode | null {
   const cleanHost = hostname.toLowerCase().split(':')[0]; // Remove port if present
 
   // Direct match with main domain or localhost
-  if (cleanHost === ROOT_DOMAIN || cleanHost === `www.${ROOT_DOMAIN}`) {
+  if (cleanHost === ROOT_DOMAIN || cleanHost === `www.${ROOT_DOMAIN}` || cleanHost === 'localhost') {
     return 'en';
   }
 
-  // Check language subdomains like fa.mgas.ir
+  // Check language subdomains like fa.mgas.ir or www.fa.mgas.ir
   const parts = cleanHost.split('.');
   if (parts.length >= 2) {
-    const sub = parts[0] as LanguageCode;
+    // If starts with 'www.', check the second part (e.g. www.fa.mgas.ir -> fa)
+    const sub = (parts[0] === 'www' && parts.length >= 3 ? parts[1] : parts[0]) as LanguageCode;
     if (Object.keys(SUBDOMAIN_MAP).includes(sub) && sub !== 'en') {
       return sub;
     }
