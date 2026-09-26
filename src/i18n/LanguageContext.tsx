@@ -139,16 +139,25 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
 
   const setLanguage = (lang: LanguageCode) => {
     if (SUPPORTED_LANGUAGES[lang]) {
-      // 1. Instant client-side state update (0ms lag, guaranteed to never fail or blank the screen)
+      // 1. Update state immediately
       setCurrentLanguageState(lang);
       
       if (typeof window !== 'undefined') {
         localStorage.setItem(STORAGE_KEY, lang);
         localStorage.setItem(MANUAL_LOCK_KEY, 'true');
 
-        // 2. Clean URL: strip any '?lang=' query parameters so URL remains clean
+        // 2. Clean URL: strip any '?lang=' query parameters
+        const cleanSearch = stripLangQueryParam(window.location.search);
+
+        // 3. Navigate to the dedicated language subdomain on production (e.g. fa.mgas.ir, de.mgas.ir, mgas.ir)
+        const { url, shouldNavigate } = buildSwitchLanguageUrl(lang);
+        if (shouldNavigate) {
+          window.location.href = url;
+          return;
+        }
+
+        // On preview/dev environments or same-subdomain, keep URL pure without query strings
         try {
-          const cleanSearch = stripLangQueryParam(window.location.search);
           const cleanUrl = `${window.location.pathname}${cleanSearch}${window.location.hash}`;
           window.history.replaceState({}, '', cleanUrl);
         } catch {}

@@ -244,12 +244,18 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
             >
               <div className="flex items-center justify-center p-1.5 sm:p-2 min-w-[100px] sm:min-w-[130px] h-12 sm:h-14 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-teal-500/10 border border-emerald-500/40 group-hover:border-emerald-400 group-hover:bg-emerald-500/25 transition-all shadow-sm">
                 <img
-                  src="/logo/new-logo-mgas-2(1)_fixed.svg"
+                  src="/logo/new-logo-mgas-2.svg"
                   alt="M Gas Logo"
                   width={130}
                   height={56}
                   decoding="async"
-                  className="w-auto h-9 sm:h-11 max-w-[120px] sm:max-w-[130px] object-contain transition-transform group-hover:scale-105"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    if (!target.src.endsWith('.png')) {
+                      target.src = '/logo/new-logo-mgas-2.png';
+                    }
+                  }}
+                  className="w-auto h-9 sm:h-11 max-w-[120px] sm:max-w-[130px] object-contain transition-transform group-hover:scale-105 filter drop-shadow-md"
                   referrerPolicy="no-referrer"
                 />
               </div>
@@ -496,12 +502,18 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
             {/* Mobile Header Brand */}
             <div className="flex items-center justify-between pb-3 border-b border-white/15">
               <img
-                src="/logo/new-logo-mgas-2(1)_fixed.svg"
+                src="/logo/new-logo-mgas-2.svg"
                 alt="M Gas Logo"
                 width={32}
                 height={32}
                 style={{ aspectRatio: '1/1' }}
                 decoding="async"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (!target.src.endsWith('.png')) {
+                    target.src = '/logo/new-logo-mgas-2.png';
+                  }
+                }}
                 className="h-8 w-auto object-contain"
                 referrerPolicy="no-referrer"
               />

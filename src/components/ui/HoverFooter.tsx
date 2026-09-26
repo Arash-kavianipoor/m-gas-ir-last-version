@@ -140,12 +140,18 @@ export const HoverFooter: React.FC = () => {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <img
-                src="/logo/new-logo-mgas-2(1)_fixed.svg"
+                src="/logo/new-logo-mgas-2.svg"
                 alt="M Gas Official Logo"
                 width={48}
                 height={48}
                 loading="lazy"
                 decoding="async"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (!target.src.endsWith('.png')) {
+                    target.src = '/logo/new-logo-mgas-2.png';
+                  }
+                }}
                 style={{ aspectRatio: '1/1' }}
                 className="h-12 w-auto object-contain filter drop-shadow"
                 referrerPolicy="no-referrer"
