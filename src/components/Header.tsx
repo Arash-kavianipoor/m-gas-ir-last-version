@@ -244,18 +244,12 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
             >
               <div className="flex items-center justify-center p-1.5 sm:p-2 min-w-[100px] sm:min-w-[130px] h-12 sm:h-14 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-teal-500/10 border border-emerald-500/40 group-hover:border-emerald-400 group-hover:bg-emerald-500/25 transition-all shadow-sm">
                 <img
-                  src="/logo/new-logo-mgas-2.svg"
+                  src="/logo/new-logo-mgas-2(1)_fixed.svg"
                   alt="M Gas Logo"
                   width={130}
                   height={56}
                   decoding="async"
-                  onError={(e) => {
-                    const target = e.currentTarget;
-                    if (!target.src.endsWith('.png')) {
-                      target.src = '/logo/new-logo-mgas-2.png';
-                    }
-                  }}
-                  className="w-auto h-9 sm:h-11 max-w-[120px] sm:max-w-[130px] object-contain transition-transform group-hover:scale-105 filter drop-shadow-md"
+                  className="w-auto h-9 sm:h-11 max-w-[120px] sm:max-w-[130px] object-contain transition-transform group-hover:scale-105"
                   referrerPolicy="no-referrer"
                 />
               </div>
@@ -438,19 +432,12 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
                               : 'text-slate-200 hover:bg-slate-800 hover:text-white'
                           }`}
                         >
-                          <div className="flex items-center gap-2 min-w-0">
+                          <div className="flex items-center gap-2">
                             <FlagIcon code={lang.code} size="sm" />
-                            <div className="flex flex-col text-start leading-tight min-w-0">
-                              <span className="text-xs font-medium truncate">{lang.nativeName}</span>
-                              <span className={`text-[9px] font-mono truncate ${
-                                currentLanguage === lang.code ? 'text-slate-900 font-semibold' : 'text-emerald-400/80'
-                              }`}>
-                                {lang.domain}
-                              </span>
-                            </div>
+                            <span className="text-xs font-medium">{lang.nativeName}</span>
                           </div>
                           <span
-                            className={`text-[10px] font-mono px-1 py-0.5 rounded shrink-0 ${
+                            className={`text-[10px] font-mono px-1 py-0.5 rounded ${
                               currentLanguage === lang.code
                                 ? 'bg-slate-950/20 text-slate-950'
                                 : 'bg-slate-800 text-slate-400'
@@ -502,18 +489,12 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
             {/* Mobile Header Brand */}
             <div className="flex items-center justify-between pb-3 border-b border-white/15">
               <img
-                src="/logo/new-logo-mgas-2.svg"
+                src="/logo/new-logo-mgas-2(1)_fixed.svg"
                 alt="M Gas Logo"
                 width={32}
                 height={32}
                 style={{ aspectRatio: '1/1' }}
                 decoding="async"
-                onError={(e) => {
-                  const target = e.currentTarget;
-                  if (!target.src.endsWith('.png')) {
-                    target.src = '/logo/new-logo-mgas-2.png';
-                  }
-                }}
                 className="h-8 w-auto object-contain"
                 referrerPolicy="no-referrer"
               />
@@ -603,17 +584,14 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
                     key={lang.code}
                     type="button"
                     onClick={() => handleLanguageSelect(lang.code)}
-                    className={`flex items-center gap-2 p-2 rounded-xl border text-xs text-start transition-all ${
+                    className={`flex items-center gap-2.5 p-2 rounded-xl border text-xs text-start transition-all ${
                       currentLanguage === lang.code
                         ? 'bg-emerald-950/80 border-emerald-500 text-emerald-300 font-bold shadow-sm'
                         : 'bg-slate-900/80 border-slate-800 text-slate-300 hover:bg-slate-800'
                     }`}
                   >
                     <FlagIcon code={lang.code} size="sm" />
-                    <div className="flex flex-col min-w-0">
-                      <span className="truncate leading-snug">{lang.nativeName}</span>
-                      <span className="text-[9px] font-mono text-emerald-400/80 truncate">{lang.domain}</span>
-                    </div>
+                    <span className="truncate">{lang.nativeName}</span>
                   </button>
                 ))}
               </div>

@@ -1,9 +1,16 @@
 # Robots.txt for M Gas (https://mgas.ir)
-# Official Manufacturer & Exporter of LPG Gas Cylinders & Pressure Vessels
-# Subdomains: fa.mgas.ir, ar.mgas.ir, ur.mgas.ir, tr.mgas.ir, ru.mgas.ir, de.mgas.ir, hy.mgas.ir
+# Official Manufacturer & Exporter of LPG Gas Cylinders
 
 User-agent: *
 Allow: /
+Allow: /?lang=ur
+Allow: /?lang=fa
+Allow: /?lang=en
+Allow: /?lang=ar
+Allow: /?lang=tr
+Allow: /?lang=ru
+Allow: /?lang=de
+Allow: /?lang=hy
 
 # AI & LLM Search Engine Crawlers
 User-agent: Googlebot
@@ -39,12 +46,5 @@ Allow: /
 User-agent: YandexBot
 Allow: /
 
-# Subdomain & Global Sitemaps
+# Canonical Sitemaps
 Sitemap: https://mgas.ir/sitemap.xml
-Sitemap: https://fa.mgas.ir/sitemap.xml
-Sitemap: https://ur.mgas.ir/sitemap.xml
-Sitemap: https://ar.mgas.ir/sitemap.xml
-Sitemap: https://tr.mgas.ir/sitemap.xml
-Sitemap: https://ru.mgas.ir/sitemap.xml
-Sitemap: https://de.mgas.ir/sitemap.xml
-Sitemap: https://hy.mgas.ir/sitemap.xml

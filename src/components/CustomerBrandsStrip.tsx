@@ -1,56 +1,74 @@
 import React from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
-import { Award, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { DOMESTIC_CUSTOMERS } from '../data/customers';
+import { Building2, CheckCircle2 } from 'lucide-react';
 
 export const CustomerBrandsStrip: React.FC = () => {
-  const { currentLanguage, t } = useLanguage();
+  const { currentLanguage, isRTL } = useLanguage();
 
-  const brands = [
-    { name: 'Iran Khodro (IKCO)', logo: '/customers/ikco.svg', alt: 'Iran Khodro Industrial Group' },
-    { name: 'SAIPA Automotive', logo: '/customers/saipa.svg', alt: 'SAIPA Automotive Group' },
-    { name: 'ISACO Aftersales', logo: '/customers/isaco.svg', alt: 'ISACO Spare Parts & Distribution' },
-    { name: 'National Iranian Gas Co. Partners', logo: '/customers/pngimage.parspng.com10.png', alt: 'Industrial LPG Distribution' },
-  ];
+  const isFa = currentLanguage === 'fa';
 
   return (
-    <section className="relative py-8 bg-slate-950/90 border-y border-slate-800/80 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          
-          {/* Section Sub-heading */}
-          <div className="flex items-center gap-3 shrink-0">
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
-              <ShieldCheck className="w-5 h-5" />
-            </div>
-            <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-emerald-400 block">
-                {currentLanguage === 'fa' ? 'مشتریان عمده و طرف‌های تجاری' : 'OEM & Major Industrial Partners'}
-              </span>
-              <p className="text-sm font-semibold text-slate-200">
-                {currentLanguage === 'fa' ? 'تأمین‌کننده مورد اعتماد صنایع بزرگ و خودروسازان' : 'Trusted by Leading Automotive & Gas Corporations'}
-              </p>
-            </div>
+    <div className="w-full bg-[#050D12]/95 border-y border-emerald-950/60 py-4 sm:py-5 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+        
+        {/* Minimal Label */}
+        <div className="flex items-center gap-2.5 shrink-0">
+          <div className="w-7 h-7 rounded-lg bg-emerald-950/80 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+            <Building2 className="w-3.5 h-3.5" />
           </div>
+          <div>
+            <div className="flex items-center gap-1.5">
+              <span className="text-xs font-bold text-slate-200">
+                {isFa ? 'مشتریان و شرکای تجاری در ایران' : 'Trusted Domestic Clients & OEM Partners'}
+              </span>
+              <span className="inline-flex items-center px-1.5 py-0.2 rounded text-[10px] font-medium bg-emerald-950 text-emerald-400 border border-emerald-800/40">
+                <CheckCircle2 className="w-2.5 h-2.5 inline me-0.5 text-emerald-400" />
+                OEM
+              </span>
+            </div>
+            <p className="text-[11px] text-slate-400 hidden sm:block">
+              {isFa
+                ? 'تامین سیلندرهای گاز مایع و مخازن اتوگاز برای صنایع برتر کشور'
+                : 'Supplying certified LPG tanks & cylinders to leading national industries'}
+            </p>
+          </div>
+        </div>
 
-          {/* Brands Logos Showcase */}
-          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10">
-            {brands.map((brand, idx) => (
-              <div
-                key={idx}
-                className="group relative flex items-center justify-center px-4 py-2 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-emerald-500/40 transition-all hover:scale-105"
-              >
+        {/* 5 Minimal Small Customer Logos */}
+        <div className="flex flex-wrap items-center justify-center md:justify-end gap-2 sm:gap-3 lg:gap-4 flex-1">
+          {DOMESTIC_CUSTOMERS.map((cust) => (
+            <div
+              key={cust.id}
+              className="group relative flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900/60 hover:bg-slate-900 border border-slate-800/80 hover:border-emerald-500/40 transition-all duration-200 shadow-sm"
+              title={`${isFa ? cust.nameFa : cust.nameEn} - ${isFa ? cust.roleFa : cust.roleEn}`}
+            >
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white p-1 flex items-center justify-center overflow-hidden shrink-0 shadow-inner aspect-square">
                 <img
-                  src={brand.logo}
-                  alt={brand.alt}
-                  className="h-8 sm:h-10 w-auto object-contain brightness-90 contrast-125 group-hover:brightness-110 transition-all"
+                  src={cust.logo}
+                  alt={isFa ? cust.nameFa : cust.nameEn}
+                  width={32}
+                  height={32}
                   loading="lazy"
+                  decoding="async"
+                  style={{ aspectRatio: '1/1' }}
+                  className="max-w-full max-h-full object-contain filter group-hover:scale-110 transition-transform duration-200"
+                  referrerPolicy="no-referrer"
                 />
               </div>
-            ))}
-          </div>
-
+              <div className="text-start">
+                <span className="text-[11px] sm:text-xs font-semibold text-slate-300 group-hover:text-white transition-colors block leading-tight">
+                  {isFa ? cust.nameFa : cust.nameEn}
+                </span>
+                <span className="text-[9px] text-slate-400 group-hover:text-emerald-400 transition-colors block">
+                  {isFa ? cust.categoryFa : cust.categoryEn}
+                </span>
+              </div>
+            </div>
+          ))}
         </div>
+
       </div>
-    </section>
+    </div>
   );
 };

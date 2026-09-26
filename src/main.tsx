@@ -1,10 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
+import {StrictMode} from 'react';
+import {createRoot} from 'react-dom/client';
+import App from './App.tsx';
 import './index.css';
+import { registerServiceWorker } from './serviceWorkerRegistration';
+import { applyDeviceClassesToHtml } from './utils/deviceDetection';
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
+// Initialize device detection and apply GPU safe classes immediately
+applyDeviceClassesToHtml();
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
     <App />
-  </React.StrictMode>
+  </StrictMode>,
 );
+
+registerServiceWorker();
+

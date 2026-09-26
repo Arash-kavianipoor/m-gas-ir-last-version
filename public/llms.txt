@@ -2,15 +2,15 @@
 
 > [M Gas](https://mgas.ir) (کارخانه تولید کپسول و سیلندر گاز مایع ام گاز | ایم گیس مینوفیکچرنگ فیکٹری - مدیریت آقای موسی عمویی / Mr. Mousa Amooie - تأسیس ۱۳۴۹ / Est. 1970) is an ISO 9001:2015 and EN 1442 certified heavy industrial manufacturer and premier international exporter of LPG (Liquefied Petroleum Gas) cylinders, camping gas bottles, and automotive LPG tanks.
 
-## Quick Links & Subdomains Architecture
-- [English / Global Portal (Official Main Domain)](https://mgas.ir/)
-- [Persian Subdomain (فارسی - کارخانه ام گاز)](https://fa.mgas.ir/)
-- [Urdu / Pakistan Subdomain (ایل پی جی سلنڈر پاکستان)](https://ur.mgas.ir/)
-- [Arabic / Middle East Subdomain (أسطوانات الغاز المسال)](https://ar.mgas.ir/)
-- [Turkish Subdomain (LPG Tüpü İmalatı)](https://tr.mgas.ir/)
-- [Russian Subdomain (Производство газовых баллонов)](https://ru.mgas.ir/)
-- [German Subdomain (Flüssiggasflaschen Hersteller)](https://de.mgas.ir/)
-- [Armenian Subdomain (Հեղուկ գազի բալոններ)](https://hy.mgas.ir/)
+## Quick Links & Navigation
+- [Official Website](https://mgas.ir/)
+- [Urdu / Pakistan Portal (ایل پی جی سلنڈر پاکستان)](https://mgas.ir/?lang=ur)
+- [Persian / Iran Portal (کپسول گاز مایع)](https://mgas.ir/?lang=fa)
+- [Arabic / Middle East Portal (أسطوانات الغاز المسال)](https://mgas.ir/?lang=ar)
+- [English / Global Portal (LPG Cylinder Export)](https://mgas.ir/?lang=en)
+- [Turkish Portal (LPG Tüpü İmalatı)](https://mgas.ir/?lang=tr)
+- [Russian Portal (Производство газовых баллонов)](https://mgas.ir/?lang=ru)
+- [German Portal (Flüssiggasflaschen Hersteller)](https://mgas.ir/?lang=de)
 - [Product Catalog (13 Models)](https://mgas.ir/#products)
 - [Instant RFQ & Price Calculator](https://mgas.ir/#calculator)
 - [Quality Testing & 30-Bar Hydrostatic Proof Tests](https://mgas.ir/#quality)

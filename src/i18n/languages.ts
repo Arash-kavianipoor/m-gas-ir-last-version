@@ -1,17 +1,6 @@
 import { LanguageCode, LanguageInfo } from '../types';
 
 export const SUPPORTED_LANGUAGES: Record<LanguageCode, LanguageInfo> = {
-  en: {
-    code: 'en',
-    locale: 'en-US',
-    name: 'English',
-    nativeName: 'English',
-    flag: '🇬🇧',
-    dir: 'ltr',
-    countryName: 'International',
-    subdomain: null,
-    domain: 'mgas.ir',
-  },
   fa: {
     code: 'fa',
     locale: 'fa-IR',
@@ -20,8 +9,15 @@ export const SUPPORTED_LANGUAGES: Record<LanguageCode, LanguageInfo> = {
     flag: '🇮🇷',
     dir: 'rtl',
     countryName: 'ایران',
-    subdomain: 'fa',
-    domain: 'fa.mgas.ir',
+  },
+  en: {
+    code: 'en',
+    locale: 'en-US',
+    name: 'English',
+    nativeName: 'English',
+    flag: '🇬🇧',
+    dir: 'ltr',
+    countryName: 'International',
   },
   ar: {
     code: 'ar',
@@ -31,8 +27,6 @@ export const SUPPORTED_LANGUAGES: Record<LanguageCode, LanguageInfo> = {
     flag: '🇸🇦',
     dir: 'rtl',
     countryName: 'الشرق الأوسط',
-    subdomain: 'ar',
-    domain: 'ar.mgas.ir',
   },
   de: {
     code: 'de',
@@ -42,8 +36,6 @@ export const SUPPORTED_LANGUAGES: Record<LanguageCode, LanguageInfo> = {
     flag: '🇩🇪',
     dir: 'ltr',
     countryName: 'Deutschland',
-    subdomain: 'de',
-    domain: 'de.mgas.ir',
   },
   ur: {
     code: 'ur',
@@ -53,8 +45,6 @@ export const SUPPORTED_LANGUAGES: Record<LanguageCode, LanguageInfo> = {
     flag: '🇵🇰',
     dir: 'rtl',
     countryName: 'پاکستان',
-    subdomain: 'ur',
-    domain: 'ur.mgas.ir',
   },
   hy: {
     code: 'hy',
@@ -64,8 +54,6 @@ export const SUPPORTED_LANGUAGES: Record<LanguageCode, LanguageInfo> = {
     flag: '🇦🇲',
     dir: 'ltr',
     countryName: 'Հայաստան',
-    subdomain: 'hy',
-    domain: 'hy.mgas.ir',
   },
   tr: {
     code: 'tr',
@@ -75,8 +63,6 @@ export const SUPPORTED_LANGUAGES: Record<LanguageCode, LanguageInfo> = {
     flag: '🇹🇷',
     dir: 'ltr',
     countryName: 'Türkiye',
-    subdomain: 'tr',
-    domain: 'tr.mgas.ir',
   },
   ru: {
     code: 'ru',
@@ -86,13 +72,7 @@ export const SUPPORTED_LANGUAGES: Record<LanguageCode, LanguageInfo> = {
     flag: '🇷🇺',
     dir: 'ltr',
     countryName: 'Россия / СНГ',
-    subdomain: 'ru',
-    domain: 'ru.mgas.ir',
   },
 };
 
-/**
- * Main domain language is English (mgas.ir).
- * Subdomains are used for other languages (fa.mgas.ir, ar.mgas.ir, etc.).
- */
-export const DEFAULT_LANGUAGE: LanguageCode = 'en';
+export const DEFAULT_LANGUAGE: LanguageCode = 'fa';

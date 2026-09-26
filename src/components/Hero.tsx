@@ -18,6 +18,7 @@ import {
   X,
   Sparkles,
 } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { COMPANY_INFO } from '../data/company';
 import { HERO_BANNERS, HeroBannerSlide } from '../data/heroBanners';
@@ -160,22 +161,28 @@ export const Hero: React.FC<HeroProps> = ({ onOpenRfq, onExploreProducts }) => {
           
           {/* Banner Image Stage: 100% Clear & Unobstructed */}
           <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] md:aspect-[2.4/1] lg:aspect-[2.8/1] min-h-[220px] max-h-[460px] overflow-hidden bg-slate-950">
-            <div
-              key={currentSlide.id}
-              className="absolute inset-0 w-full h-full transition-opacity duration-500 ease-out"
-            >
-              <img
-                src={currentSlide.image}
-                alt={getLoc(currentSlide.title)}
-                width={1400}
-                height={500}
-                style={{ aspectRatio: '2.8/1' }}
-                className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-[1.02]"
-                loading="eager"
-                decoding="async"
-                referrerPolicy="no-referrer"
-              />
-            </div>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentSlide.id}
+                initial={{ opacity: 0, scale: 1.02 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.99 }}
+                transition={{ duration: 0.6, ease: 'easeOut' }}
+                className="absolute inset-0 w-full h-full"
+              >
+                <img
+                  src={currentSlide.image}
+                  alt={getLoc(currentSlide.title)}
+                  width={1400}
+                  height={500}
+                  style={{ aspectRatio: '2.8/1' }}
+                  className="w-full h-full object-cover object-center"
+                  loading="eager"
+                  decoding="async"
+                  referrerPolicy="no-referrer"
+                />
+              </motion.div>
+            </AnimatePresence>
 
             {/* Banner Fullscreen Zoom Button */}
             <button
@@ -187,85 +194,104 @@ export const Hero: React.FC<HeroProps> = ({ onOpenRfq, onExploreProducts }) => {
               <Maximize2 className="w-3.5 h-3.5 text-emerald-400" />
               <span className="hidden sm:inline">مشاهده تصویر بنر (HD)</span>
             </button>
+
+            {/* Slider Progress Bar */}
+            {isPlaying && (
+              <div className="absolute bottom-0 inset-x-0 h-1 bg-slate-900/80 z-20">
+                <motion.div
+                  key={`slide-prog-${currentSlideIndex}`}
+                  initial={{ width: '0%' }}
+                  animate={{ width: '100%' }}
+                  transition={{ duration: SLIDE_DURATION / 1000, ease: 'linear' }}
+                  className="h-full bg-gradient-to-r from-emerald-500 to-teal-400"
+                />
+              </div>
+            )}
           </div>
 
           {/* FULL-WIDTH CONTENT BOX BELOW THE IMAGE */}
           <div className="p-5 sm:p-7 md:p-8 bg-gradient-to-b from-slate-900/95 via-slate-950/90 to-[#071116] border-t border-emerald-500/20">
-            <div
-              key={`content-${currentSlide.id}`}
-              className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 transition-all duration-300"
-            >
-              {/* Left/Main Column: Headings & Details */}
-              <div className="space-y-3 max-w-3xl">
-                {/* Tagline pill */}
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-xs font-bold backdrop-blur-md">
-                  <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>{getLoc(currentSlide.tagline)}</span>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentSlide.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.35, ease: 'easeOut' }}
+                className="flex flex-col lg:flex-row lg:items-center justify-between gap-6"
+              >
+                {/* Left/Main Column: Headings & Details */}
+                <div className="space-y-3 max-w-3xl">
+                  {/* Tagline pill */}
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-xs font-bold backdrop-blur-md">
+                    <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>{getLoc(currentSlide.tagline)}</span>
+                  </div>
+
+                  {/* Main Headline */}
+                  <h1 className="text-lg sm:text-2xl md:text-3xl font-black text-white leading-tight tracking-tight">
+                    {getLoc(currentSlide.title)}
+                  </h1>
+
+                  {/* Highlight subtitle */}
+                  <p className="text-xs sm:text-sm md:text-base font-bold text-emerald-400 leading-snug">
+                    {getLoc(currentSlide.titleHighlight)}
+                  </p>
+
+                  {/* Short Description */}
+                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    {getLoc(currentSlide.description)}
+                  </p>
+
+                  {/* 3 Key Feature Chips */}
+                  <div className="flex flex-wrap items-center gap-2 pt-1">
+                    {getSlideFeatures(currentSlide).map((feat: string, fIdx: number) => (
+                      <span
+                        key={fIdx}
+                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-950 border border-emerald-500/30 text-xs text-slate-200 shadow-sm"
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                        {feat}
+                      </span>
+                    ))}
+                  </div>
                 </div>
 
-                {/* Main Headline */}
-                <h1 className="text-lg sm:text-2xl md:text-3xl font-black text-white leading-tight tracking-tight">
-                  {getLoc(currentSlide.title)}
-                </h1>
+                {/* Right Column: Call to Action Buttons */}
+                <div className="flex flex-col sm:flex-row lg:flex-col shrink-0 gap-2.5 min-w-[240px]">
+                  <a
+                    href={`https://wa.me/${COMPANY_INFO.contacts.internationalSalesManager.whatsapp.replace('+', '')}?text=Hello%20M%20Gas%20Factory%2C%20I%20would%20like%20to%20inquire%20about%20${encodeURIComponent(getLoc(currentSlide.title))}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-sm shadow-xl shadow-emerald-950/60 hover:shadow-emerald-800/80 transition-all transform hover:-translate-y-0.5"
+                  >
+                    <MessageCircle className="w-4 h-4 fill-white/20" />
+                    <span>{getLoc(currentSlide.primaryCtaText)}</span>
+                    {isRTL ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
+                  </a>
 
-                {/* Highlight subtitle */}
-                <p className="text-xs sm:text-sm md:text-base font-bold text-emerald-400 leading-snug">
-                  {getLoc(currentSlide.titleHighlight)}
-                </p>
-
-                {/* Short Description */}
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                  {getLoc(currentSlide.description)}
-                </p>
-
-                {/* 3 Key Feature Chips */}
-                <div className="flex flex-wrap items-center gap-2 pt-1">
-                  {getSlideFeatures(currentSlide).map((feat: string, fIdx: number) => (
-                    <span
-                      key={fIdx}
-                      className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-950 border border-emerald-500/30 text-xs text-slate-200 shadow-sm"
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      onClick={onOpenRfq}
+                      className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold text-xs transition-colors hover:border-emerald-500/50"
                     >
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                      {feat}
-                    </span>
-                  ))}
+                      <Calculator className="w-4 h-4 text-emerald-400" />
+                      <span>{t.heroCtaQuote}</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={onExploreProducts}
+                      className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-emerald-950/60 hover:bg-emerald-900/80 text-emerald-300 border border-emerald-700/40 text-xs font-medium transition-colors"
+                    >
+                      <Layers className="w-4 h-4 text-emerald-400" />
+                      <span>{t.heroCtaProducts}</span>
+                    </button>
+                  </div>
                 </div>
-              </div>
-
-              {/* Right Column: Call to Action Buttons */}
-              <div className="flex flex-col sm:flex-row lg:flex-col shrink-0 gap-2.5 min-w-[240px]">
-                <a
-                  href={`https://wa.me/${COMPANY_INFO.contacts.internationalSalesManager.whatsapp.replace('+', '')}?text=Hello%20M%20Gas%20Factory%2C%20I%20would%20like%20to%20inquire%20about%20${encodeURIComponent(getLoc(currentSlide.title))}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-sm shadow-xl shadow-emerald-950/60 hover:shadow-emerald-800/80 transition-all transform hover:-translate-y-0.5"
-                >
-                  <MessageCircle className="w-4 h-4 fill-white/20" />
-                  <span>{getLoc(currentSlide.primaryCtaText)}</span>
-                  {isRTL ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
-                </a>
-
-                <div className="grid grid-cols-2 gap-2">
-                  <button
-                    type="button"
-                    onClick={onOpenRfq}
-                    className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold text-xs transition-colors hover:border-emerald-500/50"
-                  >
-                    <Calculator className="w-4 h-4 text-emerald-400" />
-                    <span>{t.heroCtaQuote}</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={onExploreProducts}
-                    className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-emerald-950/60 hover:bg-emerald-900/80 text-emerald-300 border border-emerald-700/40 text-xs font-medium transition-colors"
-                  >
-                    <Layers className="w-4 h-4 text-emerald-400" />
-                    <span>{t.heroCtaProducts}</span>
-                  </button>
-                </div>
-              </div>
-            </div>
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
 
@@ -394,106 +420,111 @@ export const Hero: React.FC<HeroProps> = ({ onOpenRfq, onExploreProducts }) => {
       </div>
 
       {/* FULLSCREEN HIGH-RES MODAL FOR BANNER VIEWING */}
-      {isZoomOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 backdrop-blur-lg p-4 animate-fadeIn"
-          onClick={() => setIsZoomOpen(false)}
-        >
-          <div
-            className="relative max-w-6xl w-full max-h-[90vh] bg-slate-900 rounded-3xl border border-emerald-500/40 shadow-2xl overflow-hidden flex flex-col"
-            onClick={(e) => e.stopPropagation()}
+      <AnimatePresence>
+        {isZoomOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 backdrop-blur-lg p-4"
+            onClick={() => setIsZoomOpen(false)}
           >
-            {/* Modal Header */}
-            <div className="flex items-center justify-between p-4 sm:p-5 border-b border-slate-800 bg-slate-950/70">
-              <div className="flex items-center gap-3">
-                <span className="px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-400 text-xs font-mono font-bold border border-emerald-500/40">
-                  بنر 0{currentSlideIndex + 1}
-                </span>
-                <div>
-                  <h3 className="text-sm sm:text-base font-bold text-white">
-                    {getLoc(currentSlide.tagline)}
-                  </h3>
-                  <p className="text-xs text-slate-400">
-                    {getLoc(currentSlide.title)}
-                  </p>
+            <div
+              className="relative max-w-6xl w-full max-h-[90vh] bg-slate-900 rounded-3xl border border-emerald-500/40 shadow-2xl overflow-hidden flex flex-col"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header */}
+              <div className="flex items-center justify-between p-4 sm:p-5 border-b border-slate-800 bg-slate-950/70">
+                <div className="flex items-center gap-3">
+                  <span className="px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-400 text-xs font-mono font-bold border border-emerald-500/40">
+                    بنر 0{currentSlideIndex + 1}
+                  </span>
+                  <div>
+                    <h3 className="text-sm sm:text-base font-bold text-white">
+                      {getLoc(currentSlide.tagline)}
+                    </h3>
+                    <p className="text-xs text-slate-400">
+                      {getLoc(currentSlide.title)}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={isRTL ? handleNext : handlePrev}
+                    className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white transition-colors"
+                    title="بنر قبلی"
+                  >
+                    {isRTL ? <ChevronRight className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={isRTL ? handlePrev : handleNext}
+                    className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white transition-colors"
+                    title="بنر بعدی"
+                  >
+                    {isRTL ? <ChevronLeft className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setIsZoomOpen(false)}
+                    className="p-2 rounded-xl bg-red-950/60 hover:bg-red-900/80 text-red-300 border border-red-800/40 transition-colors"
+                    title="بستن"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={isRTL ? handleNext : handlePrev}
-                  className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white transition-colors"
-                  title="بنر قبلی"
-                >
-                  {isRTL ? <ChevronRight className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
-                </button>
-                <button
-                  type="button"
-                  onClick={isRTL ? handlePrev : handleNext}
-                  className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white transition-colors"
-                  title="بنر بعدی"
-                >
-                  {isRTL ? <ChevronLeft className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setIsZoomOpen(false)}
-                  className="p-2 rounded-xl bg-red-950/60 hover:bg-red-900/80 text-red-300 border border-red-800/40 transition-colors"
-                  title="بستن"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-
-            {/* Modal Image Box */}
-            <div className="relative flex-1 bg-black flex items-center justify-center p-2 sm:p-4 overflow-auto">
-              <img
-                src={currentSlide.image}
-                alt={getLoc(currentSlide.title)}
-                width={1400}
-                height={600}
-                loading="lazy"
-                decoding="async"
-                style={{ aspectRatio: '2.33/1' }}
-                className="max-w-full max-h-[70vh] object-contain rounded-xl shadow-2xl"
-                referrerPolicy="no-referrer"
-              />
-            </div>
-
-            {/* Modal Footer */}
-            <div className="p-3 sm:p-4 bg-slate-950 border-t border-slate-800 flex flex-wrap items-center justify-between gap-2">
-              <div className="flex items-center gap-2">
-                {HERO_BANNERS.map((b, bIdx) => (
-                  <button
-                    key={b.id}
-                    type="button"
-                    onClick={() => setCurrentSlideIndex(bIdx)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                      bIdx === currentSlideIndex
-                        ? 'bg-emerald-500 text-slate-950'
-                        : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-                    }`}
-                  >
-                    بنر 0{bIdx + 1}
-                  </button>
-                ))}
+              {/* Modal Image Box */}
+              <div className="relative flex-1 bg-black flex items-center justify-center p-2 sm:p-4 overflow-auto">
+                <img
+                  src={currentSlide.image}
+                  alt={getLoc(currentSlide.title)}
+                  width={1400}
+                  height={600}
+                  loading="lazy"
+                  decoding="async"
+                  style={{ aspectRatio: '2.33/1' }}
+                  className="max-w-full max-h-[70vh] object-contain rounded-xl shadow-2xl"
+                  referrerPolicy="no-referrer"
+                />
               </div>
 
-              <a
-                href={`https://wa.me/${COMPANY_INFO.contacts.internationalSalesManager.whatsapp.replace('+', '')}?text=Hello%20M%20Gas%20Factory%2C%20Inquiry%20regarding%20${encodeURIComponent(getLoc(currentSlide.title))}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow transition-colors"
-              >
-                <MessageCircle className="w-3.5 h-3.5" />
-                <span>استعلام در واتساپ</span>
-              </a>
+              {/* Modal Footer */}
+              <div className="p-3 sm:p-4 bg-slate-950 border-t border-slate-800 flex flex-wrap items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  {HERO_BANNERS.map((b, bIdx) => (
+                    <button
+                      key={b.id}
+                      type="button"
+                      onClick={() => setCurrentSlideIndex(bIdx)}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                        bIdx === currentSlideIndex
+                          ? 'bg-emerald-500 text-slate-950'
+                          : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                      }`}
+                    >
+                      بنر 0{bIdx + 1}
+                    </button>
+                  ))}
+                </div>
+
+                <a
+                  href={`https://wa.me/${COMPANY_INFO.contacts.internationalSalesManager.whatsapp.replace('+', '')}?text=Hello%20M%20Gas%20Factory%2C%20Inquiry%20regarding%20${encodeURIComponent(getLoc(currentSlide.title))}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow transition-colors"
+                >
+                  <MessageCircle className="w-3.5 h-3.5" />
+                  <span>استعلام در واتساپ</span>
+                </a>
+              </div>
             </div>
-          </div>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
