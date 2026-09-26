@@ -3,6 +3,11 @@ import { useLanguage } from '../i18n/LanguageContext';
 import { SEO_CONFIG } from './config';
 import { SUPPORTED_LANGUAGES } from '../i18n/languages';
 import {
+  getBaseUrlForLanguage,
+  getDomainForLanguage,
+  ROOT_URL,
+} from '../utils/subdomains';
+import {
   generateOrganizationSchema,
   generateLocalBusinessSchema,
   generateWebSiteSchema,
@@ -26,29 +31,27 @@ export const SeoHead: React.FC<SeoHeadProps> = ({ activeArticle }) => {
   useEffect(() => {
     if (typeof document === 'undefined') return;
 
-    const langConfig = SEO_CONFIG.languages[currentLanguage] || SEO_CONFIG.languages.fa;
-    const baseSiteUrl = SEO_CONFIG.siteUrl;
+    const langConfig = SEO_CONFIG.languages[currentLanguage] || SEO_CONFIG.languages.en;
+    const currentBaseUrl = getBaseUrlForLanguage(currentLanguage);
 
     const currentUrl = activeArticle
-      ? `${baseSiteUrl}/?lang=${currentLanguage}#article=${activeArticle.slug}`
-      : currentLanguage === 'fa'
-      ? `${baseSiteUrl}/`
-      : `${baseSiteUrl}/?lang=${currentLanguage}`;
+      ? `${currentBaseUrl}/#article=${activeArticle.slug}`
+      : `${currentBaseUrl}/`;
 
     const pageTitle = activeArticle
-      ? `${activeArticle.title[currentLanguage] || activeArticle.title.fa} | ${SEO_CONFIG.siteName}`
+      ? `${activeArticle.title[currentLanguage] || activeArticle.title.en || activeArticle.title.fa} | ${SEO_CONFIG.siteName}`
       : langConfig.title;
 
     const pageDescription = activeArticle
-      ? activeArticle.abstract[currentLanguage] || activeArticle.abstract.fa
+      ? activeArticle.abstract[currentLanguage] || activeArticle.abstract.en || activeArticle.abstract.fa
       : langConfig.description;
 
     const pageKeywords = activeArticle
-      ? (activeArticle.tags[currentLanguage] || activeArticle.tags.fa || []).join(', ')
+      ? (activeArticle.tags[currentLanguage] || activeArticle.tags.en || activeArticle.tags.fa || []).join(', ')
       : langConfig.keywords;
 
     const pageOgImage = activeArticle?.coverImage
-      ? `${baseSiteUrl}${activeArticle.coverImage}`
+      ? `${SEO_CONFIG.siteUrl}${activeArticle.coverImage}`
       : SEO_CONFIG.defaultImage;
 
     // 1. Title & Primary Meta
@@ -88,18 +91,19 @@ export const SeoHead: React.FC<SeoHeadProps> = ({ activeArticle }) => {
     setMetaTag('name', 'keywords', pageKeywords);
     setMetaTag('name', 'robots', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1');
     setMetaTag('name', 'author', 'M Gas Cylinder Manufacturing Co. (Mousa Amooie)');
-    setMetaTag('name', 'publisher', 'https://mgas.ir');
+    setMetaTag('name', 'publisher', currentBaseUrl);
 
-    // Canonical Link
+    // Canonical Link for this specific subdomain
     setLinkTag('canonical', currentUrl);
 
-    // Hreflang Multi-language Alternate Links with Regional Variants
+    // Hreflang Multi-language Alternate Links with Subdomains
     Object.keys(SUPPORTED_LANGUAGES).forEach((langKey) => {
       const code = langKey as LanguageCode;
       const info = SUPPORTED_LANGUAGES[code];
+      const targetBase = getBaseUrlForLanguage(code);
       const targetUrl = activeArticle
-        ? `${baseSiteUrl}/?lang=${code}#article=${activeArticle.slug}`
-        : `${baseSiteUrl}/?lang=${code}`;
+        ? `${targetBase}/#article=${activeArticle.slug}`
+        : `${targetBase}/`;
       
       // Generic language code (e.g., "ur", "fa", "en")
       setLinkTag('alternate', targetUrl, code);
@@ -109,10 +113,11 @@ export const SeoHead: React.FC<SeoHeadProps> = ({ activeArticle }) => {
         setLinkTag('alternate', targetUrl, info.locale);
       }
     });
-    // x-default hreflang pointing to canonical site origin
+
+    // x-default hreflang pointing to the root English domain (mgas.ir)
     setLinkTag(
       'alternate',
-      activeArticle ? `${baseSiteUrl}/#article=${activeArticle.slug}` : `${baseSiteUrl}/`,
+      activeArticle ? `${ROOT_URL}/#article=${activeArticle.slug}` : `${ROOT_URL}/`,
       'x-default'
     );
 
@@ -122,17 +127,28 @@ export const SeoHead: React.FC<SeoHeadProps> = ({ activeArticle }) => {
     setMetaTag('property', 'og:url', currentUrl);
     setMetaTag('property', 'og:type', activeArticle ? 'article' : 'website');
     setMetaTag('property', 'og:locale', langConfig.locale);
-    setMetaTag('property', 'og:site_name', SEO_CONFIG.siteName);
+    setMetaTag('property', 'og:site_name', `${SEO_CONFIG.siteName} (${getDomainForLanguage(currentLanguage)})`);
     setMetaTag('property', 'og:image', pageOgImage);
     setMetaTag('property', 'og:image:width', String(SEO_CONFIG.defaultOgImageWidth));
     setMetaTag('property', 'og:image:height', String(SEO_CONFIG.defaultOgImageHeight));
     setMetaTag('property', 'og:image:alt', pageTitle);
 
+    // og:locale:alternate for other languages
+    Object.keys(SUPPORTED_LANGUAGES).forEach((langKey) => {
+      const code = langKey as LanguageCode;
+      if (code !== currentLanguage) {
+        const otherCfg = SEO_CONFIG.languages[code];
+        if (otherCfg) {
+          setMetaTag('property', `og:locale:alternate:${code}`, otherCfg.locale);
+        }
+      }
+    });
+
     if (activeArticle) {
       setMetaTag('property', 'article:published_time', activeArticle.publishDate);
       setMetaTag('property', 'article:modified_time', activeArticle.modifyDate);
       setMetaTag('property', 'article:author', 'Mousa Amooie & M Gas Technical Directorate');
-      setMetaTag('property', 'article:section', activeArticle.category[currentLanguage] || activeArticle.category.fa);
+      setMetaTag('property', 'article:section', activeArticle.category[currentLanguage] || activeArticle.category.en || activeArticle.category.fa);
     }
 
     // Twitter Card Metadata
@@ -178,4 +194,3 @@ export const SeoHead: React.FC<SeoHeadProps> = ({ activeArticle }) => {
 
   return null;
 };
-

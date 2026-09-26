@@ -432,12 +432,19 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
                               : 'text-slate-200 hover:bg-slate-800 hover:text-white'
                           }`}
                         >
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-2 min-w-0">
                             <FlagIcon code={lang.code} size="sm" />
-                            <span className="text-xs font-medium">{lang.nativeName}</span>
+                            <div className="flex flex-col text-start leading-tight min-w-0">
+                              <span className="text-xs font-medium truncate">{lang.nativeName}</span>
+                              <span className={`text-[9px] font-mono truncate ${
+                                currentLanguage === lang.code ? 'text-slate-900 font-semibold' : 'text-emerald-400/80'
+                              }`}>
+                                {lang.domain}
+                              </span>
+                            </div>
                           </div>
                           <span
-                            className={`text-[10px] font-mono px-1 py-0.5 rounded ${
+                            className={`text-[10px] font-mono px-1 py-0.5 rounded shrink-0 ${
                               currentLanguage === lang.code
                                 ? 'bg-slate-950/20 text-slate-950'
                                 : 'bg-slate-800 text-slate-400'
@@ -584,14 +591,17 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
                     key={lang.code}
                     type="button"
                     onClick={() => handleLanguageSelect(lang.code)}
-                    className={`flex items-center gap-2.5 p-2 rounded-xl border text-xs text-start transition-all ${
+                    className={`flex items-center gap-2 p-2 rounded-xl border text-xs text-start transition-all ${
                       currentLanguage === lang.code
                         ? 'bg-emerald-950/80 border-emerald-500 text-emerald-300 font-bold shadow-sm'
                         : 'bg-slate-900/80 border-slate-800 text-slate-300 hover:bg-slate-800'
                     }`}
                   >
                     <FlagIcon code={lang.code} size="sm" />
-                    <span className="truncate">{lang.nativeName}</span>
+                    <div className="flex flex-col min-w-0">
+                      <span className="truncate leading-snug">{lang.nativeName}</span>
+                      <span className="text-[9px] font-mono text-emerald-400/80 truncate">{lang.domain}</span>
+                    </div>
                   </button>
                 ))}
               </div>
