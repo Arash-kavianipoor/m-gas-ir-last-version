@@ -14,7 +14,6 @@ import {
   Video as VideoIcon,
   Flame,
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { FACTORY_VIDEOS, FactoryVideo } from '../data/factoryVideos';
 
