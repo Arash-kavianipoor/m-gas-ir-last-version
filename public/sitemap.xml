@@ -4,230 +4,232 @@
         xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 
-  <!-- 1. Primary Canonical Root Page -->
+  <!-- ======================================================== -->
+  <!-- 1. English (Main Portal - Root Domain: mgas.ir)          -->
+  <!-- ======================================================== -->
   <url>
     <loc>https://mgas.ir/</loc>
     <lastmod>2026-03-01T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
-    <!-- Multilingual & Regional hreflangs -->
-    <xhtml:link rel="alternate" hreflang="ur" href="https://mgas.ir/?lang=ur" />
-    <xhtml:link rel="alternate" hreflang="ur-PK" href="https://mgas.ir/?lang=ur" />
-    <xhtml:link rel="alternate" hreflang="fa" href="https://mgas.ir/?lang=fa" />
-    <xhtml:link rel="alternate" hreflang="fa-IR" href="https://mgas.ir/?lang=fa" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/?lang=en" />
-    <xhtml:link rel="alternate" hreflang="en-US" href="https://mgas.ir/?lang=en" />
-    <xhtml:link rel="alternate" hreflang="en-GB" href="https://mgas.ir/?lang=en" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://mgas.ir/?lang=ar" />
-    <xhtml:link rel="alternate" hreflang="ar-SA" href="https://mgas.ir/?lang=ar" />
-    <xhtml:link rel="alternate" hreflang="ar-AE" href="https://mgas.ir/?lang=ar" />
-    <xhtml:link rel="alternate" hreflang="ar-IQ" href="https://mgas.ir/?lang=ar" />
-    <xhtml:link rel="alternate" hreflang="tr" href="https://mgas.ir/?lang=tr" />
-    <xhtml:link rel="alternate" hreflang="tr-TR" href="https://mgas.ir/?lang=tr" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://mgas.ir/?lang=ru" />
-    <xhtml:link rel="alternate" hreflang="ru-RU" href="https://mgas.ir/?lang=ru" />
-    <xhtml:link rel="alternate" hreflang="de" href="https://mgas.ir/?lang=de" />
-    <xhtml:link rel="alternate" hreflang="de-DE" href="https://mgas.ir/?lang=de" />
-    <xhtml:link rel="alternate" hreflang="hy" href="https://mgas.ir/?lang=hy" />
-    <xhtml:link rel="alternate" hreflang="hy-AM" href="https://mgas.ir/?lang=hy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="fa" href="https://fa.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="fa-IR" href="https://fa.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://ur.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ur-PK" href="https://ur.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://ar.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ar-SA" href="https://ar.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ar-AE" href="https://ar.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ar-IQ" href="https://ar.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://tr.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="tr-TR" href="https://tr.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ru.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ru-RU" href="https://ru.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://de.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://de.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="hy" href="https://hy.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="hy-AM" href="https://hy.mgas.ir/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/" />
 
     <!-- Video 1: Factory Tour by Managing Director Mousa Amooie -->
     <video:video>
       <video:thumbnail_loc>https://mgas.ir/videos/factory-tour-manager-thumb.webp</video:thumbnail_loc>
-      <video:title>بازدید مدیر کارخانه آقای موسی عمویی Mousa Amooie از خطوط تولید کپسول گاز ام گاز | Factory Inspection</video:title>
-      <video:description>نظارت مستقیم مدیریت ارشد کارخانه م گاز بر فرآیند قالب‌گیری، کنترل کیفیت لحظه‌ای خطوط مونتاژ و رعایت استانداردهای ملی و بین‌المللی کپسول‌های گاز مایع.</video:description>
+      <video:title>M Gas Factory Inspection by Managing Director Mr. Mousa Amooie</video:title>
+      <video:description>Executive inspection of deep hydraulic drawing presses, 30-bar pressure testing lines, and ISO 9001 compliance standards.</video:description>
       <video:content_loc>https://mgas.ir/videos/avc_XRecorder_Compressed_03032023_184301.mp4</video:content_loc>
       <video:publication_date>2023-03-03T18:43:00+03:30</video:publication_date>
       <video:family_friendly>yes</video:family_friendly>
-      <video:live>no</video:live>
+      <video:duration>90</video:duration>
     </video:video>
 
-    <!-- Video 2: Paint Curing & Baking Oven -->
+    <!-- Video 2: Robotic Production & Powder Coating -->
     <video:video>
-      <video:thumbnail_loc>https://mgas.ir/videos/production-line-2-thumb.webp</video:thumbnail_loc>
-      <video:title>کوره پخت رنگ الکترواستاتیک کپسول‌های گاز مایع با حرارت یکنواخت</video:title>
-      <video:description>عبور پیوسته کپسول‌های گاز مایع از کوره کانوایری پخت رنگ با دمای کنترل‌شده ۲۰۰ درجه سانتی‌گراد جهت ایجاد پوشش مقاوم و ضدخش.</video:description>
-      <video:content_loc>https://mgas.ir/videos/production-line-2.mp4</video:content_loc>
-      <video:publication_date>2023-03-03T18:43:00+03:30</video:publication_date>
+      <video:thumbnail_loc>https://mgas.ir/videos/factory-tour-welding-thumb.webp</video:thumbnail_loc>
+      <video:title>Robotic Welding & Automated Powder Coating Lines | M Gas</video:title>
+      <video:description>Automated submerged-arc welding line and oven curing powder coating ensuring 25+ years corrosion resistance.</video:description>
+      <video:content_loc>https://mgas.ir/videos/VID_20240905_121528_955.mp4</video:content_loc>
+      <video:publication_date>2024-09-05T12:15:28+03:30</video:publication_date>
       <video:family_friendly>yes</video:family_friendly>
-      <video:live>no</video:live>
+      <video:duration>45</video:duration>
     </video:video>
 
-    <!-- Video 3: Finished Goods Warehouse & Logistics -->
-    <video:video>
-      <video:thumbnail_loc>https://mgas.ir/videos/production-line-3-thumb.webp</video:thumbnail_loc>
-      <video:title>انبار مکانیزه محصولات نهایی، بسته‌بندی ایمن، بارگیری و تحویل سفارشات به مشتریان</video:title>
-      <video:description>نگهداری استاندارد کپسول‌های گاز تولیدی در انبار کارخانه، بازرسی پیش از بارگیری، بارچینی اصولی با لیفتراک و تحویل سریع به مشتریان داخلی و صادراتی.</video:description>
-      <video:content_loc>https://mgas.ir/videos/production-line-3.mp4</video:content_loc>
-      <video:publication_date>2023-03-03T18:43:00+03:30</video:publication_date>
-      <video:family_friendly>yes</video:family_friendly>
-      <video:live>no</video:live>
-    </video:video>
-
-    <!-- Video 4: Shot Blasting & 30-Bar Hydrostatic Testing -->
-    <video:video>
-      <video:thumbnail_loc>https://mgas.ir/videos/production-line-4-thumb.webp</video:thumbnail_loc>
-      <video:title>شات‌بلاست، رنگ پودری الکترواستاتیک و آزمون‌های هیدرواستاتیک ۳۰ بار</video:title>
-      <video:description>پاک‌سازی سطح فولاد با شات‌بلاست تمام‌اتوماتیک و آزمون فشار هیدرواستاتیک بر روی تک‌تک کپسول‌های گاز ام گاز.</video:description>
-      <video:content_loc>https://mgas.ir/videos/production-line-4.mp4</video:content_loc>
-      <video:publication_date>2023-03-03T18:43:00+03:30</video:publication_date>
-      <video:family_friendly>yes</video:family_friendly>
-      <video:live>no</video:live>
-    </video:video>
-  </url>
-
-  <!-- 2. Urdu (Pakistan) Targeted Endpoint -->
-  <url>
-    <loc>https://mgas.ir/?lang=ur</loc>
-    <lastmod>2026-03-01T00:00:00+00:00</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.95</priority>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://mgas.ir/?lang=ur" />
-    <xhtml:link rel="alternate" hreflang="ur-PK" href="https://mgas.ir/?lang=ur" />
-    <xhtml:link rel="alternate" hreflang="fa" href="https://mgas.ir/?lang=fa" />
-    <xhtml:link rel="alternate" hreflang="fa-IR" href="https://mgas.ir/?lang=fa" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/?lang=en" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://mgas.ir/?lang=ar" />
-    <xhtml:link rel="alternate" hreflang="tr" href="https://mgas.ir/?lang=tr" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://mgas.ir/?lang=ru" />
-    <xhtml:link rel="alternate" hreflang="de" href="https://mgas.ir/?lang=de" />
-    <xhtml:link rel="alternate" hreflang="hy" href="https://mgas.ir/?lang=hy" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/" />
+    <!-- Product Images -->
     <image:image>
-      <image:loc>https://mgas.ir/banners/DSC080212591.webp</image:loc>
-      <image:title>ایل پی جی سلنڈر مینوفیکچرنگ فیکٹری ایم گیس | M Gas Pakistan</image:title>
-      <image:caption>50 کلو، 11.8 کلو اور کیمپنگ ایل پی جی سلنڈرز بنانے والا سرکردہ کارخانہ</image:caption>
+      <image:loc>https://mgas.ir/products/lpg-50kg-industrial.png</image:loc>
+      <image:title>50kg Industrial LPG Cylinder (108 Liter Pressure Vessel)</image:title>
+      <image:caption>Commercial &amp; heavy industrial cylinder with 30-bar hydrostatic testing</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://mgas.ir/products/lpg-11kg-standard.png</image:loc>
+      <image:title>11.8kg Household LPG Gas Cylinder</image:title>
+      <image:caption>High-safety residential LPG bottle with automated collar welding</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://mgas.ir/products/lpg-2kg-picnic.png</image:loc>
+      <image:title>2kg Camping &amp; Picnic Gas Bottle</image:title>
+      <image:caption>Portable LPG camping cylinder with brass valve</image:caption>
     </image:image>
   </url>
 
-  <!-- 3. Persian (Iran / Afghanistan / Tajikistan) Endpoint -->
+  <!-- ======================================================== -->
+  <!-- 2. Persian Subdomain (fa.mgas.ir)                        -->
+  <!-- ======================================================== -->
   <url>
-    <loc>https://mgas.ir/?lang=fa</loc>
+    <loc>https://fa.mgas.ir/</loc>
+    <lastmod>2026-03-01T00:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://fa.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="fa-IR" href="https://fa.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://ur.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ur-PK" href="https://ur.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://ar.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://tr.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ru.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://de.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="hy" href="https://hy.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/" />
+
+    <video:video>
+      <video:thumbnail_loc>https://mgas.ir/videos/factory-tour-manager-thumb.webp</video:thumbnail_loc>
+      <video:title>بازدید مدیر کارخانه آقای موسی عمویی Mousa Amooie از خطوط تولید کپسول گاز ام گاز</video:title>
+      <video:description>نظارت مستقیم مدیریت ارشد کارخانه م گاز بر فرآیند کشش هیدرولیک، تست فشار ۳۰ بار و انطباق استاندارد ملی ایران.</video:description>
+      <video:content_loc>https://mgas.ir/videos/avc_XRecorder_Compressed_03032023_184301.mp4</video:content_loc>
+      <video:publication_date>2023-03-03T18:43:00+03:30</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:duration>90</video:duration>
+    </video:video>
+  </url>
+
+  <!-- ======================================================== -->
+  <!-- 3. Urdu / Pakistan Subdomain (ur.mgas.ir)                -->
+  <!-- ======================================================== -->
+  <url>
+    <loc>https://ur.mgas.ir/</loc>
     <lastmod>2026-03-01T00:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
-    <xhtml:link rel="alternate" hreflang="fa" href="https://mgas.ir/?lang=fa" />
-    <xhtml:link rel="alternate" hreflang="fa-IR" href="https://mgas.ir/?lang=fa" />
-    <xhtml:link rel="alternate" hreflang="ur" href="https://mgas.ir/?lang=ur" />
-    <xhtml:link rel="alternate" hreflang="ur-PK" href="https://mgas.ir/?lang=ur" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/?lang=en" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://mgas.ir/?lang=ar" />
-    <xhtml:link rel="alternate" hreflang="tr" href="https://mgas.ir/?lang=tr" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://mgas.ir/?lang=ru" />
-    <xhtml:link rel="alternate" hreflang="de" href="https://mgas.ir/?lang=de" />
-    <xhtml:link rel="alternate" hreflang="hy" href="https://mgas.ir/?lang=hy" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://ur.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ur-PK" href="https://ur.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="fa" href="https://fa.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://ar.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://tr.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ru.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://de.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="hy" href="https://hy.mgas.ir/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/" />
+
+    <image:image>
+      <image:loc>https://mgas.ir/products/lpg-50kg-industrial.png</image:loc>
+      <image:title>50kg Commercial LPG Cylinder Pakistan</image:title>
+      <image:caption>50 کلو کمرشل ایل پی جی سلنڈر برائے ہوٹل اور فیکٹری</image:caption>
+    </image:image>
   </url>
 
-  <!-- 4. English (International / North America / Europe / Asia) Endpoint -->
+  <!-- ======================================================== -->
+  <!-- 4. Arabic Subdomain (ar.mgas.ir)                         -->
+  <!-- ======================================================== -->
   <url>
-    <loc>https://mgas.ir/?lang=en</loc>
+    <loc>https://ar.mgas.ir/</loc>
     <lastmod>2026-03-01T00:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/?lang=en" />
-    <xhtml:link rel="alternate" hreflang="en-US" href="https://mgas.ir/?lang=en" />
-    <xhtml:link rel="alternate" hreflang="en-GB" href="https://mgas.ir/?lang=en" />
-    <xhtml:link rel="alternate" hreflang="ur" href="https://mgas.ir/?lang=ur" />
-    <xhtml:link rel="alternate" hreflang="fa" href="https://mgas.ir/?lang=fa" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://mgas.ir/?lang=ar" />
-    <xhtml:link rel="alternate" hreflang="tr" href="https://mgas.ir/?lang=tr" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://mgas.ir/?lang=ru" />
-    <xhtml:link rel="alternate" hreflang="de" href="https://mgas.ir/?lang=de" />
-    <xhtml:link rel="alternate" hreflang="hy" href="https://mgas.ir/?lang=hy" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://ar.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ar-SA" href="https://ar.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ar-AE" href="https://ar.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ar-IQ" href="https://ar.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="fa" href="https://fa.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://ur.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://tr.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ru.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://de.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="hy" href="https://hy.mgas.ir/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/" />
   </url>
 
-  <!-- 5. Arabic (Middle East & North Africa) Endpoint -->
+  <!-- ======================================================== -->
+  <!-- 5. Turkish Subdomain (tr.mgas.ir)                        -->
+  <!-- ======================================================== -->
   <url>
-    <loc>https://mgas.ir/?lang=ar</loc>
+    <loc>https://tr.mgas.ir/</loc>
     <lastmod>2026-03-01T00:00:00+00:00</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.95</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://mgas.ir/?lang=ar" />
-    <xhtml:link rel="alternate" hreflang="ar-SA" href="https://mgas.ir/?lang=ar" />
-    <xhtml:link rel="alternate" hreflang="ar-AE" href="https://mgas.ir/?lang=ar" />
-    <xhtml:link rel="alternate" hreflang="ar-IQ" href="https://mgas.ir/?lang=ar" />
-    <xhtml:link rel="alternate" hreflang="ur" href="https://mgas.ir/?lang=ur" />
-    <xhtml:link rel="alternate" hreflang="fa" href="https://mgas.ir/?lang=fa" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/?lang=en" />
-    <xhtml:link rel="alternate" hreflang="tr" href="https://mgas.ir/?lang=tr" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://mgas.ir/?lang=ru" />
-    <xhtml:link rel="alternate" hreflang="de" href="https://mgas.ir/?lang=de" />
-    <xhtml:link rel="alternate" hreflang="hy" href="https://mgas.ir/?lang=hy" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/" />
-  </url>
-
-  <!-- 6. Turkish (Turkey, Azerbaijan, Cyprus) Endpoint -->
-  <url>
-    <loc>https://mgas.ir/?lang=tr</loc>
-    <lastmod>2026-03-01T00:00:00+00:00</lastmod>
-    <changefreq>daily</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://mgas.ir/?lang=tr" />
-    <xhtml:link rel="alternate" hreflang="tr-TR" href="https://mgas.ir/?lang=tr" />
-    <xhtml:link rel="alternate" hreflang="ur" href="https://mgas.ir/?lang=ur" />
-    <xhtml:link rel="alternate" hreflang="fa" href="https://mgas.ir/?lang=fa" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/?lang=en" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://mgas.ir/?lang=ar" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://mgas.ir/?lang=ru" />
-    <xhtml:link rel="alternate" hreflang="de" href="https://mgas.ir/?lang=de" />
-    <xhtml:link rel="alternate" hreflang="hy" href="https://mgas.ir/?lang=hy" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://tr.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="tr-TR" href="https://tr.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="fa" href="https://fa.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://ur.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://ar.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ru.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://de.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="hy" href="https://hy.mgas.ir/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/" />
   </url>
 
-  <!-- 7. Russian (Russia, CIS countries) Endpoint -->
+  <!-- ======================================================== -->
+  <!-- 6. Russian Subdomain (ru.mgas.ir)                        -->
+  <!-- ======================================================== -->
   <url>
-    <loc>https://mgas.ir/?lang=ru</loc>
+    <loc>https://ru.mgas.ir/</loc>
     <lastmod>2026-03-01T00:00:00+00:00</lastmod>
-    <changefreq>daily</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://mgas.ir/?lang=ru" />
-    <xhtml:link rel="alternate" hreflang="ru-RU" href="https://mgas.ir/?lang=ru" />
-    <xhtml:link rel="alternate" hreflang="ur" href="https://mgas.ir/?lang=ur" />
-    <xhtml:link rel="alternate" hreflang="fa" href="https://mgas.ir/?lang=fa" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/?lang=en" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://mgas.ir/?lang=ar" />
-    <xhtml:link rel="alternate" hreflang="tr" href="https://mgas.ir/?lang=tr" />
-    <xhtml:link rel="alternate" hreflang="de" href="https://mgas.ir/?lang=de" />
-    <xhtml:link rel="alternate" hreflang="hy" href="https://mgas.ir/?lang=hy" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ru.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ru-RU" href="https://ru.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="fa" href="https://fa.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://ur.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://ar.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://tr.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://de.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="hy" href="https://hy.mgas.ir/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/" />
   </url>
 
-  <!-- 8. German (Germany, Austria, Switzerland) Endpoint -->
+  <!-- ======================================================== -->
+  <!-- 7. German Subdomain (de.mgas.ir)                         -->
+  <!-- ======================================================== -->
   <url>
-    <loc>https://mgas.ir/?lang=de</loc>
+    <loc>https://de.mgas.ir/</loc>
     <lastmod>2026-03-01T00:00:00+00:00</lastmod>
-    <changefreq>daily</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://mgas.ir/?lang=de" />
-    <xhtml:link rel="alternate" hreflang="de-DE" href="https://mgas.ir/?lang=de" />
-    <xhtml:link rel="alternate" hreflang="ur" href="https://mgas.ir/?lang=ur" />
-    <xhtml:link rel="alternate" hreflang="fa" href="https://mgas.ir/?lang=fa" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/?lang=en" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://mgas.ir/?lang=ar" />
-    <xhtml:link rel="alternate" hreflang="tr" href="https://mgas.ir/?lang=tr" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://mgas.ir/?lang=ru" />
-    <xhtml:link rel="alternate" hreflang="hy" href="https://mgas.ir/?lang=hy" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://de.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="de-DE" href="https://de.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="fa" href="https://fa.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://ur.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://ar.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://tr.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ru.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="hy" href="https://hy.mgas.ir/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/" />
   </url>
 
-  <!-- 9. Armenian (Armenia, Caucasus) Endpoint -->
+  <!-- ======================================================== -->
+  <!-- 8. Armenian Subdomain (hy.mgas.ir)                       -->
+  <!-- ======================================================== -->
   <url>
-    <loc>https://mgas.ir/?lang=hy</loc>
+    <loc>https://hy.mgas.ir/</loc>
     <lastmod>2026-03-01T00:00:00+00:00</lastmod>
-    <changefreq>daily</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="hy" href="https://mgas.ir/?lang=hy" />
-    <xhtml:link rel="alternate" hreflang="hy-AM" href="https://mgas.ir/?lang=hy" />
-    <xhtml:link rel="alternate" hreflang="ur" href="https://mgas.ir/?lang=ur" />
-    <xhtml:link rel="alternate" hreflang="fa" href="https://mgas.ir/?lang=fa" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/?lang=en" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://mgas.ir/?lang=ar" />
-    <xhtml:link rel="alternate" hreflang="tr" href="https://mgas.ir/?lang=tr" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://mgas.ir/?lang=ru" />
-    <xhtml:link rel="alternate" hreflang="de" href="https://mgas.ir/?lang=de" />
+    <xhtml:link rel="alternate" hreflang="hy" href="https://hy.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="hy-AM" href="https://hy.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="fa" href="https://fa.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://ur.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://ar.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://tr.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ru.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://de.mgas.ir/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/" />
   </url>
 

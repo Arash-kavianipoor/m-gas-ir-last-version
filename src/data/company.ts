@@ -33,8 +33,8 @@ export const COMPANY_INFO = {
       persianName: 'آرش کاویانی‌پور',
       roleEn: 'International Sales & Export Representative',
       roleFa: 'نماینده فروش و امور بین‌الملل (خارج از ایران)',
-      whatsapp: '+447833783825',
-      whatsappDisplay: '+44 7833 783825',
+      whatsapp: '+989128634908',
+      whatsappDisplay: '+989128634908',
     },
     factoryCentral: {
       phone: '+982636606842',
@@ -92,7 +92,7 @@ export const SEO_CONFIG: SeoConfig = {
     url: 'https://mgas.ir',
     logo: 'https://mgas.ir/logo.png',
     telephoneDomestic: '+982636606842',
-    telephoneInternational: '+447833783825',
+    telephoneInternational: '+989128634908',
     emailInfo: 'Info@mgas.ir',
     emailSales: 'Seller@mgas.ir',
     address: {
