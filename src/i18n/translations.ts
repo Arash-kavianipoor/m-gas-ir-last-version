@@ -199,6 +199,12 @@ export interface TranslationDictionary {
   backToArticles: string;
   relatedArticles: string;
   articleEngineeringBadge: string;
+
+  // Core SEO Capabilities
+  seoMetaLpgManufacturerInIran: string;
+  seoMetaDomesticIndustrialCylinders: string;
+  seoMetaAutoLpgTanks: string;
+  seoMetaCombinedSummary: string;
 }
 
 export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
@@ -389,6 +395,12 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     backToArticles: 'مشاهده همه مقالات',
     relatedArticles: 'سایر مقالات تخصصی',
     articleEngineeringBadge: 'مقاله پژوهشی و مهندسی مرجع',
+
+    // Core SEO Capabilities
+    seoMetaLpgManufacturerInIran: 'تولید کننده بزرگ سیلندر/کپسول گاز مایع در ایران',
+    seoMetaDomesticIndustrialCylinders: 'تولید کننده انواع سیلندرهای گاز خانگی و صنعتی',
+    seoMetaAutoLpgTanks: 'تولید کننده مخازن گاز مایع انواع خودرو',
+    seoMetaCombinedSummary: 'تولید کننده بزرگ سیلندر/کپسول گاز مایع در ایران | تولید انواع سیلندرهای خانگی و صنعتی و مخازن گاز خودرو با استانداردهای ملی و ISO 9001',
   },
 
   // ================= English (en) =================
@@ -578,6 +590,12 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     backToArticles: 'View All Articles',
     relatedArticles: 'Related Technical Articles',
     articleEngineeringBadge: 'Peer-Reviewed Technical Analysis',
+
+    // Core SEO Capabilities
+    seoMetaLpgManufacturerInIran: 'Major Manufacturer of LPG Cylinders & Gas Bottles in Iran',
+    seoMetaDomesticIndustrialCylinders: 'Manufacturer of All Types of Domestic and Industrial Gas Cylinders',
+    seoMetaAutoLpgTanks: 'Manufacturer of Automotive LPG Tanks and Gas Cylinders for All Vehicle Types',
+    seoMetaCombinedSummary: 'Major LPG cylinder manufacturer in Iran, producing all types of domestic & industrial gas cylinders and automotive LPG tanks with ISO 9001 certification.',
   },
 
   // ================= Arabic (ar) =================
@@ -767,6 +785,12 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     backToArticles: 'عرض كافة المقالات',
     relatedArticles: 'مقالات هندسية ذات صلة',
     articleEngineeringBadge: 'بحث هندسي تنظيمي معتمد',
+
+    // Core SEO Capabilities
+    seoMetaLpgManufacturerInIran: 'أكبر مصنّع لأسطوانات وخزانات الغاز المسال (LPG) في إيران',
+    seoMetaDomesticIndustrialCylinders: 'مصنّع لجميع أنواع أسطوانات الغاز المنزلية والصناعية',
+    seoMetaAutoLpgTanks: 'مصنّع خزانات الغاز المسال (LPG) لمختلف أنواع السيارات',
+    seoMetaCombinedSummary: 'أكبر مصنّع لأسطوانات وخزانات الغاز المسال في إيران، تصنيع كافة الأسطوانات المنزلية والصناعية وخزانات سيارات الغاز وفق معايير ISO 9001.',
   },
 
   // ================= German (de) =================
@@ -956,6 +980,12 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     backToArticles: 'Alle Artikel anzeigen',
     relatedArticles: 'Ähnliche Fachartikel',
     articleEngineeringBadge: 'Wissenschaftlich fundierte Analyse',
+
+    // Core SEO Capabilities
+    seoMetaLpgManufacturerInIran: 'Führender Hersteller von Flüssiggasflaschen (LPG) & Gaszylindern im Iran',
+    seoMetaDomesticIndustrialCylinders: 'Hersteller aller Arten von Haushalts- und industriellen Gasflaschen',
+    seoMetaAutoLpgTanks: 'Hersteller von Auto-LPG-Tanks und Autogasbehältern für alle Fahrzeugtypen',
+    seoMetaCombinedSummary: 'Führender Hersteller von Flüssiggasflaschen im Iran: Produktion aller Arten von Haushalts- und Industrie-Gasflaschen sowie Auto-LPG-Tanks nach ISO 9001.',
   },
 
   // ================= Urdu (ur) =================
@@ -1145,6 +1175,12 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     backToArticles: 'تمام مضامین دیکھیں',
     relatedArticles: 'دیگر متعلقہ مضامین',
     articleEngineeringBadge: 'مستند تکنیکی تجزیہ',
+
+    // Core SEO Capabilities
+    seoMetaLpgManufacturerInIran: 'ایران میں ایل پی جی گیس سلنڈرز اور کپسولز کا سب سے بڑا مینوفیکچرر',
+    seoMetaDomesticIndustrialCylinders: 'تمام اقسام کے گھریلو اور صنعتی گیس سلنڈرز کا مینوفیکچرر',
+    seoMetaAutoLpgTanks: 'ہر قسم کی گاڑیوں کے لیے آٹو ایل پی جی مائع گیس ٹینکوں کا مینوفیکچرر',
+    seoMetaCombinedSummary: 'ایران میں ایل پی جی سلنڈرز کا بڑا مینوفیکچرر، تمام اقسام کے گھریلو، صنعتی اور آٹو گاڑیوں کے گیس ٹینکوں کا تصدیق شدہ پروڈیوسر اور ایکسپورٹر۔',
   },
 
   // ================= Armenian (hy) =================
@@ -1334,6 +1370,12 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     backToArticles: 'Դիտել բոլոր հոդվածները',
     relatedArticles: 'Հարակից հոդվածներ',
     articleEngineeringBadge: 'Տեխնիկական վերլուծություն',
+
+    // Core SEO Capabilities
+    seoMetaLpgManufacturerInIran: 'Իրանում հեղուկ գազի (LPG) գազաբալոնների խոշորագույն արտադրող',
+    seoMetaDomesticIndustrialCylinders: 'Կենցաղային և արդյունաբերական բոլոր տեսակի գազաբալոնների արտադրող',
+    seoMetaAutoLpgTanks: 'Տարբեր տեսակի ավտոմեքենաների համար ավտոգազի (Auto LPG) բաքերի արտադրող',
+    seoMetaCombinedSummary: 'Իրանում հեղուկ գազի (LPG) բալոնների խոշորագույն արտադրող. կենցաղային և արդյունաբերական գազաբալոններ և ավտոմեքենաների ավտոգազի բաքեր ISO 9001 ստանդարտով:',
   },
 
   // ================= Turkish (tr) =================
@@ -1523,6 +1565,12 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     backToArticles: 'Tüm Makaleleri Gör',
     relatedArticles: 'İlgili Teknik Makaleler',
     articleEngineeringBadge: 'Hakemli Teknik Analiz',
+
+    // Core SEO Capabilities
+    seoMetaLpgManufacturerInIran: "İran'ın Büyük LPG Tüpü ve Sıvılaştırılmış Gaz Silindiri Üreticisi",
+    seoMetaDomesticIndustrialCylinders: 'Evsel ve Endüstriyel Her Çeşit Gaz Silindiri ve Tüpü Üreticisi',
+    seoMetaAutoLpgTanks: 'Her Türlü Araç İçin Otogaz (Auto LPG) Tankları ve Tüpleri Üreticisi',
+    seoMetaCombinedSummary: "İran'ın büyük LPG tüpü üreticisi: evsel ve endüstriyel her çeşit gaz tüpü ile araç otogaz tanklarının ISO 9001 ve EN 1442 standartlarında imalatı.",
   },
 
   // ================= Russian (ru) =================
@@ -1712,5 +1760,11 @@ export const TRANSLATIONS: Record<LanguageCode, TranslationDictionary> = {
     backToArticles: 'Все статьи',
     relatedArticles: 'Связанные технические статьи',
     articleEngineeringBadge: 'Научно-технический анализ',
+
+    // Core SEO Capabilities
+    seoMetaLpgManufacturerInIran: 'Крупнейший производитель баллонов для сжиженного газа (LPG) в Иране',
+    seoMetaDomesticIndustrialCylinders: 'Производитель всех видов бытовых и промышленных газовых баллонов',
+    seoMetaAutoLpgTanks: 'Производитель автомобильных газовых баллонов и емкостей СНГ (Auto LPG) для всех типов авто',
+    seoMetaCombinedSummary: 'Крупнейший завод баллонов LPG в Иране: производство полного спектра бытовых, промышленных газовых баллонов и автомобильных емкостей СУГ по ISO 9001.',
   },
 };

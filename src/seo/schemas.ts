@@ -1,5 +1,5 @@
 import { LanguageCode } from '../types';
-import { SEO_CONFIG } from './config';
+import { SEO_CONFIG, TARGET_SEO_PHRASES } from './config';
 import { COMPANY_INFO } from '../data/company';
 import { PRODUCTS } from '../data/products';
 import { TECHNICAL_ARTICLES, Article } from '../data/articles';
@@ -8,13 +8,20 @@ import { getBaseUrlForLanguage, getDomainForLanguage } from '../utils/subdomains
 
 export function generateOrganizationSchema(lang: LanguageCode = 'en') {
   const baseUrl = getBaseUrlForLanguage(lang);
+  const phrases = TARGET_SEO_PHRASES[lang] || TARGET_SEO_PHRASES.en;
+
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     '@id': `${baseUrl}/#organization`,
     name: SEO_CONFIG.organization.name,
     legalName: SEO_CONFIG.organization.legalName,
-    alternateName: SEO_CONFIG.organization.alternateName,
+    alternateName: [
+      ...SEO_CONFIG.organization.alternateName,
+      phrases.cylinderManufacturer,
+    ],
+    slogan: phrases.cylinderManufacturer,
+    description: phrases.fullDescription,
     url: baseUrl,
     logo: {
       '@type': 'ImageObject',
@@ -43,16 +50,45 @@ export function generateOrganizationSchema(lang: LanguageCode = 'en') {
       'https://www.linkedin.com/company/mgas',
       'https://www.instagram.com/mgas_cylinders',
     ],
+    knowsAbout: [
+      phrases.cylinderManufacturer,
+      phrases.domesticIndustrial,
+      phrases.autoLpgTanks,
+      ...SEO_CONFIG.organization.knowsAbout,
+    ],
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: phrases.cylinderManufacturer,
+      itemListElement: [
+        {
+          '@type': 'OfferCatalog',
+          name: phrases.cylinderManufacturer,
+          description: phrases.fullDescription,
+        },
+        {
+          '@type': 'OfferCatalog',
+          name: phrases.domesticIndustrial,
+        },
+        {
+          '@type': 'OfferCatalog',
+          name: phrases.autoLpgTanks,
+        },
+      ],
+    },
   };
 }
 
 export function generateLocalBusinessSchema(lang: LanguageCode) {
   const baseUrl = getBaseUrlForLanguage(lang);
+  const phrases = TARGET_SEO_PHRASES[lang] || TARGET_SEO_PHRASES.en;
+
   return {
     '@context': 'https://schema.org',
     '@type': 'ManufacturingBusiness',
     '@id': `${baseUrl}/#localbusiness`,
     name: SEO_CONFIG.organization.name,
+    description: phrases.fullDescription,
+    slogan: phrases.cylinderManufacturer,
     image: `${SEO_CONFIG.siteUrl}/banners/factory_hero.jpg`,
     telephone: COMPANY_INFO.contacts.factoryCentral.phone,
     email: COMPANY_INFO.emails.sales,
@@ -78,6 +114,47 @@ export function generateLocalBusinessSchema(lang: LanguageCode) {
       },
     ],
     priceRange: '$$',
+    knowsAbout: [
+      phrases.cylinderManufacturer,
+      phrases.domesticIndustrial,
+      phrases.autoLpgTanks,
+    ],
+  };
+}
+
+export function generateCoreCompetenciesSchema(lang: LanguageCode) {
+  const baseUrl = getBaseUrlForLanguage(lang);
+  const phrases = TARGET_SEO_PHRASES[lang] || TARGET_SEO_PHRASES.en;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    '@id': `${baseUrl}/#core-competencies`,
+    name: phrases.cylinderManufacturer,
+    description: phrases.fullDescription,
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: phrases.cylinderManufacturer,
+        description: 'بزرگترین کارخانه و تولیدکننده کپسول و سیلندرهای گاز مایع در ایران با آزمون فشار ۳۰ بار هیدرواستاتیک',
+        url: `${baseUrl}/#products`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: phrases.domesticIndustrial,
+        description: 'طیف کامل سیلندرهای خانگی و صنعتی از ۰.۵ لیتری تا ۶۰ لیتری و ۵۰ کیلویی',
+        url: `${baseUrl}/#products`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: phrases.autoLpgTanks,
+        description: 'تولید مخازن گازسوز استاندارد خودرو و اتوگاز با رعایت تمامی استانداردهای ایمنی ملی و جهانی',
+        url: `${baseUrl}/#products`,
+      },
+    ],
   };
 }
 

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
-import { SEO_CONFIG } from './config';
+import { SEO_CONFIG, TARGET_SEO_PHRASES } from './config';
 import { SUPPORTED_LANGUAGES } from '../i18n/languages';
 import {
   getBaseUrlForLanguage,
@@ -17,6 +17,7 @@ import {
   generateFaqSchema,
   generateArticleSchema,
   generateAllArticlesSchema,
+  generateCoreCompetenciesSchema,
 } from './schemas';
 import { LanguageCode } from '../types';
 import { Article } from '../data/articles';
@@ -32,6 +33,7 @@ export const SeoHead: React.FC<SeoHeadProps> = ({ activeArticle }) => {
     if (typeof document === 'undefined') return;
 
     const langConfig = SEO_CONFIG.languages[currentLanguage] || SEO_CONFIG.languages.en;
+    const targetPhrases = TARGET_SEO_PHRASES[currentLanguage] || TARGET_SEO_PHRASES.en;
     const currentBaseUrl = getBaseUrlForLanguage(currentLanguage);
 
     const currentUrl = activeArticle
@@ -92,6 +94,15 @@ export const SeoHead: React.FC<SeoHeadProps> = ({ activeArticle }) => {
     setMetaTag('name', 'robots', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1');
     setMetaTag('name', 'author', 'M Gas Cylinder Manufacturing Co. (Mousa Amooie)');
     setMetaTag('name', 'publisher', currentBaseUrl);
+
+    // Topical & Keyword Hierarchy Metadata for Enhanced Search Ranking
+    setMetaTag('name', 'subject', `${targetPhrases.cylinderManufacturer} | ${targetPhrases.domesticIndustrial} | ${targetPhrases.autoLpgTanks}`);
+    setMetaTag('name', 'topic', targetPhrases.cylinderManufacturer);
+    setMetaTag('name', 'abstract', targetPhrases.fullDescription);
+    setMetaTag('name', 'classification', 'Industrial LPG & Gas Cylinder Manufacturing, Pressure Vessels, Automotive LPG Tanks');
+    setMetaTag('name', 'target:specialty:1', targetPhrases.cylinderManufacturer);
+    setMetaTag('name', 'target:specialty:2', targetPhrases.domesticIndustrial);
+    setMetaTag('name', 'target:specialty:3', targetPhrases.autoLpgTanks);
 
     // Canonical Link for this specific subdomain
     setLinkTag('canonical', currentUrl);
@@ -164,9 +175,10 @@ export const SeoHead: React.FC<SeoHeadProps> = ({ activeArticle }) => {
 
     // Structured Data (JSON-LD) Injections
     const structuredDataScripts = [
-      { id: 'schema-org', data: generateOrganizationSchema() },
+      { id: 'schema-org', data: generateOrganizationSchema(currentLanguage) },
       { id: 'schema-localbusiness', data: generateLocalBusinessSchema(currentLanguage) },
       { id: 'schema-website', data: generateWebSiteSchema(currentLanguage) },
+      { id: 'schema-core-competencies', data: generateCoreCompetenciesSchema(currentLanguage) },
       { id: 'schema-breadcrumbs', data: generateBreadcrumbSchema(currentLanguage, activeArticle || undefined) },
       { id: 'schema-videos', data: generateVideosSchema(currentLanguage) },
       { id: 'schema-products', data: generateProductsSchema(currentLanguage) },

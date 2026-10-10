@@ -17,6 +17,8 @@ import {
   Maximize2,
   X,
   Sparkles,
+  Car,
+  Wrench,
 } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { COMPANY_INFO } from '../data/company';
@@ -286,9 +288,63 @@ export const Hero: React.FC<HeroProps> = ({ onOpenRfq, onExploreProducts }) => {
           </div>
         </div>
 
+        {/* Core Manufacturing Capabilities / SEO Strategic Pillars */}
+        <section
+          aria-label="Core Manufacturing Capabilities"
+          className="mt-6 sm:mt-8 p-3.5 sm:p-5 rounded-2xl bg-gradient-to-r from-emerald-950/70 via-slate-900/90 to-teal-950/70 border border-emerald-500/40 backdrop-blur-md shadow-xl"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
+            
+            {/* Pillar 1: تولید کننده بزرگ سیلندر/کپسول گاز مایع در ایران */}
+            <article className="flex items-start gap-3 p-3.5 rounded-xl bg-slate-950/80 border border-emerald-500/20 hover:border-emerald-400/50 transition-all group">
+              <div className="shrink-0 w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
+                <Factory className="w-5 h-5" />
+              </div>
+              <div className="space-y-0.5 min-w-0">
+                <span className="text-[10px] uppercase font-bold tracking-wider text-emerald-400/80 block">
+                  Pillar 01 • استانداردهای کشوری و جهانی
+                </span>
+                <h2 className="text-xs sm:text-sm font-bold text-white group-hover:text-emerald-300 transition-colors leading-snug">
+                  {t.seoMetaLpgManufacturerInIran}
+                </h2>
+              </div>
+            </article>
+
+            {/* Pillar 2: تولید کننده انواع سیلندرهای گاز خانگی و صنعتی */}
+            <article className="flex items-start gap-3 p-3.5 rounded-xl bg-slate-950/80 border border-teal-500/20 hover:border-teal-400/50 transition-all group">
+              <div className="shrink-0 w-10 h-10 rounded-xl bg-teal-500/15 border border-teal-500/30 flex items-center justify-center text-teal-400 group-hover:scale-105 transition-transform">
+                <Wrench className="w-5 h-5" />
+              </div>
+              <div className="space-y-0.5 min-w-0">
+                <span className="text-[10px] uppercase font-bold tracking-wider text-teal-400/80 block">
+                  Pillar 02 • تنوع ابعاد ۰.۵ لیتری تا ۵۰ کیلویی
+                </span>
+                <h2 className="text-xs sm:text-sm font-bold text-white group-hover:text-teal-300 transition-colors leading-snug">
+                  {t.seoMetaDomesticIndustrialCylinders}
+                </h2>
+              </div>
+            </article>
+
+            {/* Pillar 3: تولید کننده مخازن گاز مایع انواع خودرو */}
+            <article className="flex items-start gap-3 p-3.5 rounded-xl bg-slate-950/80 border border-cyan-500/20 hover:border-cyan-400/50 transition-all group">
+              <div className="shrink-0 w-10 h-10 rounded-xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-400 group-hover:scale-105 transition-transform">
+                <Car className="w-5 h-5" />
+              </div>
+              <div className="space-y-0.5 min-w-0">
+                <span className="text-[10px] uppercase font-bold tracking-wider text-cyan-400/80 block">
+                  Pillar 03 • اتوگاز خودرویی استاندارد
+                </span>
+                <h2 className="text-xs sm:text-sm font-bold text-white group-hover:text-cyan-300 transition-colors leading-snug">
+                  {t.seoMetaAutoLpgTanks}
+                </h2>
+              </div>
+            </article>
+
+          </div>
+        </section>
 
         {/* 4 Standard Stats Cards */}
-        <div className="mt-8 sm:mt-10 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div className="mt-6 sm:mt-8 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           
           <div className="p-3 sm:p-4 rounded-2xl bg-slate-900/60 border border-emerald-500/20 backdrop-blur-md shadow-md flex flex-col items-center text-center space-y-1 group hover:border-emerald-500/40 transition-colors">
             <div className="w-8 h-8 rounded-xl bg-emerald-950/80 border border-emerald-700/40 flex items-center justify-center mb-0.5 text-emerald-400">
