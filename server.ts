@@ -13,12 +13,19 @@ async function startServer() {
 
   app.use(express.json());
 
-  // Security and Caching Middleware
+  // Security, CORS, and Caching Middleware
   app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, HEAD, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Range, Authorization');
     res.setHeader('X-Content-Type-Options', 'nosniff');
     res.setHeader('X-Frame-Options', 'SAMEORIGIN');
     res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
     res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+
+    if (req.method === 'OPTIONS') {
+      return res.status(204).end();
+    }
 
     // 1. Redirect HTTP to HTTPS in production behind reverse proxies
     const proto = req.headers['x-forwarded-proto'];
@@ -28,8 +35,8 @@ async function startServer() {
       return res.redirect(301, `https://${host}${req.originalUrl}`);
     }
 
-    // 2. Redirect www.mgas.ir to mgas.ir
-    if (host.startsWith('www.mgas.ir')) {
+    // 2. Redirect www.mgas.ir or www.*.mgas.ir to non-www equivalent
+    if (host.startsWith('www.') && host.includes('mgas.ir')) {
       const nonWwwHost = host.replace(/^www\./, '');
       return res.redirect(301, `https://${nonWwwHost}${req.originalUrl}`);
     }

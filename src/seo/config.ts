@@ -162,7 +162,7 @@ export const SEO_CONFIG = {
       name: 'English',
       subdomain: 'en',
       domain: 'en.mgas.ir',
-      subdomainUrl: 'https://mgas.ir/?lang=en',
+      subdomainUrl: 'https://en.mgas.ir',
       title: 'M Gas | LPG Cylinder Manufacturer in Iran | Domestic, Industrial & Auto Tanks',
       description: 'Official M Gas catalog and technical specifications for LPG cylinders, industrial pressure vessels, and automotive autogas tanks. Contact us for bulk orders and export inquiries.',
       keywords: '',

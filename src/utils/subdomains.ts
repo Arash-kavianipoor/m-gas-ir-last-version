@@ -34,28 +34,29 @@ export function getBaseUrlForLanguage(lang: LanguageCode): string {
 }
 
 /**
- * Parses language code from hostname (e.g., 'mgas.ir' -> 'fa', 'en.mgas.ir' -> 'en')
+ * Parses language code from hostname (e.g., 'mgas.ir' -> 'fa', 'de.mgas.ir' -> 'de')
  */
 export function getLanguageFromHostname(hostname: string): LanguageCode | null {
   if (!hostname) return null;
 
-  const cleanHost = hostname.toLowerCase().split(':')[0]; // Remove port if present
+  const cleanHost = hostname.toLowerCase().split(':')[0].trim(); // Remove port if present
 
   // Direct match with main domain: returns Persian (primary language)
   if (cleanHost === ROOT_DOMAIN || cleanHost === `www.${ROOT_DOMAIN}`) {
     return 'fa';
   }
 
-  // Local development / preview
-  if (cleanHost === 'localhost' || cleanHost.includes('127.0.0.1') || cleanHost.includes('run.app')) {
+  // Local development / preview without explicit subdomains
+  if (cleanHost === 'localhost' || cleanHost === '127.0.0.1' || cleanHost.includes('run.app')) {
     return null; // Will defer to query parameter or stored preference, falling back to 'fa'
   }
 
-  // Check language subdomains like en.mgas.ir or ar.mgas.ir
+  // Check language subdomains like de.mgas.ir, en.mgas.ir, ar.mgas.ir, etc.
   const parts = cleanHost.split('.');
   if (parts.length >= 2) {
-    const sub = (parts[0] === 'www' && parts.length >= 3 ? parts[1] : parts[0]) as LanguageCode;
-    if (Object.keys(SUBDOMAIN_MAP).includes(sub)) {
+    const candidate = parts[0] === 'www' && parts.length >= 3 ? parts[1] : parts[0];
+    const sub = candidate as LanguageCode;
+    if (sub !== 'fa' && Object.prototype.hasOwnProperty.call(SUBDOMAIN_MAP, sub)) {
       return sub;
     }
   }
@@ -92,21 +93,15 @@ export function buildSwitchLanguageUrl(
   currentPath: string = '/',
   currentHash: string = ''
 ): { url: string; shouldNavigate: boolean } {
-  const isProd = typeof window !== 'undefined' ? isProductionMgas(window.location.hostname) : false;
   const domain = getDomainForLanguage(targetLang);
   const path = typeof window !== 'undefined' ? window.location.pathname : currentPath;
   const hash = typeof window !== 'undefined' ? window.location.hash : currentHash;
 
-  // On production, route to subdomain if available
   const targetUrl = targetLang === 'fa'
     ? `${ROOT_URL}${path}${hash}`
     : `https://${domain}${path}${hash}`;
 
-  if (isProd) {
-    const currentHost = window.location.hostname.toLowerCase();
-    const shouldNavigate = currentHost !== domain;
-    return { url: targetUrl, shouldNavigate };
-  }
-
+  // Never force-break client SPA with hard window.location.href redirects
   return { url: targetUrl, shouldNavigate: false };
 }
+

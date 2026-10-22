@@ -9,6 +9,8 @@ import {
   buildSwitchLanguageUrl,
   getBaseUrlForLanguage,
   stripLangQueryParam,
+  ROOT_DOMAIN,
+  ROOT_URL,
 } from '../utils/subdomains';
 
 interface LanguageContextType {
@@ -33,7 +35,13 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
 
   const [currentLanguage, setCurrentLanguageState] = useState<LanguageCode>(() => {
     if (typeof window !== 'undefined') {
-      // 1. Check if URL has an explicit ?lang query parameter
+      // 1. Subdomain check FIRST (e.g. de.mgas.ir -> 'de', ar.mgas.ir -> 'ar', en.mgas.ir -> 'en')
+      const hostLang = getLanguageFromHostname(window.location.hostname);
+      if (hostLang && SUPPORTED_LANGUAGES[hostLang]) {
+        return hostLang;
+      }
+
+      // 2. Check if URL has an explicit ?lang query parameter
       try {
         const urlParams = new URLSearchParams(window.location.search);
         const urlLang = urlParams.get('lang') as LanguageCode | null;
@@ -49,12 +57,6 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
           return urlLang;
         }
       } catch {}
-
-      // 2. Subdomain check in production (e.g. en.mgas.ir, ar.mgas.ir)
-      const hostLang = getLanguageFromHostname(window.location.hostname);
-      if (hostLang && SUPPORTED_LANGUAGES[hostLang]) {
-        return hostLang;
-      }
 
       // 3. User manual preference in localStorage if previously selected
       const isManual = localStorage.getItem(MANUAL_LOCK_KEY) === 'true';
@@ -121,24 +123,27 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
 
   const setLanguage = (lang: LanguageCode) => {
     if (SUPPORTED_LANGUAGES[lang]) {
-      // 1. Update state immediately
+      // 1. Update state immediately - renders in memory instantly with 0 ms latency
       setCurrentLanguageState(lang);
       
       if (typeof window !== 'undefined') {
         localStorage.setItem(STORAGE_KEY, lang);
         localStorage.setItem(MANUAL_LOCK_KEY, 'true');
 
-        // 2. In production, navigate to the dedicated language subdomain if configured
-        const { url, shouldNavigate } = buildSwitchLanguageUrl(lang);
-        if (shouldNavigate) {
-          window.location.href = url;
-          return;
-        }
-
-        // 3. For single-domain / preview / non-subdomain environments:
-        // If switching to default Persian (fa), clean query parameter to keep pure canonical https://mgas.ir/
-        // If switching to another language, set ?lang= parameter cleanly so refresh and direct access works!
+        // 2. Safe, in-page URL synchronization:
+        // Update URL cleanly without triggering page crash, DNS error, or white screen
         try {
+          const currentHost = window.location.hostname.toLowerCase();
+          const hostLang = getLanguageFromHostname(currentHost);
+
+          // If user is on a dedicated language subdomain (e.g. de.mgas.ir) and explicitly selects Persian (fa):
+          // Smoothly navigate back to canonical root https://mgas.ir
+          if (hostLang && hostLang !== lang && lang === DEFAULT_LANGUAGE && currentHost.includes(ROOT_DOMAIN)) {
+            window.location.href = `${ROOT_URL}${window.location.pathname}${window.location.hash}`;
+            return;
+          }
+
+          // Otherwise keep in-app flow seamless and update the query string ?lang=
           const params = new URLSearchParams(window.location.search);
           if (lang === DEFAULT_LANGUAGE) {
             params.delete('lang');

@@ -8,5 +8,17 @@
   "assets": {
     "directory": "./dist",
     "not_found_handling": "single-page-application"
-  }
+  },
+  "routes": [
+    { "pattern": "mgas.ir", "custom_domain": true },
+    { "pattern": "www.mgas.ir", "custom_domain": true },
+    { "pattern": "de.mgas.ir", "custom_domain": true },
+    { "pattern": "en.mgas.ir", "custom_domain": true },
+    { "pattern": "ar.mgas.ir", "custom_domain": true },
+    { "pattern": "tr.mgas.ir", "custom_domain": true },
+    { "pattern": "ru.mgas.ir", "custom_domain": true },
+    { "pattern": "ur.mgas.ir", "custom_domain": true },
+    { "pattern": "hy.mgas.ir", "custom_domain": true }
+  ]
 }
+
