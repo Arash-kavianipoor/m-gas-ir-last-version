@@ -86,7 +86,19 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
     setActiveDropdown(null);
     setLangDropdownOpen(false);
     const targetId = href.replace('#', '');
-    scrollToElement(targetId);
+    if (targetId === 'hero') {
+      if (window.location.hash && window.location.hash !== '#hero') {
+        try {
+          history.pushState(null, '', window.location.pathname + window.location.search);
+        } catch {
+          window.location.hash = '';
+        }
+      }
+      scrollToElement('hero');
+    } else {
+      window.location.hash = targetId;
+      scrollToElement(targetId);
+    }
   };
 
   const toggleNavDropdown = (menuKey: string) => {
@@ -577,11 +589,39 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
                 {t.navQuality}
               </a>
               <a
+                href="#factory-tour"
+                onClick={(e) => handleNavClick(e, '#factory-tour')}
+                className="px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-200 hover:text-white hover:bg-white/10 transition-colors"
+              >
+                {isRTL ? 'مستند ویدئویی خطوط تولید' : 'Factory Video Tour'}
+              </a>
+              <a
+                href="#articles"
+                onClick={(e) => handleNavClick(e, '#articles')}
+                className="px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-200 hover:text-white hover:bg-white/10 transition-colors"
+              >
+                {t.navArticles}
+              </a>
+              <a
                 href="#history"
                 onClick={(e) => handleNavClick(e, '#history')}
                 className="px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-200 hover:text-white hover:bg-white/10 transition-colors"
               >
                 {t.navHistory}
+              </a>
+              <a
+                href="#faq"
+                onClick={(e) => handleNavClick(e, '#faq')}
+                className="px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-200 hover:text-white hover:bg-white/10 transition-colors"
+              >
+                {isRTL ? 'پرسش‌های متداول' : 'FAQ'}
+              </a>
+              <a
+                href="#calculator"
+                onClick={(e) => handleNavClick(e, '#calculator')}
+                className="px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-200 hover:text-white hover:bg-white/10 transition-colors"
+              >
+                {t.navCalculator}
               </a>
               <a
                 href="#contact"

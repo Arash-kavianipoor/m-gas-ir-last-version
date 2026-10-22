@@ -33,39 +33,42 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
 
   const [currentLanguage, setCurrentLanguageState] = useState<LanguageCode>(() => {
     if (typeof window !== 'undefined') {
-      // 1. Highest Priority: Hostname-based subdomain in production (e.g. fa.mgas.ir, de.mgas.ir)
-      const hostLang = getLanguageFromHostname(window.location.hostname);
-      if (hostLang && SUPPORTED_LANGUAGES[hostLang]) {
-        return hostLang;
-      }
-
-      // 2. Priority 2: Check localStorage user-selected language if manually locked
-      const isManual = localStorage.getItem(MANUAL_LOCK_KEY) === 'true';
-      const saved = localStorage.getItem(STORAGE_KEY) as LanguageCode | null;
-      if (isManual && saved && SUPPORTED_LANGUAGES[saved]) {
-        return saved;
-      }
-
-      // 3. Fallback: Check if URL had a legacy ?lang parameter, clean it up immediately
+      // 1. Check if URL has an explicit ?lang query parameter
       try {
         const urlParams = new URLSearchParams(window.location.search);
         const urlLang = urlParams.get('lang') as LanguageCode | null;
         if (urlLang && SUPPORTED_LANGUAGES[urlLang]) {
           localStorage.setItem(STORAGE_KEY, urlLang);
-          // Strip ?lang query param from address bar so URL remains clean
-          const cleanSearch = stripLangQueryParam(window.location.search);
-          const cleanUrl = `${window.location.pathname}${cleanSearch}${window.location.hash}`;
-          window.history.replaceState({}, '', cleanUrl);
+          localStorage.setItem(MANUAL_LOCK_KEY, 'true');
+          // If lang is Persian (the default), clean the URL query to preserve canonical https://mgas.ir/
+          if (urlLang === DEFAULT_LANGUAGE) {
+            const cleanSearch = stripLangQueryParam(window.location.search);
+            const cleanUrl = `${window.location.pathname}${cleanSearch}${window.location.hash}`;
+            window.history.replaceState({}, '', cleanUrl);
+          }
           return urlLang;
         }
       } catch {}
+
+      // 2. Subdomain check in production (e.g. en.mgas.ir, ar.mgas.ir)
+      const hostLang = getLanguageFromHostname(window.location.hostname);
+      if (hostLang && SUPPORTED_LANGUAGES[hostLang]) {
+        return hostLang;
+      }
+
+      // 3. User manual preference in localStorage if previously selected
+      const isManual = localStorage.getItem(MANUAL_LOCK_KEY) === 'true';
+      const saved = localStorage.getItem(STORAGE_KEY) as LanguageCode | null;
+      if (isManual && saved && SUPPORTED_LANGUAGES[saved]) {
+        return saved;
+      }
     }
-    return DEFAULT_LANGUAGE; // 'en' (Main domain: mgas.ir)
+    return DEFAULT_LANGUAGE; // 'fa' (Canonical Persian on mgas.ir)
   });
 
-  // Clean any legacy '?lang=' query parameter on initial mount to keep URLs pure
+  // Clean redundant '?lang=fa' query parameter on initial mount while preserving other languages
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.location.search.includes('lang=')) {
+    if (typeof window !== 'undefined' && window.location.search.includes('lang=fa')) {
       try {
         const cleanSearch = stripLangQueryParam(window.location.search);
         const cleanUrl = `${window.location.pathname}${cleanSearch}${window.location.hash}`;
@@ -74,34 +77,13 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
     }
   }, []);
 
-  // Geolocation auto-detection on load & IP changes
+  // Geolocation detection for informational badges (Strictly NO forced redirects or automatic content hijacking)
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    const hostname = window.location.hostname;
-    const isProd = isProductionMgas(hostname);
-    const hostLang = getLanguageFromHostname(hostname);
-    const isManualLocked = localStorage.getItem(MANUAL_LOCK_KEY) === 'true';
-
-    // If user is already on an explicit language subdomain (e.g., fa.mgas.ir, de.mgas.ir, ur.mgas.ir),
-    // they are specifically visiting that language portal. Do not redirect them elsewhere!
-    if (isProd && hostLang && hostLang !== DEFAULT_LANGUAGE) {
-      detectVisitorLanguage().then((res) => setGeoInfo(res));
-      return;
-    }
-
-    // Run rapid multi-layer geolocation detection
+    // Detect visitor country for logistics estimation, but do NOT force-change language without user consent
     detectVisitorLanguage().then((result) => {
       setGeoInfo(result);
-
-      if (result.detectedLanguage && SUPPORTED_LANGUAGES[result.detectedLanguage]) {
-        // In dev, preview, or production:
-        // Automatically switch language state if not manually locked by the user
-        if (result.isNewIpDetected || (!isManualLocked && !hostLang)) {
-          setCurrentLanguageState(result.detectedLanguage);
-          localStorage.setItem(STORAGE_KEY, result.detectedLanguage);
-        }
-      }
     });
   }, []);
 
@@ -146,20 +128,26 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
         localStorage.setItem(STORAGE_KEY, lang);
         localStorage.setItem(MANUAL_LOCK_KEY, 'true');
 
-        // 2. Clean URL: strip any '?lang=' query parameters
-        const cleanSearch = stripLangQueryParam(window.location.search);
-
-        // 3. Navigate to the dedicated language subdomain on production (e.g. fa.mgas.ir, de.mgas.ir, mgas.ir)
+        // 2. In production, navigate to the dedicated language subdomain if configured
         const { url, shouldNavigate } = buildSwitchLanguageUrl(lang);
         if (shouldNavigate) {
           window.location.href = url;
           return;
         }
 
-        // On preview/dev environments or same-subdomain, keep URL pure without query strings
+        // 3. For single-domain / preview / non-subdomain environments:
+        // If switching to default Persian (fa), clean query parameter to keep pure canonical https://mgas.ir/
+        // If switching to another language, set ?lang= parameter cleanly so refresh and direct access works!
         try {
-          const cleanUrl = `${window.location.pathname}${cleanSearch}${window.location.hash}`;
-          window.history.replaceState({}, '', cleanUrl);
+          const params = new URLSearchParams(window.location.search);
+          if (lang === DEFAULT_LANGUAGE) {
+            params.delete('lang');
+          } else {
+            params.set('lang', lang);
+          }
+          const queryStr = params.toString() ? `?${params.toString()}` : '';
+          const newUrl = `${window.location.pathname}${queryStr}${window.location.hash}`;
+          window.history.pushState({}, '', newUrl);
         } catch {}
       }
     }

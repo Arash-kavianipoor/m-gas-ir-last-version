@@ -174,6 +174,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenRfq, onExploreProducts }) => {
                 style={{ aspectRatio: '2.8/1' }}
                 className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-[1.02]"
                 loading="eager"
+                fetchPriority="high"
                 decoding="async"
                 referrerPolicy="no-referrer"
               />

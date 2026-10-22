@@ -1,17 +1,6 @@
 import { LanguageCode, LanguageInfo } from '../types';
 
 export const SUPPORTED_LANGUAGES: Record<LanguageCode, LanguageInfo> = {
-  en: {
-    code: 'en',
-    locale: 'en-US',
-    name: 'English',
-    nativeName: 'English',
-    flag: '🇬🇧',
-    dir: 'ltr',
-    countryName: 'International',
-    subdomain: null,
-    domain: 'mgas.ir',
-  },
   fa: {
     code: 'fa',
     locale: 'fa-IR',
@@ -20,8 +9,19 @@ export const SUPPORTED_LANGUAGES: Record<LanguageCode, LanguageInfo> = {
     flag: '🇮🇷',
     dir: 'rtl',
     countryName: 'ایران',
-    subdomain: 'fa',
-    domain: 'fa.mgas.ir',
+    subdomain: null,
+    domain: 'mgas.ir',
+  },
+  en: {
+    code: 'en',
+    locale: 'en-US',
+    name: 'English',
+    nativeName: 'English',
+    flag: '🇬🇧',
+    dir: 'ltr',
+    countryName: 'International',
+    subdomain: 'en',
+    domain: 'en.mgas.ir',
   },
   ar: {
     code: 'ar',
@@ -92,7 +92,7 @@ export const SUPPORTED_LANGUAGES: Record<LanguageCode, LanguageInfo> = {
 };
 
 /**
- * Main domain language is English (mgas.ir).
- * Subdomains are used for other languages (fa.mgas.ir, ar.mgas.ir, etc.).
+ * Main domain language is Persian (mgas.ir) as per official company specifications.
+ * Subdomains or clean parameters are used for other language portals.
  */
-export const DEFAULT_LANGUAGE: LanguageCode = 'en';
+export const DEFAULT_LANGUAGE: LanguageCode = 'fa';

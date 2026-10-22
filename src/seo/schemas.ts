@@ -1,14 +1,14 @@
-import { LanguageCode } from '../types';
+import { LanguageCode, Product } from '../types';
 import { SEO_CONFIG, TARGET_SEO_PHRASES } from './config';
 import { COMPANY_INFO } from '../data/company';
 import { PRODUCTS } from '../data/products';
 import { TECHNICAL_ARTICLES, Article } from '../data/articles';
 import { FACTORY_VIDEOS } from '../data/factoryVideos';
-import { getBaseUrlForLanguage, getDomainForLanguage } from '../utils/subdomains';
+import { getBaseUrlForLanguage } from '../utils/subdomains';
 
-export function generateOrganizationSchema(lang: LanguageCode = 'en') {
+export function generateOrganizationSchema(lang: LanguageCode = 'fa') {
   const baseUrl = getBaseUrlForLanguage(lang);
-  const phrases = TARGET_SEO_PHRASES[lang] || TARGET_SEO_PHRASES.en;
+  const phrases = TARGET_SEO_PHRASES[lang] || TARGET_SEO_PHRASES.fa;
 
   return {
     '@context': 'https://schema.org',
@@ -41,14 +41,14 @@ export function generateOrganizationSchema(lang: LanguageCode = 'en') {
     telephone: COMPANY_INFO.contacts.factoryCentral.phone,
     address: {
       '@type': 'PostalAddress',
-      streetAddress: COMPANY_INFO.address.officeAddressEnglish,
-      addressLocality: 'Karaj',
-      addressRegion: 'Alborz Province',
+      streetAddress: COMPANY_INFO.address.fullPersian,
+      addressLocality: 'کرج',
+      addressRegion: 'استان البرز',
       addressCountry: 'IR',
     },
     sameAs: [
       'https://www.linkedin.com/company/mgas',
-      'https://www.instagram.com/mgas_cylinders',
+      'https://www.instagram.com/mgas.ir',
     ],
     knowsAbout: [
       phrases.cylinderManufacturer,
@@ -62,16 +62,15 @@ export function generateOrganizationSchema(lang: LanguageCode = 'en') {
       itemListElement: [
         {
           '@type': 'OfferCatalog',
-          name: phrases.cylinderManufacturer,
-          description: phrases.fullDescription,
+          name: 'کپسول‌های گاز خانگی و پیکنیک (Domestic & Camping Cylinders)',
         },
         {
           '@type': 'OfferCatalog',
-          name: phrases.domesticIndustrial,
+          name: 'سیلندرهای گاز صنعتی و کارگاهی (Industrial LPG Cylinders)',
         },
         {
           '@type': 'OfferCatalog',
-          name: phrases.autoLpgTanks,
+          name: 'مخازن گاز مایع خودرو (Automotive LPG Autogas Tanks)',
         },
       ],
     },
@@ -80,7 +79,7 @@ export function generateOrganizationSchema(lang: LanguageCode = 'en') {
 
 export function generateLocalBusinessSchema(lang: LanguageCode) {
   const baseUrl = getBaseUrlForLanguage(lang);
-  const phrases = TARGET_SEO_PHRASES[lang] || TARGET_SEO_PHRASES.en;
+  const phrases = TARGET_SEO_PHRASES[lang] || TARGET_SEO_PHRASES.fa;
 
   return {
     '@context': 'https://schema.org',
@@ -89,15 +88,15 @@ export function generateLocalBusinessSchema(lang: LanguageCode) {
     name: SEO_CONFIG.organization.name,
     description: phrases.fullDescription,
     slogan: phrases.cylinderManufacturer,
-    image: `${SEO_CONFIG.siteUrl}/banners/factory_hero.jpg`,
+    image: `${SEO_CONFIG.siteUrl}/banners/DSC080212591.webp`,
     telephone: COMPANY_INFO.contacts.factoryCentral.phone,
     email: COMPANY_INFO.emails.sales,
     url: baseUrl,
     address: {
       '@type': 'PostalAddress',
-      streetAddress: COMPANY_INFO.address.officeAddressEnglish,
-      addressLocality: 'Karaj',
-      addressRegion: 'Alborz',
+      streetAddress: COMPANY_INFO.address.fullPersian,
+      addressLocality: 'کرج',
+      addressRegion: 'استان البرز',
       addressCountry: 'IR',
     },
     geo: {
@@ -113,7 +112,7 @@ export function generateLocalBusinessSchema(lang: LanguageCode) {
         closes: '18:00',
       },
     ],
-    priceRange: '$$',
+    priceRange: '$$$',
     knowsAbout: [
       phrases.cylinderManufacturer,
       phrases.domesticIndustrial,
@@ -124,7 +123,7 @@ export function generateLocalBusinessSchema(lang: LanguageCode) {
 
 export function generateCoreCompetenciesSchema(lang: LanguageCode) {
   const baseUrl = getBaseUrlForLanguage(lang);
-  const phrases = TARGET_SEO_PHRASES[lang] || TARGET_SEO_PHRASES.en;
+  const phrases = TARGET_SEO_PHRASES[lang] || TARGET_SEO_PHRASES.fa;
 
   return {
     '@context': 'https://schema.org',
@@ -166,14 +165,19 @@ export function generateWebSiteSchema(lang: LanguageCode) {
     '@id': `${baseUrl}/#website`,
     url: baseUrl,
     name: SEO_CONFIG.siteName,
-    inLanguage: lang,
+    inLanguage: lang === 'fa' ? 'fa-IR' : 'en-US',
     publisher: {
       '@id': `${baseUrl}/#organization`,
     },
   };
 }
 
-export function generateBreadcrumbSchema(lang: LanguageCode, activeArticle?: Article | null) {
+export function generateBreadcrumbSchema(
+  lang: LanguageCode,
+  activeArticle?: Article | null,
+  activeProduct?: Product | null,
+  activeSection?: string | null
+) {
   const baseUrl = getBaseUrlForLanguage(lang);
   const items = [
     {
@@ -182,20 +186,61 @@ export function generateBreadcrumbSchema(lang: LanguageCode, activeArticle?: Art
       name: lang === 'fa' ? 'صفحه اصلی' : 'Home',
       item: `${baseUrl}/`,
     },
-    {
-      '@type': 'ListItem',
-      position: 2,
-      name: lang === 'fa' ? 'محصولات و سیلندرها' : 'LPG Cylinders',
-      item: `${baseUrl}/#products`,
-    },
   ];
 
-  if (activeArticle) {
+  if (activeProduct) {
+    items.push({
+      '@type': 'ListItem',
+      position: 2,
+      name: lang === 'fa' ? 'محصولات و سیلندرهای گاز' : 'LPG Cylinders & Tanks',
+      item: `${baseUrl}/#products`,
+    });
+    const loc = activeProduct.locales[lang] || activeProduct.locales.fa || activeProduct.locales.en;
     items.push({
       '@type': 'ListItem',
       position: 3,
-      name: activeArticle.title[lang] || activeArticle.title.en || activeArticle.title.fa,
+      name: loc.name,
+      item: `${baseUrl}/#product=${activeProduct.slug}`,
+    });
+  } else if (activeArticle) {
+    items.push({
+      '@type': 'ListItem',
+      position: 2,
+      name: lang === 'fa' ? 'مقالات و پایگاه دانش' : 'Articles & Technical Papers',
+      item: `${baseUrl}/#articles`,
+    });
+    items.push({
+      '@type': 'ListItem',
+      position: 3,
+      name: activeArticle.title[lang] || activeArticle.title.fa || activeArticle.title.en,
       item: `${baseUrl}/#article=${activeArticle.slug}`,
+    });
+  } else if (activeSection && activeSection !== 'hero') {
+    const sectionNames: Record<string, { fa: string; en: string }> = {
+      products: { fa: 'محصولات و کپسول‌های گاز مایع', en: 'LPG Cylinders Catalog' },
+      quality: { fa: 'کنترل کیفیت و آزمون فشار ۳۰ بار', en: 'Quality & 30-Bar Hydro Test' },
+      'factory-tour': { fa: 'مستند ویدئویی خطوط تولید کارخانه', en: 'Factory Video Tour' },
+      articles: { fa: 'مقالات مهندسی و متالورژی', en: 'Technical Engineering Articles' },
+      history: { fa: 'تاریخچه و سوابق ۵۰ ساله کارخانه', en: '50-Year Heritage & History' },
+      faq: { fa: 'پرسش‌های متداول مشتریان و صادرات', en: 'Frequently Asked Questions' },
+      calculator: { fa: 'محاسبه‌گر آنلاین استعلام قیمت و کانتینر', en: 'Online RFQ & Container Calculator' },
+      contact: { fa: 'اطلاعات تماس و نشانی کارخانه کرج', en: 'Contact Us & Factory Location' },
+      specifications: { fa: 'مشخصات فنی و استانداردهای کپسول گاز', en: 'Technical Specifications' },
+    };
+    const sName = sectionNames[activeSection];
+    const label = sName ? (lang === 'fa' ? sName.fa : sName.en) : activeSection;
+    items.push({
+      '@type': 'ListItem',
+      position: 2,
+      name: label,
+      item: `${baseUrl}/#${activeSection}`,
+    });
+  } else {
+    items.push({
+      '@type': 'ListItem',
+      position: 2,
+      name: lang === 'fa' ? 'محصولات و سیلندرهای گاز' : 'LPG Cylinders & Tanks',
+      item: `${baseUrl}/#products`,
     });
   }
 
@@ -207,7 +252,6 @@ export function generateBreadcrumbSchema(lang: LanguageCode, activeArticle?: Art
 }
 
 export function generateVideosSchema(lang: LanguageCode) {
-  const baseUrl = getBaseUrlForLanguage(lang);
   return FACTORY_VIDEOS.map((vid) => ({
     '@context': 'https://schema.org',
     '@type': 'VideoObject',
@@ -228,56 +272,106 @@ export function generateVideosSchema(lang: LanguageCode) {
   }));
 }
 
-export function generateProductsSchema(lang: LanguageCode) {
+export function generateSingleProductSchema(prod: Product, lang: LanguageCode) {
   const baseUrl = getBaseUrlForLanguage(lang);
-  return PRODUCTS.map((prod) => {
-    const loc = prod.locales[lang] || prod.locales.en;
-    return {
-      '@context': 'https://schema.org',
-      '@type': 'Product',
-      '@id': `${baseUrl}/#product-${prod.id}`,
-      name: loc.name,
-      image: `${SEO_CONFIG.siteUrl}${prod.image}`,
-      description: loc.shortDescription,
-      sku: prod.id,
-      brand: {
-        '@type': 'Brand',
-        name: 'M Gas',
+  const loc = prod.locales[lang] || prod.locales.fa || prod.locales.en;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    '@id': `${baseUrl}/#product=${prod.slug}`,
+    name: loc.name,
+    image: `${SEO_CONFIG.siteUrl}${prod.image}`,
+    description: loc.fullDescription || loc.shortDescription,
+    sku: prod.id,
+    brand: {
+      '@type': 'Brand',
+      name: 'ام گاز (M Gas)',
+    },
+    manufacturer: {
+      '@id': `${baseUrl}/#organization`,
+    },
+    weight: {
+      '@type': 'QuantitativeValue',
+      value: prod.emptyWeightKg,
+      unitCode: 'KGM',
+    },
+    height: {
+      '@type': 'QuantitativeValue',
+      value: prod.heightCm,
+      unitCode: 'CMT',
+    },
+    width: {
+      '@type': 'QuantitativeValue',
+      value: prod.circleDiameterCm,
+      unitCode: 'CMT',
+    },
+    additionalProperty: [
+      {
+        '@type': 'PropertyValue',
+        name: 'Test Pressure',
+        value: `${prod.testPressureBar} Bar (100% Hydrostatic Proof Expansion)`,
       },
-      offers: {
-        '@type': 'Offer',
-        url: `${baseUrl}/#products`,
-        priceCurrency: 'USD',
-        price: prod.unitPriceUsd || '45.00',
-        availability: 'https://schema.org/InStock',
-        seller: {
-          '@type': 'Organization',
-          name: SEO_CONFIG.organization.name,
-        },
+      {
+        '@type': 'PropertyValue',
+        name: 'Working Pressure',
+        value: `${prod.workingPressureBar} Bar`,
       },
-    };
-  });
+      {
+        '@type': 'PropertyValue',
+        name: 'Material Specification',
+        value: prod.material,
+      },
+      {
+        '@type': 'PropertyValue',
+        name: 'Standard Compliance',
+        value: 'ISIRI 841 / ISIRI 304 / ISO 9001 / EN 1442',
+      },
+    ],
+    offers: {
+      '@type': 'Offer',
+      url: `${baseUrl}/#product=${prod.slug}`,
+      priceCurrency: 'USD',
+      price: prod.unitPriceUsd ? String(prod.unitPriceUsd) : undefined,
+      priceValidUntil: '2027-12-31',
+      availability: 'https://schema.org/InStock',
+      itemCondition: 'https://schema.org/NewCondition',
+      seller: {
+        '@id': `${baseUrl}/#organization`,
+      },
+    },
+  };
+}
+
+export function generateProductsSchema(lang: LanguageCode) {
+  return PRODUCTS.map((prod) => generateSingleProductSchema(prod, lang));
 }
 
 export function generateFaqSchema(lang: LanguageCode) {
   const faqs = [
     {
       qFa: 'آیا کلیه سیلندرهای ام گاز دارای آزمون هیدرواستاتیک ۳۰ بار هستند؟',
-      aFa: 'بله، ۱۰۰٪ سیلندرهای تولیدی در کارخانه ام گاز تحت آزمون فشار هیدرواستاتیک ۳۰ بار و تست نشت حباب زیر آب قرار می‌گیرند.',
+      aFa: 'بله، ۱۰۰٪ سیلندرهای تولیدی در کارخانه ام گاز تحت آزمون فشار هیدرواستاتیک ۳۰ بار در ژاکت آب و تست نشت حباب زیر آب قرار می‌گیرند.',
       qEn: 'Are all M Gas cylinders tested with 30-bar hydrostatic proof pressure?',
-      aEn: 'Yes, 100% of manufactured cylinders undergo 30-bar hydrostatic proof testing and underwater leak tests.',
+      aEn: 'Yes, 100% of manufactured cylinders undergo 30-bar hydrostatic proof water-jacket testing and underwater leak tests.',
     },
     {
       qFa: 'حداقل سفارش برای صادرات سیلندر گاز چقدر است؟',
-      aFa: 'حداقل سفارش برای کانتینرهای صادراتی بسته به حجم سیلندر بین ۲۰۰ تا ۱۰۰۰ عدد متغیر است.',
+      aFa: 'حداقل سفارش برای پارت‌های صادراتی بسته به حجم سیلندر بین ۲۰۰ تا ۱۰۰۰ عدد متغیر است و امکان بارگیری کانتینری در مرزهای خروجی وجود دارد.',
       qEn: 'What is the minimum order quantity (MOQ) for cylinder export?',
       aEn: 'MOQ for export containers ranges between 200 and 1,000 units depending on cylinder volume.',
     },
     {
-      qFa: 'آیا امکان سفارشی‌سازی رنگ کپسول با کدهای رال (RAL) وجود دارد؟',
-      aFa: 'بله، خط رنگ الکترواستاتیک پودری کارخانه قابلیت اعمال تمامی ۲۰۰+ رنگ استاندارد رال را داراست.',
-      qEn: 'Is custom RAL color powder coating available for cylinders?',
-      aEn: 'Yes, our automated electrostatic coating line supports all 200+ RAL standard colors.',
+      qFa: 'سیلندرهای ام گاز با چه نوع شیرها و استانداردهایی مونتاژ می‌شوند؟',
+      aFa: 'سیلندرهای صادراتی متناسب با کشور مقصد با شیرهای استاندارد برنجی با رزوه W21.8، رزوه چپ‌گرد، شیرهای سوپاپ‌دار یا مولتی‌والوهای خودرویی ECE R67 مونتاژ و آزمایش می‌شوند.',
+      qEn: 'What valve specifications and international standards are fitted?',
+      aEn: 'Cylinders are assembled according to destination market standards with certified brass valves (W21.8, POL, left-hand threads, compact camping valves, or ECE R67 automotive multivalves).',
+    },
+    {
+      qFa: 'چه استانداردهای ملی و بین‌المللی برای سیلندرهای ام گاز اخذ شده است؟',
+      aFa: 'کارخانه ام گاز دارنده نشان استاندارد ملی ایران (ISIRI 841 و ISIRI 406)، گواهینامه مدیریت کیفیت بین‌المللی ISO 9001:2015 و تاییدیه مقاومت تست فشار مخازن است.',
+      qEn: 'Which national and international certifications does M Gas hold?',
+      aEn: 'M Gas holds the National Standard of Iran (ISIRI 841 / ISIRI 406), ISO 9001:2015 Quality Management Certification, and Pressure Equipment Directive approvals.',
     },
   ];
 
@@ -297,8 +391,8 @@ export function generateFaqSchema(lang: LanguageCode) {
 
 export function generateArticleSchema(article: Article, lang: LanguageCode) {
   const baseUrl = getBaseUrlForLanguage(lang);
-  const title = article.title[lang] || article.title.en || article.title.fa;
-  const description = article.abstract[lang] || article.abstract.en || article.abstract.fa;
+  const title = article.title[lang] || article.title.fa || article.title.en;
+  const description = article.abstract[lang] || article.abstract.fa || article.abstract.en;
 
   return {
     '@context': 'https://schema.org',
@@ -313,12 +407,7 @@ export function generateArticleSchema(article: Article, lang: LanguageCode) {
       name: article.author.name,
     },
     publisher: {
-      '@type': 'Organization',
-      name: SEO_CONFIG.organization.name,
-      logo: {
-        '@type': 'ImageObject',
-        url: SEO_CONFIG.organization.logo,
-      },
+      '@id': `${baseUrl}/#organization`,
     },
     mainEntityOfPage: {
       '@type': 'WebPage',

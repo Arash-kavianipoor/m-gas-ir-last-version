@@ -93,9 +93,14 @@ export const ArticlesSection: React.FC<ArticlesSectionProps> = ({ onSelectArticl
                 className="group relative flex flex-col bg-slate-900/90 rounded-3xl border border-slate-800 hover:border-emerald-500/40 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-emerald-950/20"
               >
                 {/* Article Cover Image Banner */}
-                <div
-                  onClick={() => onSelectArticle(article)}
-                  className="relative w-full h-48 sm:h-56 overflow-hidden cursor-pointer bg-slate-950 border-b border-slate-800/80 aspect-[16/9]"
+                <a
+                  href={`#article=${article.slug}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onSelectArticle(article);
+                  }}
+                  className="block relative w-full h-48 sm:h-56 overflow-hidden cursor-pointer bg-slate-950 border-b border-slate-800/80 aspect-[16/9]"
+                  title={title}
                 >
                   <img
                     src={article.coverImage}
@@ -125,7 +130,7 @@ export const ArticlesSection: React.FC<ArticlesSectionProps> = ({ onSelectArticl
                       {article.readTimeMinutes} {t.readTime}
                     </span>
                   </div>
-                </div>
+                </a>
 
                 <div className="p-6 sm:p-8 flex-1 flex flex-col">
                   {/* Top Metadata */}
@@ -138,11 +143,16 @@ export const ArticlesSection: React.FC<ArticlesSectionProps> = ({ onSelectArticl
                   </div>
 
                   {/* Article Title */}
-                  <h3
-                    onClick={() => onSelectArticle(article)}
-                    className="text-xl sm:text-2xl font-bold text-white group-hover:text-emerald-300 transition-colors cursor-pointer leading-snug mb-4"
-                  >
-                    {title}
+                  <h3 className="text-xl sm:text-2xl font-bold text-white group-hover:text-emerald-300 transition-colors leading-snug mb-4">
+                    <a
+                      href={`#article=${article.slug}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        onSelectArticle(article);
+                      }}
+                    >
+                      {title}
+                    </a>
                   </h3>
 
                   {/* Abstract */}
@@ -198,13 +208,17 @@ export const ArticlesSection: React.FC<ArticlesSectionProps> = ({ onSelectArticl
                     </div>
                   </div>
 
-                  <button
-                    onClick={() => onSelectArticle(article)}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs sm:text-sm transition-all shadow-md shadow-emerald-950 hover:gap-3 flex-shrink-0"
+                  <a
+                    href={`#article=${article.slug}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      onSelectArticle(article);
+                    }}
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs sm:text-sm transition-all shadow-md shadow-emerald-950 hover:gap-3 flex-shrink-0 cursor-pointer"
                   >
                     <span>{t.readArticleBtn}</span>
                     <ArrowIcon className="w-4 h-4" />
-                  </button>
+                  </a>
                 </div>
               </div>
             </article>

@@ -5,232 +5,372 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 
   <!-- ======================================================== -->
-  <!-- 1. English (Main Portal - Root Domain: mgas.ir)          -->
+  <!-- 1. Main Persian Portal (Canonical: https://mgas.ir/)     -->
   <!-- ======================================================== -->
   <url>
     <loc>https://mgas.ir/</loc>
-    <lastmod>2026-03-01T00:00:00+00:00</lastmod>
+    <lastmod>2026-10-21T06:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="en-US" href="https://mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="en-GB" href="https://mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="fa" href="https://fa.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="fa-IR" href="https://fa.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="ur" href="https://ur.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="ur-PK" href="https://ur.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="fa" href="https://mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="fa-IR" href="https://mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/?lang=en" />
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://mgas.ir/?lang=en" />
     <xhtml:link rel="alternate" hreflang="ar" href="https://ar.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="ar-SA" href="https://ar.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="ar-AE" href="https://ar.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="ar-IQ" href="https://ar.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="tr" href="https://tr.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="tr-TR" href="https://tr.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://ru.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="ru-RU" href="https://ru.mgas.ir/" />
     <xhtml:link rel="alternate" hreflang="de" href="https://de.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="de-DE" href="https://de.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ur" href="https://ur.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://tr.mgas.ir/" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://ru.mgas.ir/" />
     <xhtml:link rel="alternate" hreflang="hy" href="https://hy.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="hy-AM" href="https://hy.mgas.ir/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/" />
 
     <!-- Video 1: Factory Tour by Managing Director Mousa Amooie -->
     <video:video>
       <video:thumbnail_loc>https://mgas.ir/videos/factory-tour-manager-thumb.webp</video:thumbnail_loc>
-      <video:title>M Gas Factory Inspection by Managing Director Mr. Mousa Amooie</video:title>
-      <video:description>Executive inspection of deep hydraulic drawing presses, 30-bar pressure testing lines, and ISO 9001 compliance standards.</video:description>
-      <video:content_loc>https://mgas.ir/videos/avc_XRecorder_Compressed_03032023_184301.mp4</video:content_loc>
-      <video:publication_date>2023-03-03T18:43:00+03:30</video:publication_date>
+      <video:title>بازدید مدیرعامل کارخانه آقای موسی عمویی از خطوط تولید کپسول گاز ام گاز</video:title>
+      <video:description>نظارت مستقیم مدیریت ارشد بر فرآیند کشش هیدرولیک، تست فشار ۳۰ بار و کنترل کیفیت سیلندرهای گاز مایع</video:description>
+      <video:content_loc>https://mgas.ir/videos/factory-tour-manager.mp4</video:content_loc>
+      <video:publication_date>2024-01-15T08:00:00+03:30</video:publication_date>
       <video:family_friendly>yes</video:family_friendly>
       <video:duration>90</video:duration>
     </video:video>
 
-    <!-- Video 2: Robotic Production & Powder Coating -->
+    <!-- Video 2: Robotic Production & Powder Coating Line -->
     <video:video>
-      <video:thumbnail_loc>https://mgas.ir/videos/factory-tour-welding-thumb.webp</video:thumbnail_loc>
-      <video:title>Robotic Welding & Automated Powder Coating Lines | M Gas</video:title>
-      <video:description>Automated submerged-arc welding line and oven curing powder coating ensuring 25+ years corrosion resistance.</video:description>
-      <video:content_loc>https://mgas.ir/videos/VID_20240905_121528_955.mp4</video:content_loc>
-      <video:publication_date>2024-09-05T12:15:28+03:30</video:publication_date>
+      <video:thumbnail_loc>https://mgas.ir/videos/production-line-2-thumb.webp</video:thumbnail_loc>
+      <video:title>خطوط جوشکاری زیرپودری اتوماتیک و رنگ پودری الکترواستاتیک کپسول گاز ام گاز</video:title>
+      <video:description>فرآیند جوشکاری تمام اتوماتیک زیرپودری و پخت کوره‌ای ۲۰۰ درجه رنگ الکترواستاتیک در کارخانه ام گاز</video:description>
+      <video:content_loc>https://mgas.ir/videos/production-line-2.mp4</video:content_loc>
+      <video:publication_date>2024-01-15T08:00:00+03:30</video:publication_date>
       <video:family_friendly>yes</video:family_friendly>
       <video:duration>45</video:duration>
     </video:video>
 
-    <!-- Product Images -->
+    <!-- Real Hero & Facility Images -->
     <image:image>
-      <image:loc>https://mgas.ir/products/lpg-50kg-industrial.png</image:loc>
-      <image:title>50kg Industrial LPG Cylinder (108 Liter Pressure Vessel)</image:title>
-      <image:caption>Commercial &amp; heavy industrial cylinder with 30-bar hydrostatic testing</image:caption>
+      <image:loc>https://mgas.ir/banners/DSC080212591.webp</image:loc>
+      <image:title>خط تولید کپسول گاز مایع کارخانه ام گاز</image:title>
+      <image:caption>کارخانه تولید کپسول و سیلندر گاز مایع LPG با آزمون فشار ۳۰ بار</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://mgas.ir/products/lpg-11kg-standard.png</image:loc>
-      <image:title>11.8kg Household LPG Gas Cylinder</image:title>
-      <image:caption>High-safety residential LPG bottle with automated collar welding</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://mgas.ir/products/lpg-2kg-picnic.png</image:loc>
-      <image:title>2kg Camping &amp; Picnic Gas Bottle</image:title>
-      <image:caption>Portable LPG camping cylinder with brass valve</image:caption>
+      <image:loc>https://mgas.ir/founder/mousa-amooie-inspection.webp</image:loc>
+      <image:title>آقای موسی عمویی، بنیانگذار و مدیرعامل کارخانه ام گاز</image:title>
+      <image:caption>بازرسی فنی کنترل کیفیت تولید کپسول‌های گاز مایع</image:caption>
     </image:image>
   </url>
 
   <!-- ======================================================== -->
-  <!-- 2. Persian Subdomain (fa.mgas.ir)                        -->
+  <!-- 2. English Portal Version                                -->
   <!-- ======================================================== -->
   <url>
-    <loc>https://fa.mgas.ir/</loc>
-    <lastmod>2026-03-01T00:00:00+00:00</lastmod>
+    <loc>https://mgas.ir/?lang=en</loc>
+    <lastmod>2026-10-21T06:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="fa" href="https://fa.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="fa-IR" href="https://fa.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="en-US" href="https://mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="ur" href="https://ur.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="ur-PK" href="https://ur.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://ar.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="tr" href="https://tr.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://ru.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="de" href="https://de.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="hy" href="https://hy.mgas.ir/" />
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/?lang=en" />
+    <xhtml:link rel="alternate" hreflang="fa" href="https://mgas.ir/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/" />
-
-    <video:video>
-      <video:thumbnail_loc>https://mgas.ir/videos/factory-tour-manager-thumb.webp</video:thumbnail_loc>
-      <video:title>بازدید مدیر کارخانه آقای موسی عمویی Mousa Amooie از خطوط تولید کپسول گاز ام گاز</video:title>
-      <video:description>نظارت مستقیم مدیریت ارشد کارخانه م گاز بر فرآیند کشش هیدرولیک، تست فشار ۳۰ بار و انطباق استاندارد ملی ایران.</video:description>
-      <video:content_loc>https://mgas.ir/videos/avc_XRecorder_Compressed_03032023_184301.mp4</video:content_loc>
-      <video:publication_date>2023-03-03T18:43:00+03:30</video:publication_date>
-      <video:family_friendly>yes</video:family_friendly>
-      <video:duration>90</video:duration>
-    </video:video>
+    <image:image>
+      <image:loc>https://mgas.ir/banners/DSC080212591.webp</image:loc>
+      <image:title>M Gas LPG Cylinder Manufacturing Facility</image:title>
+      <image:caption>Major manufacturer and international exporter of LPG cylinders and automotive gas tanks since 1970</image:caption>
+    </image:image>
   </url>
 
   <!-- ======================================================== -->
-  <!-- 3. Urdu / Pakistan Subdomain (ur.mgas.ir)                -->
+  <!-- 3. Dedicated Menu Section Pages for Google SEO Indexing  -->
   <!-- ======================================================== -->
   <url>
-    <loc>https://ur.mgas.ir/</loc>
-    <lastmod>2026-03-01T00:00:00+00:00</lastmod>
-    <changefreq>daily</changefreq>
+    <loc>https://mgas.ir/#products</loc>
+    <lastmod>2026-10-21T06:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.95</priority>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://ur.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="ur-PK" href="https://ur.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="fa" href="https://fa.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://ar.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="tr" href="https://tr.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://ru.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="de" href="https://de.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="hy" href="https://hy.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/" />
-
+    <xhtml:link rel="alternate" hreflang="fa" href="https://mgas.ir/#products" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/?lang=en#products" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/#products" />
     <image:image>
-      <image:loc>https://mgas.ir/products/lpg-50kg-industrial.png</image:loc>
-      <image:title>50kg Commercial LPG Cylinder Pakistan</image:title>
-      <image:caption>50 کلو کمرشل ایل پی جی سلنڈر برائے ہوٹل اور فیکٹری</image:caption>
+      <image:loc>https://mgas.ir/banners/DSC080212591.webp</image:loc>
+      <image:title>کاتالوگ محصولات و کپسول‌های گاز مایع LPG ام گاز</image:title>
+      <image:caption>طیف کامل ۱۳ مدل سیلندر گاز مایع خانگی، پیکنیک، صنعتی و مخازن اتوگاز خودرو</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://mgas.ir/#quality</loc>
+    <lastmod>2026-10-21T06:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://mgas.ir/#quality" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/?lang=en#quality" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/#quality" />
+    <image:image>
+      <image:loc>https://mgas.ir/about/2c-scaled.webp</image:loc>
+      <image:title>کنترل کیفیت و آزمون هیدرواستاتیک ۳۰ بار سیلندر گاز مایع ام گاز</image:title>
+      <image:caption>فرآیند آزمون فشار ۳۰ بار، جوشکاری زیرپودری SAW و تنش‌زدایی کوره در کارخانه ام گاز</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://mgas.ir/#factory-tour</loc>
+    <lastmod>2026-10-21T06:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://mgas.ir/#factory-tour" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/?lang=en#factory-tour" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/#factory-tour" />
+  </url>
+
+  <url>
+    <loc>https://mgas.ir/#articles</loc>
+    <lastmod>2026-10-21T06:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://mgas.ir/#articles" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/?lang=en#articles" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/#articles" />
+  </url>
+
+  <url>
+    <loc>https://mgas.ir/#history</loc>
+    <lastmod>2026-10-21T06:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://mgas.ir/#history" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/?lang=en#history" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/#history" />
+    <image:image>
+      <image:loc>https://mgas.ir/founder/mousa-amooie-inspection.webp</image:loc>
+      <image:title>تاریخچه و ۵۰ سال سابقه کارخانه ام گاز با مدیریت موسی عمویی</image:title>
+      <image:caption>تأسیس در سال ۱۳۴۹ و صادرات مستمر به بیش از ۱۲ کشور جهان</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://mgas.ir/#faq</loc>
+    <lastmod>2026-10-21T06:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://mgas.ir/#faq" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/?lang=en#faq" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/#faq" />
+  </url>
+
+  <url>
+    <loc>https://mgas.ir/#calculator</loc>
+    <lastmod>2026-10-21T06:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://mgas.ir/#calculator" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/?lang=en#calculator" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/#calculator" />
+  </url>
+
+  <url>
+    <loc>https://mgas.ir/#contact</loc>
+    <lastmod>2026-10-21T06:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://mgas.ir/#contact" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/?lang=en#contact" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/#contact" />
+  </url>
+
+  <!-- ======================================================== -->
+  <!-- 4. Cylinder Product Catalog Pages (All 14 Models)         -->
+  <!-- ======================================================== -->
+  <url>
+    <loc>https://mgas.ir/#product=cylinder-60-liter</loc>
+    <lastmod>2026-10-21T06:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://mgas.ir/products/60%20Liter/DSC08492-1-scaled.webp</image:loc>
+      <image:title>کپسول گاز مایع ۶۰ لیتری کارخانه ام گاز</image:title>
+      <image:caption>سیلندر گاز ۶۰ لیتر صنعتی و کارگاهی با تست فشار ۳۰ بار</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://mgas.ir/#product=cylinder-50-kg</loc>
+    <lastmod>2026-10-21T06:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://mgas.ir/products/50%20Liter/DSC08492-1-scaled.webp</image:loc>
+      <image:title>کپسول گاز ۵۰ کیلویی صنعتی ام گاز</image:title>
+      <image:caption>سیلندر گاز مایع ۵۰ کیلوگرم با فولاد استاندارد مخازن تحت فشار</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://mgas.ir/#product=cylinder-45-kg</loc>
+    <lastmod>2026-10-21T06:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://mgas.ir/products/45%20Liter/DSC08492-1-scaled.webp</image:loc>
+      <image:title>کپسول گاز مایع ۴۵ کیلویی صنعتی ام گاز</image:title>
+      <image:caption>سیلندر صنعتی ۴۵ کیلوگرم با آزمون هیدرواستاتیک ۳۰ بار</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://mgas.ir/#product=cylinder-33-kg</loc>
+    <lastmod>2026-10-21T06:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://mgas.ir/products/33%20Liter/DSC08492-1-scaled.webp</image:loc>
+      <image:title>کپسول گاز مایع ۳۳ کیلویی ام گاز</image:title>
+      <image:caption>سیلندر گاز ۳۳ کیلوگرم کارگاهی و صنعتی ام گاز</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://mgas.ir/#product=cylinder-25-kg</loc>
+    <lastmod>2026-10-21T06:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://mgas.ir/products/25%20Liter/DSC08492-1-scaled.webp</image:loc>
+      <image:title>کپسول گاز ۲۵ کیلویی ام گاز</image:title>
+      <image:caption>سیلندر گاز مایع ۲۵ کیلوگرم نیمه صنعتی</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://mgas.ir/#product=cylinder-11-kg</loc>
+    <lastmod>2026-10-21T06:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <image:image>
+      <image:loc>https://mgas.ir/products/11%20Liter/DSC08566-1-scaled.webp</image:loc>
+      <image:title>کپسول گاز ۱۱ کیلویی خانگی استاندارد ام گاز</image:title>
+      <image:caption>سیلندر گاز مایع ۱۱ کیلوگرم پرفروش‌ترین مدل خانگی با شیر استاندارد</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://mgas.ir/#product=cylinder-10-kg</loc>
+    <lastmod>2026-10-21T06:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://mgas.ir/products/10%20Liter/DSC08566-1-scaled.webp</image:loc>
+      <image:title>کپسول گاز ۱۰ کیلویی ام گاز</image:title>
+      <image:caption>سیلندر گاز ۱۰ کیلوگرم سبک برای مصارف خانگی و ویلایی</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://mgas.ir/#product=cylinder-8-kg</loc>
+    <lastmod>2026-10-21T06:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://mgas.ir/products/8%20Liter/DSC08482-1-scaled.webp</image:loc>
+      <image:title>کپسول گاز ۸ کیلویی ام گاز</image:title>
+      <image:caption>سیلندر گاز مایع ۸ کیلوگرم پرتابل</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://mgas.ir/#product=cylinder-5-kg</loc>
+    <lastmod>2026-10-21T06:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://mgas.ir/products/5%20Liter/DSC080536.webp</image:loc>
+      <image:title>کپسول گاز ۵ کیلویی پیکنیک ام گاز</image:title>
+      <image:caption>سیلندر گاز مایع ۵ کیلوگرم مسافرتی و پیکنیک با شیر برنجی استاندارد</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://mgas.ir/#product=cylinder-3-kg</loc>
+    <lastmod>2026-10-21T06:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://mgas.ir/products/3%20Liter/DSC08478-5-scaled.webp</image:loc>
+      <image:title>کپسول گاز ۳ کیلویی پیکنیک ام گاز</image:title>
+      <image:caption>سیلندر ۳ کیلوگرم پیکنیکی کمپینگ با رنگ کوره‌ای</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://mgas.ir/#product=cylinder-1-5-liter</loc>
+    <lastmod>2026-10-21T06:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://mgas.ir/products/1.5%20Liter/DSC08466-1-scaled.webp</image:loc>
+      <image:title>کپسول گاز ۱.۵ لیتری قابل حمل ام گاز</image:title>
+      <image:caption>سیلندر کوچک ۱.۵ لیتر مناسب کوهنوردی و گردشگری</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://mgas.ir/#product=cylinder-1-liter</loc>
+    <lastmod>2026-10-21T06:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+    <image:image>
+      <image:loc>https://mgas.ir/products/1%20Liter/DSC08464-1-scaled.webp</image:loc>
+      <image:title>کپسول گاز ۱ لیتری ام گاز</image:title>
+      <image:caption>سیلندر پرتابل ۱ لیتر گاز مایع LPG</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://mgas.ir/#product=cylinder-0-5-liter</loc>
+    <lastmod>2026-10-21T06:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+    <image:image>
+      <image:loc>https://mgas.ir/products/0.5%20Liter/DSC08458-1-scaled.webp</image:loc>
+      <image:title>کپسول گاز ۰.۵ لیتری جیبی ام گاز</image:title>
+      <image:caption>کوچک‌ترین کپسول گاز استاندارد ۰.۵ لیتر</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://mgas.ir/#product=cylinder-auto-lpg-tank</loc>
+    <lastmod>2026-10-21T06:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://mgas.ir/products/Auto%20LPG%20Tank/DSC08511.webp</image:loc>
+      <image:title>مخزن گاز مایع خودرو (Auto LPG Tank) ام گاز</image:title>
+      <image:caption>تولید مخازن اتوگاز خودرویی استاندارد با ضخامت ۳.۵ میلیمتر و تست فشار ۳۰ بار</image:caption>
     </image:image>
   </url>
 
   <!-- ======================================================== -->
-  <!-- 4. Arabic Subdomain (ar.mgas.ir)                         -->
+  <!-- 4. Technical Research Articles                            -->
   <!-- ======================================================== -->
   <url>
-    <loc>https://ar.mgas.ir/</loc>
-    <lastmod>2026-03-01T00:00:00+00:00</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.95</priority>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://ar.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="ar-SA" href="https://ar.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="ar-AE" href="https://ar.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="ar-IQ" href="https://ar.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="fa" href="https://fa.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="ur" href="https://ur.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="tr" href="https://tr.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://ru.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="de" href="https://de.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="hy" href="https://hy.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/" />
+    <loc>https://mgas.ir/#article=engineering-standards-lpg-cylinder-manufacturing</loc>
+    <lastmod>2026-10-21T06:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://mgas.ir/articles/engineering.webp</image:loc>
+      <image:title>استانداردهای مهندسی و پروتکل‌های ایمنی در ساخت کپسول‌های گاز مایع LPG</image:title>
+      <image:caption>تحلیل متالورژی ورق، جوشکاری زیرپودری، عملیات حرارتی ۹۳۰ درجه و تست هیدرواستاتیک ۳۰ بار</image:caption>
+    </image:image>
   </url>
 
-  <!-- ======================================================== -->
-  <!-- 5. Turkish Subdomain (tr.mgas.ir)                        -->
-  <!-- ======================================================== -->
   <url>
-    <loc>https://tr.mgas.ir/</loc>
-    <lastmod>2026-03-01T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="tr" href="https://tr.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="tr-TR" href="https://tr.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="fa" href="https://fa.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="ur" href="https://ur.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://ar.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://ru.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="de" href="https://de.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="hy" href="https://hy.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/" />
-  </url>
-
-  <!-- ======================================================== -->
-  <!-- 6. Russian Subdomain (ru.mgas.ir)                        -->
-  <!-- ======================================================== -->
-  <url>
-    <loc>https://ru.mgas.ir/</loc>
-    <lastmod>2026-03-01T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://ru.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="ru-RU" href="https://ru.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="fa" href="https://fa.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="ur" href="https://ur.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://ar.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="tr" href="https://tr.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="de" href="https://de.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="hy" href="https://hy.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/" />
-  </url>
-
-  <!-- ======================================================== -->
-  <!-- 7. German Subdomain (de.mgas.ir)                         -->
-  <!-- ======================================================== -->
-  <url>
-    <loc>https://de.mgas.ir/</loc>
-    <lastmod>2026-03-01T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="de" href="https://de.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="de-DE" href="https://de.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="fa" href="https://fa.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="ur" href="https://ur.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://ar.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="tr" href="https://tr.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://ru.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="hy" href="https://hy.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/" />
-  </url>
-
-  <!-- ======================================================== -->
-  <!-- 8. Armenian Subdomain (hy.mgas.ir)                       -->
-  <!-- ======================================================== -->
-  <url>
-    <loc>https://hy.mgas.ir/</loc>
-    <lastmod>2026-03-01T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="hy" href="https://hy.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="hy-AM" href="https://hy.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="fa" href="https://fa.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="ur" href="https://ur.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://ar.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="tr" href="https://tr.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="ru" href="https://ru.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="de" href="https://de.mgas.ir/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://mgas.ir/" />
+    <loc>https://mgas.ir/#article=lpg-cylinder-management-storage-transportation-safety-protocols</loc>
+    <lastmod>2026-10-21T06:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://mgas.ir/articles/technical.webp</image:loc>
+      <image:title>پروتکل‌های ایمنی، انبارداری و حمل‌ونقل سیلندرهای گاز مایع</image:title>
+      <image:caption>اصول انبارداری، ایمنی بارگیری، مدیریت حوادث و استانداردهای NFPA 58 در حمل گاز مایع</image:caption>
+    </image:image>
   </url>
 
 </urlset>

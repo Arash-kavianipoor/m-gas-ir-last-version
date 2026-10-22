@@ -82,48 +82,63 @@ export const MeniscusMobileNav: React.FC<MeniscusNavProps> = ({
     : navItems;
 
   /*
-   * Track current section only when explicitly overridden (e.g. modal/article state)
-   * We avoid listening to scroll events to protect mobile Chrome GPU compositor from frequent layout triggers.
+   * Track current section from URL hash or explicit override.
+   * Enables deep-linking, SEO crawler navigation and browser history support.
    */
   useEffect(() => {
-    if (activeSectionOverride) {
-      const idx = items.findIndex(
-        (item) => item.id === activeSectionOverride
-      );
-
+    const syncFromUrl = () => {
+      const hash = window.location.hash.replace('#', '').split('=')[0];
+      const targetId = activeSectionOverride || hash || 'hero';
+      const idx = items.findIndex((item) => item.id === targetId);
       if (idx !== -1) {
         setActiveIndex(idx);
       }
-    }
-  }, [activeSectionOverride, isRTL]);
+    };
+
+    syncFromUrl();
+    window.addEventListener('hashchange', syncFromUrl, { passive: true });
+    return () => window.removeEventListener('hashchange', syncFromUrl);
+  }, [activeSectionOverride, isRTL, items]);
 
   /*
-   * Navigation click.
+   * Navigation click with exclusive URL assignment.
    */
   const handleSelect = (index: number) => {
     setActiveIndex(index);
 
     const item = items[index];
 
-    if (
-      item.id === 'calculator' &&
-      onOpenRfq
-    ) {
-      onOpenRfq();
+    if (item.id === 'calculator') {
+      window.location.hash = 'calculator';
+      if (onOpenRfq) {
+        onOpenRfq();
+      } else {
+        scrollToElement('calculator');
+      }
       return;
     }
 
-    if (
-      item.id === 'products' &&
-      onExploreProducts
-    ) {
-      onExploreProducts();
+    if (item.id === 'products') {
+      window.location.hash = 'products';
+      if (onExploreProducts) {
+        onExploreProducts();
+      } else {
+        scrollToElement('products');
+      }
       return;
     }
 
     if (item.id === 'hero') {
+      if (window.location.hash && window.location.hash !== '#hero') {
+        try {
+          history.pushState(null, '', window.location.pathname + window.location.search);
+        } catch {
+          window.location.hash = '';
+        }
+      }
       smoothOrInstantScrollToTop();
     } else {
+      window.location.hash = item.id;
       scrollToElement(item.id);
     }
   };
@@ -352,13 +367,14 @@ export const MeniscusMobileNav: React.FC<MeniscusNavProps> = ({
               : rawLabel;
 
           return (
-            <button
+            <a
               key={item.id}
-              type="button"
+              href={item.href}
               id={`meniscus-tab-${item.id}`}
-              onClick={() =>
-                handleSelect(index)
-              }
+              onClick={(e) => {
+                e.preventDefault();
+                handleSelect(index);
+              }}
               className="
                 relative
                 flex-1
@@ -374,8 +390,10 @@ export const MeniscusMobileNav: React.FC<MeniscusNavProps> = ({
                 select-none
                 group
                 px-1
+                no-underline
               "
               aria-label={label}
+              title={label}
             >
               <span
                 dir={isRTL ? 'rtl' : 'ltr'}
@@ -403,7 +421,7 @@ export const MeniscusMobileNav: React.FC<MeniscusNavProps> = ({
               >
                 {label}
               </span>
-            </button>
+            </a>
           );
         })}
       </div>

@@ -138,30 +138,49 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
                       </span>
                     </div>
 
-                    {/* Product Image on Desktop with Hover Zoom Feature (No click modal) */}
-                    <div
-                      className="relative aspect-square w-full rounded-xl bg-slate-950/80 border border-slate-800/80 p-4 flex items-center justify-center overflow-hidden group cursor-crosshair"
+                    {/* Product Image on Desktop with Hover Zoom Feature and crawlable link */}
+                    <a
+                      href={`#product=${product.slug}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        onSelectProductForSpecs(product);
+                      }}
+                      className="block relative aspect-square w-full rounded-xl bg-slate-950/80 border border-slate-800/80 p-4 overflow-hidden group cursor-pointer"
                       onMouseEnter={() => setHoveredPreviewImage(product.images?.referenceReal || product.image)}
                       onMouseLeave={() => setHoveredPreviewImage(null)}
+                      title={loc.name}
                     >
                       <img
                         src={product.images?.front || product.image}
-                        alt={loc.name}
-                        className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-125"
+                        alt={loc.imageAlt || loc.name}
+                        width={300}
+                        height={300}
+                        style={{ aspectRatio: '1/1' }}
+                        className="max-h-full max-w-full object-contain mx-auto transition-transform duration-300 group-hover:scale-110"
                         loading="lazy"
+                        decoding="async"
                       />
-                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                         <span className="px-3 py-1.5 rounded-full bg-slate-900/90 text-emerald-400 text-xs font-bold flex items-center gap-1.5 shadow-lg border border-emerald-500/30">
                           <Eye className="w-3.5 h-3.5" />
-                          <span>{currentLanguage === 'fa' ? 'پیش‌نمایش ۱۰۰٪' : '100% Zoom'}</span>
+                          <span>{currentLanguage === 'fa' ? 'مشاهده مشخصات فنی' : 'View Specifications'}</span>
                         </span>
                       </div>
-                    </div>
+                    </a>
 
                     {/* Title & Short Description */}
                     <div className="mt-4 space-y-1.5">
                       <h3 className="text-base font-bold text-white leading-snug line-clamp-2">
-                        {loc.name}
+                        <a
+                          href={`#product=${product.slug}`}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            onSelectProductForSpecs(product);
+                          }}
+                          className="hover:text-emerald-400 transition-colors"
+                        >
+                          {loc.name}
+                        </a>
                       </h3>
                       <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
                         {loc.shortDescription}
@@ -184,19 +203,23 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
 
                     {/* Action Buttons */}
                     <div className="grid grid-cols-2 gap-2 pt-1">
-                      <button
-                        type="button"
-                        onClick={() => onSelectProductForSpecs(product)}
-                        className="w-full py-2 px-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700/80 text-xs font-semibold transition-all flex items-center justify-center gap-1"
+                      <a
+                        href={`#product=${product.slug}`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          onSelectProductForSpecs(product);
+                        }}
+                        className="w-full py-2 px-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700/80 text-xs font-semibold transition-all flex items-center justify-center gap-1 cursor-pointer"
+                        title={`${loc.name} - ${currentLanguage === 'fa' ? 'نقشه و تست فشار' : 'Blueprint & 3D'}`}
                       >
                         <Compass className="w-3.5 h-3.5 text-emerald-400" />
-                        <span>{currentLanguage === 'fa' ? 'نقشه و رنگ' : 'Specs & 3D'}</span>
-                      </button>
+                        <span>{currentLanguage === 'fa' ? 'نقشه و مشخصات' : 'Specs & 3D'}</span>
+                      </a>
 
                       <button
                         type="button"
                         onClick={() => onAddToRfq(product)}
-                        className="w-full py-2 px-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition-all shadow-md shadow-emerald-500/20 flex items-center justify-center gap-1"
+                        className="w-full py-2 px-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition-all shadow-md shadow-emerald-500/20 flex items-center justify-center gap-1 cursor-pointer"
                       >
                         <Plus className="w-3.5 h-3.5" />
                         <span>{t.navCalculator || 'Add to RFQ'}</span>

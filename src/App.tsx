@@ -21,10 +21,11 @@ import { HoverFooter } from './components/ui/HoverFooter';
 import { TechnicalSpecsModal } from './components/TechnicalSpecsModal';
 import { MeniscusMobileNav } from './components/MeniscusMobileNav';
 import { Product, RfqItem } from './types';
-import { Phone, ArrowUp } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 import { WhatsAppIcon } from './components/WhatsAppIcon';
 import { COMPANY_INFO } from './data/company';
 import { TECHNICAL_ARTICLES, Article } from './data/articles';
+import { PRODUCTS } from './data/products';
 import { SeoHead } from './seo/SeoHead';
 import { scrollToElement, scrollToTop as smoothOrInstantScrollToTop } from './utils/scrollHelper';
 
@@ -32,29 +33,64 @@ function MainWebsite() {
   const { currentLanguage, isRTL, t } = useLanguage();
   const [selectedProductForSpecs, setSelectedProductForSpecs] = useState<Product | null>(null);
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
+  const [activeSection, setActiveSection] = useState<string | null>(null);
   const [rfqItems, setRfqItems] = useState<RfqItem[]>([]);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
-  // Synchronize URL hash with selected article for deep-linking and SEO
+  // Synchronize URL hash with selected article, product, or distinct menu section for SEO and deep-linking
   useEffect(() => {
     const parseHash = () => {
       const hash = window.location.hash;
+      
       if (hash.startsWith('#article=')) {
         const slug = hash.replace('#article=', '').split('&')[0];
         const match = TECHNICAL_ARTICLES.find((a) => a.slug === slug || a.id === slug);
         if (match) {
           setSelectedArticle(match);
+          setSelectedProductForSpecs(null);
+          setActiveSection('articles');
           return;
         }
-      }
-      if (!hash.startsWith('#article=')) {
+      } else {
         setSelectedArticle(null);
+      }
+
+      if (hash.startsWith('#product=')) {
+        const slug = hash.replace('#product=', '').split('&')[0];
+        const match = PRODUCTS.find((p) => p.slug === slug || p.id === slug);
+        if (match) {
+          setSelectedProductForSpecs(match);
+          setSelectedArticle(null);
+          setActiveSection('products');
+          return;
+        }
+      } else {
+        setSelectedProductForSpecs(null);
+      }
+
+      // Check for standalone menu section hashes
+      const cleanHash = hash.replace('#', '').split('&')[0].split('?')[0];
+      if (cleanHash && cleanHash !== 'hero') {
+        setActiveSection(cleanHash);
+      } else {
+        setActiveSection(null);
       }
     };
 
     parseHash();
     window.addEventListener('hashchange', parseHash, { passive: true });
     return () => window.removeEventListener('hashchange', parseHash);
+  }, []);
+
+  // Smooth scroll to target element on initial page load if deep-linked
+  useEffect(() => {
+    const hash = window.location.hash.replace('#', '').split('&')[0].split('?')[0];
+    if (hash && !hash.startsWith('article=') && !hash.startsWith('product=') && hash !== 'hero') {
+      const timer = setTimeout(() => {
+        scrollToElement(hash);
+      }, 300);
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   useEffect(() => {
@@ -71,6 +107,7 @@ function MainWebsite() {
 
   const handleOpenArticle = (article: Article) => {
     setSelectedArticle(article);
+    setSelectedProductForSpecs(null);
     window.location.hash = `article=${article.slug}`;
     smoothOrInstantScrollToTop();
   };
@@ -78,6 +115,18 @@ function MainWebsite() {
   const handleCloseArticle = () => {
     setSelectedArticle(null);
     window.location.hash = 'articles';
+  };
+
+  const handleSelectProduct = (product: Product) => {
+    setSelectedProductForSpecs(product);
+    window.location.hash = `product=${product.slug}`;
+  };
+
+  const handleCloseProduct = () => {
+    setSelectedProductForSpecs(null);
+    if (window.location.hash.startsWith('#product=')) {
+      window.location.hash = 'products';
+    }
   };
 
   const handleOpenRfq = () => {
@@ -123,7 +172,11 @@ function MainWebsite() {
   return (
     <div className={`min-h-screen bg-[#050D12] text-slate-100 selection:bg-emerald-500 selection:text-slate-950 ${isVazir ? 'font-vazirmatn' : 'font-sans'}`}>
       {/* Centralized Multilingual SEO Engine & JSON-LD Syncer */}
-      <SeoHead activeArticle={selectedArticle} />
+      <SeoHead
+        activeArticle={selectedArticle}
+        activeProduct={selectedProductForSpecs}
+        activeSection={activeSection}
+      />
       
       {/* Sticky Shrinking Header */}
       {!selectedArticle && <Header onOpenRfq={handleOpenRfq} />}
@@ -147,19 +200,19 @@ function MainWebsite() {
           {/* Minimal Customer & OEM Brands Trust Bar */}
           <CustomerBrandsStrip />
 
-          {/* 13 Gas Cylinders Catalog with GlowCards & Technical Filters */}
+          {/* 13 Gas Cylinders Catalog with GlowCards, Semantic <a> tags & Technical Filters */}
           <ProductCatalog
-            onSelectProductForSpecs={setSelectedProductForSpecs}
+            onSelectProductForSpecs={handleSelectProduct}
             onAddToRfq={handleAddToRfq}
           />
 
           {/* Engineering Quality, 30-Bar Hydrostatic Testing & Metallurgical Process */}
           <QualityProcess />
 
-          {/* Factory Video Tour & Production Line Footage (Including Managing Director Mr. Mousa Amooie Inspection) */}
+          {/* Factory Video Tour & Production Line Footage */}
           <FactoryVideoTour />
 
-          {/* Technical Articles & Engineering Knowledge Base */}
+          {/* Technical Articles & Engineering Knowledge Base with Crawlable Semantic Links */}
           <ArticlesSection onSelectArticle={handleOpenArticle} />
 
           {/* 50-Year Heritage (Est. 1970), Vision & 12+ Export Destinational Hubs */}
@@ -185,7 +238,7 @@ function MainWebsite() {
       {/* Interactive Blueprint & Technical Drawing Modal */}
       <TechnicalSpecsModal
         product={selectedProductForSpecs}
-        onClose={() => setSelectedProductForSpecs(null)}
+        onClose={handleCloseProduct}
         onAddToRfq={handleAddToRfq}
       />
 
@@ -193,10 +246,10 @@ function MainWebsite() {
       <MeniscusMobileNav
         onOpenRfq={handleOpenRfq}
         onExploreProducts={handleExploreProducts}
-        activeSectionOverride={selectedArticle ? 'articles' : null}
+        activeSectionOverride={selectedArticle ? 'articles' : (activeSection || null)}
       />
 
-      {/* Floating Quick WhatsApp Action Button (bottom right / left based on RTL, lifted on mobile for Meniscus Dock clearance) */}
+      {/* Floating Quick WhatsApp Action Button */}
       <div
         className={`fixed bottom-22 sm:bottom-24 lg:bottom-6 z-40 flex flex-col items-center gap-3 ${
           isRTL ? 'left-4 sm:left-6' : 'right-4 sm:right-6'

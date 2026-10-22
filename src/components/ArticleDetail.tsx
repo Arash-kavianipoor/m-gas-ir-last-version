@@ -76,7 +76,10 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
   }, [article]);
 
   const handleCopyLink = () => {
-    const url = `${window.location.origin}/#article=${article.slug}&lang=${currentLanguage}`;
+    const baseUrl = window.location.origin;
+    const url = currentLanguage === 'fa'
+      ? `${baseUrl}/#article=${article.slug}`
+      : `${baseUrl}/?lang=${currentLanguage}#article=${article.slug}`;
     navigator.clipboard.writeText(url);
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
@@ -420,6 +423,56 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
                   </li>
                 ))}
               </ul>
+            </section>
+
+            {/* Related Manufactured Cylinders (Internal SEO Linking & Commercial Inquiries) */}
+            <section className="bg-slate-900/60 p-6 sm:p-8 rounded-3xl border border-emerald-500/30 space-y-4">
+              <div className="flex items-center gap-2.5 text-sm font-bold text-emerald-400 uppercase tracking-wider border-b border-slate-800 pb-3">
+                <ShieldCheck className="w-5 h-5 text-emerald-400" />
+                <span>{currentLanguage === 'fa' ? 'محصولات منطبق با استانداردهای این مقاله' : 'Cylinders Conforming to These Standards'}</span>
+              </div>
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                {currentLanguage === 'fa'
+                  ? 'کلیه محصولات کارخانه ام گاز منطبق بر الزامات مهندسی، تست هیدرواستاتیک ۳۰ بار و کدهای استاندارد ISIRI 841 و EN 1442 تولید می‌شوند:'
+                  : 'All M Gas cylinders undergo 30-bar hydrostatic proof expansion testing and are certified to ISIRI 841, ISO 9001, and EN 1442:'}
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                <a
+                  href="#product=cylinder-11-kg"
+                  className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/60 transition-all group block"
+                >
+                  <span className="text-xs font-bold text-white group-hover:text-emerald-300 block mb-1">
+                    {currentLanguage === 'fa' ? 'سیلندر ۱۱ کیلویی خانگی' : '11kg Domestic Cylinder'}
+                  </span>
+                  <span className="text-[11px] text-slate-400 block font-mono">
+                    {currentLanguage === 'fa' ? 'آزمون ۳۰ بار • شیر استاندارد' : '30-Bar Proof • G.56 Valve'}
+                  </span>
+                </a>
+
+                <a
+                  href="#product=cylinder-50-kg"
+                  className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/60 transition-all group block"
+                >
+                  <span className="text-xs font-bold text-white group-hover:text-emerald-300 block mb-1">
+                    {currentLanguage === 'fa' ? 'سیلندر ۵۰ کیلویی صنعتی' : '50kg Industrial Cylinder'}
+                  </span>
+                  <span className="text-[11px] text-slate-400 block font-mono">
+                    {currentLanguage === 'fa' ? 'مخزن سنگین کارگاهی • POL' : 'Heavy Gauge Steel • POL Valve'}
+                  </span>
+                </a>
+
+                <a
+                  href="#product=cylinder-auto-lpg-tank"
+                  className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/60 transition-all group block"
+                >
+                  <span className="text-xs font-bold text-white group-hover:text-emerald-300 block mb-1">
+                    {currentLanguage === 'fa' ? 'مخزن گاز مایع خودرو' : 'Automotive LPG Autogas Tank'}
+                  </span>
+                  <span className="text-[11px] text-slate-400 block font-mono">
+                    {currentLanguage === 'fa' ? 'استاندارد ECE R67 • ضخامت ۳.۵mm' : 'ECE R67 • 3.5mm Steel'}
+                  </span>
+                </a>
+              </div>
             </section>
 
             {/* Related Articles Switcher */}
