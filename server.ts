@@ -49,10 +49,18 @@ async function startServer() {
       return res.redirect(301, '/sitemap.xml');
     }
 
-    // 4. Redirect redundant ?lang=fa on root since Persian is the canonical default
-    if (req.path === '/' && req.query.lang === 'fa') {
-      const cleanUrl = req.originalUrl.replace(/(\?|&)lang=fa/, '').replace(/\?$/, '');
-      return res.redirect(301, cleanUrl || '/');
+    // 4. ELIMINATE SEO CANNIBALIZATION: Permanent 301 redirect any ?lang= query parameters
+    // Focus activity strictly on dedicated subdomains (e.g., https://en.mgas.ir/ or https://de.mgas.ir/)
+    if (req.query.lang) {
+      const targetLang = String(req.query.lang).toLowerCase();
+      const cleanPath = req.path;
+      if (targetLang === 'fa') {
+        return res.redirect(301, `https://mgas.ir${cleanPath === '/' ? '' : cleanPath}`);
+      }
+      const validSubdomains = ['en', 'ar', 'de', 'ur', 'tr', 'ru', 'hy'];
+      if (validSubdomains.includes(targetLang)) {
+        return res.redirect(301, `https://${targetLang}.mgas.ir${cleanPath === '/' ? '' : cleanPath}`);
+      }
     }
 
     next();

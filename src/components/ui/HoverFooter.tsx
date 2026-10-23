@@ -204,24 +204,32 @@ export const HoverFooter: React.FC = () => {
 
             {/* Quick Links */}
             <div className="pt-2 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-medium">
-              <a href="#articles" className="text-emerald-400 hover:text-emerald-300 transition-colors">
-                {t.navArticles}
-              </a>
-              <span className="text-slate-700">•</span>
-              <a href="#faq" className="text-emerald-400 hover:text-emerald-300 transition-colors">
-                {t.faqBadge || 'FAQ'}
-              </a>
-              <span className="text-slate-700">•</span>
-              <a href="#products" className="text-slate-400 hover:text-white transition-colors">
+              <a href="/products" className="text-emerald-400 hover:text-emerald-300 transition-colors">
                 {t.navProducts}
               </a>
               <span className="text-slate-700">•</span>
-              <a href="#factory-tour" className="text-slate-400 hover:text-white transition-colors">
+              <a href="/quality" className="text-slate-400 hover:text-white transition-colors">
+                {t.navQuality}
+              </a>
+              <span className="text-slate-700">•</span>
+              <a href="/factory-tour" className="text-slate-400 hover:text-white transition-colors">
                 {isRTL ? 'ویدیوهای کارخانه' : 'Factory Videos'}
               </a>
               <span className="text-slate-700">•</span>
-              <a href="#calculator" className="text-slate-400 hover:text-white transition-colors">
+              <a href="/articles" className="text-emerald-400 hover:text-emerald-300 transition-colors">
+                {t.navArticles}
+              </a>
+              <span className="text-slate-700">•</span>
+              <a href="/faq" className="text-slate-400 hover:text-white transition-colors">
+                {t.faqBadge || 'FAQ'}
+              </a>
+              <span className="text-slate-700">•</span>
+              <a href="/calculator" className="text-slate-400 hover:text-white transition-colors">
                 {t.navCalculator}
+              </a>
+              <span className="text-slate-700">•</span>
+              <a href="/contact" className="text-slate-400 hover:text-white transition-colors">
+                {t.navContact}
               </a>
             </div>
           </div>

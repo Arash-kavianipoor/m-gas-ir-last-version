@@ -6,7 +6,8 @@ import {
   Calculator,
 } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
-import { scrollToElement, scrollToTop as smoothOrInstantScrollToTop } from '../utils/scrollHelper';
+import { useRouter } from '../router/RouterContext';
+import { scrollToTop as smoothOrInstantScrollToTop } from '../utils/scrollHelper';
 
 export interface MeniscusNavProps {
   onOpenRfq?: () => void;
@@ -30,6 +31,7 @@ export const MeniscusMobileNav: React.FC<MeniscusNavProps> = ({
   activeSectionOverride,
 }) => {
   const { t, isRTL } = useLanguage();
+  const { navigate, currentPath } = useRouter();
 
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -38,7 +40,7 @@ export const MeniscusMobileNav: React.FC<MeniscusNavProps> = ({
   const navItems: NavItem[] = [
     {
       id: 'hero',
-      href: '#hero',
+      href: '/',
       labelKey: 'navHome',
       icon: Flame,
       color: '#10b981',
@@ -47,7 +49,7 @@ export const MeniscusMobileNav: React.FC<MeniscusNavProps> = ({
     },
     {
       id: 'products',
-      href: '#products',
+      href: '/products',
       labelKey: 'navProducts',
       icon: Layers,
       color: '#06b6d4',
@@ -56,7 +58,7 @@ export const MeniscusMobileNav: React.FC<MeniscusNavProps> = ({
     },
     {
       id: 'quality',
-      href: '#quality',
+      href: '/quality',
       labelKey: 'navQuality',
       icon: ShieldCheck,
       color: '#f59e0b',
@@ -65,7 +67,7 @@ export const MeniscusMobileNav: React.FC<MeniscusNavProps> = ({
     },
     {
       id: 'calculator',
-      href: '#calculator',
+      href: '/calculator',
       labelKey: 'navCalculator',
       icon: Calculator,
       color: '#ec4899',
@@ -82,64 +84,42 @@ export const MeniscusMobileNav: React.FC<MeniscusNavProps> = ({
     : navItems;
 
   /*
-   * Track current section from URL hash or explicit override.
-   * Enables deep-linking, SEO crawler navigation and browser history support.
+   * Track current section from clean currentPath or explicit override.
    */
   useEffect(() => {
-    const syncFromUrl = () => {
-      const hash = window.location.hash.replace('#', '').split('=')[0];
-      const targetId = activeSectionOverride || hash || 'hero';
-      const idx = items.findIndex((item) => item.id === targetId);
-      if (idx !== -1) {
-        setActiveIndex(idx);
-      }
-    };
+    let targetId = 'hero';
+    if (activeSectionOverride) {
+      targetId = activeSectionOverride;
+    } else if (currentPath.startsWith('/products')) {
+      targetId = 'products';
+    } else if (currentPath.startsWith('/quality') || currentPath.startsWith('/factory-tour')) {
+      targetId = 'quality';
+    } else if (currentPath.startsWith('/calculator')) {
+      targetId = 'calculator';
+    } else if (currentPath === '/') {
+      targetId = 'hero';
+    }
 
-    syncFromUrl();
-    window.addEventListener('hashchange', syncFromUrl, { passive: true });
-    return () => window.removeEventListener('hashchange', syncFromUrl);
-  }, [activeSectionOverride, isRTL, items]);
+    const idx = items.findIndex((item) => item.id === targetId);
+    if (idx !== -1) {
+      setActiveIndex(idx);
+    }
+  }, [activeSectionOverride, currentPath, isRTL, items]);
 
   /*
-   * Navigation click with exclusive URL assignment.
+   * Navigation click with exclusive clean URL assignment.
    */
   const handleSelect = (index: number) => {
     setActiveIndex(index);
-
     const item = items[index];
 
-    if (item.id === 'calculator') {
-      window.location.hash = 'calculator';
-      if (onOpenRfq) {
-        onOpenRfq();
-      } else {
-        scrollToElement('calculator');
-      }
-      return;
-    }
-
-    if (item.id === 'products') {
-      window.location.hash = 'products';
-      if (onExploreProducts) {
-        onExploreProducts();
-      } else {
-        scrollToElement('products');
-      }
-      return;
-    }
-
-    if (item.id === 'hero') {
-      if (window.location.hash && window.location.hash !== '#hero') {
-        try {
-          history.pushState(null, '', window.location.pathname + window.location.search);
-        } catch {
-          window.location.hash = '';
-        }
-      }
+    navigate(item.href);
+    if (item.id === 'calculator' && onOpenRfq) {
+      onOpenRfq();
+    } else if (item.id === 'products' && onExploreProducts) {
+      onExploreProducts();
+    } else if (item.id === 'hero') {
       smoothOrInstantScrollToTop();
-    } else {
-      window.location.hash = item.id;
-      scrollToElement(item.id);
     }
   };
 

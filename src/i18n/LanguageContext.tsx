@@ -130,29 +130,13 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
         localStorage.setItem(STORAGE_KEY, lang);
         localStorage.setItem(MANUAL_LOCK_KEY, 'true');
 
-        // 2. Safe, in-page URL synchronization:
-        // Update URL cleanly without triggering page crash, DNS error, or white screen
+        // 2. Direct Subdomain Navigation in Production (Strictly avoids ?lang= cannibalization)
         try {
-          const currentHost = window.location.hostname.toLowerCase();
-          const hostLang = getLanguageFromHostname(currentHost);
-
-          // If user is on a dedicated language subdomain (e.g. de.mgas.ir) and explicitly selects Persian (fa):
-          // Smoothly navigate back to canonical root https://mgas.ir
-          if (hostLang && hostLang !== lang && lang === DEFAULT_LANGUAGE && currentHost.includes(ROOT_DOMAIN)) {
-            window.location.href = `${ROOT_URL}${window.location.pathname}${window.location.hash}`;
+          const { url, shouldNavigate } = buildSwitchLanguageUrl(lang, window.location.pathname);
+          if (shouldNavigate) {
+            window.location.href = url;
             return;
           }
-
-          // Otherwise keep in-app flow seamless and update the query string ?lang=
-          const params = new URLSearchParams(window.location.search);
-          if (lang === DEFAULT_LANGUAGE) {
-            params.delete('lang');
-          } else {
-            params.set('lang', lang);
-          }
-          const queryStr = params.toString() ? `?${params.toString()}` : '';
-          const newUrl = `${window.location.pathname}${queryStr}${window.location.hash}`;
-          window.history.pushState({}, '', newUrl);
         } catch {}
       }
     }

@@ -46,3 +46,10 @@ Allow: /
 
 # Official XML Sitemaps
 Sitemap: https://mgas.ir/sitemap.xml
+Sitemap: https://en.mgas.ir/sitemap.xml
+Sitemap: https://ar.mgas.ir/sitemap.xml
+Sitemap: https://de.mgas.ir/sitemap.xml
+Sitemap: https://ur.mgas.ir/sitemap.xml
+Sitemap: https://tr.mgas.ir/sitemap.xml
+Sitemap: https://ru.mgas.ir/sitemap.xml
+Sitemap: https://hy.mgas.ir/sitemap.xml

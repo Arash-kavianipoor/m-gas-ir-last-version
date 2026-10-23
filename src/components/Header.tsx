@@ -25,6 +25,7 @@ import { COMPANY_INFO } from '../data/company';
 import { FlagIcon } from './FlagIcon';
 import { scrollToElement } from '../utils/scrollHelper';
 import { CatalogDownloadModal } from './CatalogDownloadModal';
+import { useRouter } from '../router/RouterContext';
 
 interface HeaderProps {
   onOpenRfq?: () => void;
@@ -32,6 +33,7 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
   const { currentLanguage, setLanguage, t, isRTL, geoInfo } = useLanguage();
+  const { navigate } = useRouter();
   const isVazir = currentLanguage === 'fa' || currentLanguage === 'ar' || isRTL;
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -80,25 +82,22 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
     };
   }, [activeDropdown]);
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
     e.preventDefault();
     setMobileMenuOpen(false);
     setActiveDropdown(null);
     setLangDropdownOpen(false);
-    const targetId = href.replace('#', '');
-    if (targetId === 'hero') {
-      if (window.location.hash && window.location.hash !== '#hero') {
-        try {
-          history.pushState(null, '', window.location.pathname + window.location.search);
-        } catch {
-          window.location.hash = '';
-        }
-      }
-      scrollToElement('hero');
-    } else {
-      window.location.hash = targetId;
-      scrollToElement(targetId);
+    
+    // Normalize path to clean page URL
+    let cleanPath = path;
+    if (cleanPath.startsWith('#')) {
+      const name = cleanPath.replace('#', '');
+      if (name === 'hero' || !name) cleanPath = '/';
+      else if (name === 'history') cleanPath = '/about';
+      else cleanPath = '/' + name;
     }
+    
+    navigate(cleanPath);
   };
 
   const toggleNavDropdown = (menuKey: string) => {
@@ -119,44 +118,38 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
 
   const currentLangInfo = SUPPORTED_LANGUAGES[currentLanguage];
 
-  // Concise, Conceptual Dropdown Menu Categories
+  // Standalone Clean Dropdown Menu Categories
   const menuCategories = [
     {
       id: 'products',
       title: t.navProducts,
       icon: Layers,
-      href: '#products',
-      badge: '13',
+      href: '/products',
+      badge: '14',
       items: [
         {
-          label: isRTL ? 'همه ۱۳ مدل' : 'All 13 Models',
-          desc: isRTL ? 'کاتالوگ جامع کپسول‌ها' : 'Complete portfolio',
-          href: '#products',
+          label: isRTL ? 'فروشگاه و تمام ۱۴ مدل' : 'Store & All 14 Models',
+          desc: isRTL ? 'کاتالوگ جامع کپسول‌ها' : 'Complete portfolio & shop',
+          href: '/products',
           icon: Layers,
         },
         {
           label: isRTL ? 'خانگی و پیکنیک' : 'Domestic & Camping',
           desc: isRTL ? '۰.۵ تا ۱۱ کیلوگرم' : '0.5kg – 11kg cylinders',
-          href: '#products',
+          href: '/products',
           icon: Flame,
         },
         {
           label: isRTL ? 'صنعتی و کارگاهی' : 'Industrial & Heavy',
           desc: isRTL ? '۲۵ تا ۵۰ کیلوگرم' : '25kg – 50kg heavy duty',
-          href: '#products',
+          href: '/products',
           icon: Building2,
         },
         {
-          label: isRTL ? 'مخازن خودرویی' : 'Automotive LPG',
-          desc: isRTL ? 'مخازن ۶۰ تا ۸۰ لیتر' : '60L – 80L auto tanks',
-          href: '#products',
+          label: isRTL ? 'مخازن خودرویی' : 'Automotive LPG Tanks',
+          desc: isRTL ? 'مخازن ۶۰ لیتر استانداردی' : '60L auto LPG tanks',
+          href: '/products',
           icon: Compass,
-        },
-        {
-          label: t.navSpecifications,
-          desc: isRTL ? 'نقشه و تست فشار' : 'Drawings & test limits',
-          href: '#specifications',
-          icon: FileText,
         },
       ],
     },
@@ -164,26 +157,20 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
       id: 'quality',
       title: t.navQuality,
       icon: ShieldCheck,
-      href: '#quality',
+      href: '/quality',
       badge: 'ISO',
       items: [
         {
-          label: isRTL ? 'ویدیوهای کارخانه و خطوط تولید' : 'Factory Video Tour',
-          desc: isRTL ? 'بازدید مدیر کارخانه (آقای موسی عمویی)' : 'Executive tour & production lines',
-          href: '#factory-tour',
-          icon: Video,
-        },
-        {
-          label: isRTL ? 'استانداردها' : 'ISO & Certifications',
-          desc: isRTL ? 'ISO 9001 و ملی ایران' : 'Global accredited standards',
-          href: '#quality',
+          label: isRTL ? 'استانداردها و کنترل کیفیت' : 'Quality & ISO Standards',
+          desc: isRTL ? 'ISO 9001 و آزمون هیدرواستاتیک ۳۰ بار' : 'Accredited global standards & testing',
+          href: '/quality',
           icon: ShieldCheck,
         },
         {
-          label: isRTL ? 'تست هیدرواستاتیک' : '30-Bar Hydro Test',
-          desc: isRTL ? 'آزمون فشار ۳۰ بار' : '100% burst & leak tested',
-          href: '#quality',
-          icon: Award,
+          label: isRTL ? 'مستند ویدئویی خطوط تولید' : 'Factory Video Tour',
+          desc: isRTL ? 'بازدید مدیر کارخانه (آقای موسی عمویی)' : 'Production lines & inspection tour',
+          href: '/factory-tour',
+          icon: Video,
         },
       ],
     },
@@ -191,19 +178,19 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
       id: 'articles',
       title: t.navArticles,
       icon: BookOpen,
-      href: '#articles',
+      href: '/articles',
       badge: 'NEW',
       items: [
         {
           label: isRTL ? 'استانداردهای مهندسی و ساخت' : 'Manufacturing Standards',
           desc: isRTL ? 'تحلیل متالورژی، جوشکاری و PWHT' : 'Metallurgy, SAW welding & PWHT',
-          href: '#articles',
+          href: '/articles/engineering-standards-lpg-cylinder-manufacturing',
           icon: FileText,
         },
         {
           label: isRTL ? 'مدیریت، نگهداری و حمل‌ونقل' : 'Storage & Logistics Safety',
           desc: isRTL ? 'NFPA 58، OSHA و استانداردهای ADR' : 'NFPA 58, OSHA & ADR compliance',
-          href: '#articles',
+          href: '/articles/lpg-cylinder-management-storage-transportation-safety',
           icon: ShieldCheck,
         },
       ],
@@ -212,19 +199,31 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
       id: 'about',
       title: t.navHistory,
       icon: Building2,
-      href: '#history',
+      href: '/about',
       badge: '1970',
       items: [
         {
-          label: isRTL ? 'درباره کارخانه' : 'Factory Heritage',
-          desc: isRTL ? 'تأسیس از سال ۱۳۴۹' : 'Since 1970 (50+ years)',
-          href: '#history',
+          label: isRTL ? 'درباره کارخانه و بنیانگذار' : 'Factory Heritage & Founder',
+          desc: isRTL ? 'تأسیس از سال ۱۳۴۹ (مدیریت موسی عمویی)' : 'Since 1970 (50+ years experience)',
+          href: '/about',
           icon: Building2,
         },
         {
-          label: isRTL ? 'صادرات و تماس' : 'Export & Contact',
-          desc: isRTL ? '۱۲+ کشور جهان' : '12+ global destinations',
-          href: '#contact',
+          label: isRTL ? 'پرسش‌های متداول' : 'FAQ & Certification',
+          desc: isRTL ? 'پاسخ به سوالات فنی و بازرگانی' : 'Technical & export questions',
+          href: '/faq',
+          icon: Award,
+        },
+        {
+          label: isRTL ? 'استعلام قیمت و کانتینربندی' : 'Online RFQ Calculator',
+          desc: isRTL ? 'محاسبه کانتینر ۲۰ و ۴۰ فوت' : 'Container stuffing & weight',
+          href: '/calculator',
+          icon: Calculator,
+        },
+        {
+          label: isRTL ? 'تماس و صادرات' : 'Export & Karaj Factory',
+          desc: isRTL ? 'تماس با واحد فروش و آدرس کارخانه' : 'Global sales desk & direct contact',
+          href: '/contact',
           icon: Phone,
         },
       ],
@@ -249,8 +248,8 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
             
             {/* Brand Logo & Title */}
             <a
-              href="#hero"
-              onClick={(e) => handleNavClick(e, '#hero')}
+              href="/"
+              onClick={(e) => handleNavClick(e, '/')}
               className="flex items-center gap-2.5 group focus:outline-none shrink-0"
               aria-label="M Gas Official Website"
             >
@@ -286,8 +285,8 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
               
               {/* Home Direct Link */}
               <a
-                href="#hero"
-                onClick={(e) => handleNavClick(e, '#hero')}
+                href="/"
+                onClick={(e) => handleNavClick(e, '/')}
                 className="px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-200 hover:text-white hover:bg-slate-800/80 transition-colors"
               >
                 {t.navHome}
@@ -370,8 +369,8 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
 
               {/* Direct Contact Link */}
               <a
-                href="#contact"
-                onClick={(e) => handleNavClick(e, '#contact')}
+                href="/contact"
+                onClick={(e) => handleNavClick(e, '/contact')}
                 className="px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-200 hover:text-white hover:bg-slate-800/80 transition-colors"
               >
                 {t.navContact}
@@ -567,65 +566,65 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
             {/* Nav links on Mobile */}
             <nav className="flex flex-col space-y-1">
               <a
-                href="#hero"
-                onClick={(e) => handleNavClick(e, '#hero')}
+                href="/"
+                onClick={(e) => handleNavClick(e, '/')}
                 className="px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-200 hover:text-white hover:bg-white/10 transition-colors"
               >
                 {t.navHome}
               </a>
               <a
-                href="#products"
-                onClick={(e) => handleNavClick(e, '#products')}
+                href="/products"
+                onClick={(e) => handleNavClick(e, '/products')}
                 className="px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-200 hover:text-white hover:bg-white/10 transition-colors flex items-center justify-between"
               >
                 <span>{t.navProducts}</span>
-                <span className="text-xs bg-white/15 px-2 py-0.5 rounded-full text-emerald-300">13</span>
+                <span className="text-xs bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-2 py-0.5 rounded-full font-bold">14</span>
               </a>
               <a
-                href="#quality"
-                onClick={(e) => handleNavClick(e, '#quality')}
+                href="/quality"
+                onClick={(e) => handleNavClick(e, '/quality')}
                 className="px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-200 hover:text-white hover:bg-white/10 transition-colors"
               >
                 {t.navQuality}
               </a>
               <a
-                href="#factory-tour"
-                onClick={(e) => handleNavClick(e, '#factory-tour')}
+                href="/factory-tour"
+                onClick={(e) => handleNavClick(e, '/factory-tour')}
                 className="px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-200 hover:text-white hover:bg-white/10 transition-colors"
               >
                 {isRTL ? 'مستند ویدئویی خطوط تولید' : 'Factory Video Tour'}
               </a>
               <a
-                href="#articles"
-                onClick={(e) => handleNavClick(e, '#articles')}
+                href="/articles"
+                onClick={(e) => handleNavClick(e, '/articles')}
                 className="px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-200 hover:text-white hover:bg-white/10 transition-colors"
               >
                 {t.navArticles}
               </a>
               <a
-                href="#history"
-                onClick={(e) => handleNavClick(e, '#history')}
+                href="/about"
+                onClick={(e) => handleNavClick(e, '/about')}
                 className="px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-200 hover:text-white hover:bg-white/10 transition-colors"
               >
                 {t.navHistory}
               </a>
               <a
-                href="#faq"
-                onClick={(e) => handleNavClick(e, '#faq')}
+                href="/faq"
+                onClick={(e) => handleNavClick(e, '/faq')}
                 className="px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-200 hover:text-white hover:bg-white/10 transition-colors"
               >
                 {isRTL ? 'پرسش‌های متداول' : 'FAQ'}
               </a>
               <a
-                href="#calculator"
-                onClick={(e) => handleNavClick(e, '#calculator')}
+                href="/calculator"
+                onClick={(e) => handleNavClick(e, '/calculator')}
                 className="px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-200 hover:text-white hover:bg-white/10 transition-colors"
               >
                 {t.navCalculator}
               </a>
               <a
-                href="#contact"
-                onClick={(e) => handleNavClick(e, '#contact')}
+                href="/contact"
+                onClick={(e) => handleNavClick(e, '/contact')}
                 className="px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-200 hover:text-white hover:bg-white/10 transition-colors"
               >
                 {t.navContact}

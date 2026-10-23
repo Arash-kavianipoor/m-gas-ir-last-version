@@ -136,22 +136,22 @@ export function generateCoreCompetenciesSchema(lang: LanguageCode) {
         '@type': 'ListItem',
         position: 1,
         name: phrases.cylinderManufacturer,
-        description: 'بزرگترین کارخانه و تولیدکننده کپسول و سیلندرهای گاز مایع در ایران با آزمون فشار ۳۰ بار هیدرواستاتیک',
-        url: `${baseUrl}/#products`,
+        description: 'بزرگترین کارخانه و کمپانی تولید سیلندر گاز مایع در ایران با آزمون فشار ۳۰ بار هیدرواستاتیک',
+        url: `${baseUrl}/products`,
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: phrases.domesticIndustrial,
         description: 'طیف کامل سیلندرهای خانگی و صنعتی از ۰.۵ لیتری تا ۶۰ لیتری و ۵۰ کیلویی',
-        url: `${baseUrl}/#products`,
+        url: `${baseUrl}/products`,
       },
       {
         '@type': 'ListItem',
         position: 3,
         name: phrases.autoLpgTanks,
         description: 'تولید مخازن گازسوز استاندارد خودرو و اتوگاز با رعایت تمامی استانداردهای ایمنی ملی و جهانی',
-        url: `${baseUrl}/#products`,
+        url: `${baseUrl}/products`,
       },
     ],
   };
@@ -192,55 +192,56 @@ export function generateBreadcrumbSchema(
     items.push({
       '@type': 'ListItem',
       position: 2,
-      name: lang === 'fa' ? 'محصولات و سیلندرهای گاز' : 'LPG Cylinders & Tanks',
-      item: `${baseUrl}/#products`,
+      name: lang === 'fa' ? 'فروشگاه و محصولات' : 'Products & Catalog',
+      item: `${baseUrl}/products`,
     });
     const loc = activeProduct.locales[lang] || activeProduct.locales.fa || activeProduct.locales.en;
     items.push({
       '@type': 'ListItem',
       position: 3,
       name: loc.name,
-      item: `${baseUrl}/#product=${activeProduct.slug}`,
+      item: `${baseUrl}/products/${activeProduct.slug}`,
     });
   } else if (activeArticle) {
     items.push({
       '@type': 'ListItem',
       position: 2,
       name: lang === 'fa' ? 'مقالات و پایگاه دانش' : 'Articles & Technical Papers',
-      item: `${baseUrl}/#articles`,
+      item: `${baseUrl}/articles`,
     });
     items.push({
       '@type': 'ListItem',
       position: 3,
       name: activeArticle.title[lang] || activeArticle.title.fa || activeArticle.title.en,
-      item: `${baseUrl}/#article=${activeArticle.slug}`,
+      item: `${baseUrl}/articles/${activeArticle.slug}`,
     });
   } else if (activeSection && activeSection !== 'hero') {
-    const sectionNames: Record<string, { fa: string; en: string }> = {
-      products: { fa: 'محصولات و کپسول‌های گاز مایع', en: 'LPG Cylinders Catalog' },
-      quality: { fa: 'کنترل کیفیت و آزمون فشار ۳۰ بار', en: 'Quality & 30-Bar Hydro Test' },
-      'factory-tour': { fa: 'مستند ویدئویی خطوط تولید کارخانه', en: 'Factory Video Tour' },
-      articles: { fa: 'مقالات مهندسی و متالورژی', en: 'Technical Engineering Articles' },
-      history: { fa: 'تاریخچه و سوابق ۵۰ ساله کارخانه', en: '50-Year Heritage & History' },
-      faq: { fa: 'پرسش‌های متداول مشتریان و صادرات', en: 'Frequently Asked Questions' },
-      calculator: { fa: 'محاسبه‌گر آنلاین استعلام قیمت و کانتینر', en: 'Online RFQ & Container Calculator' },
-      contact: { fa: 'اطلاعات تماس و نشانی کارخانه کرج', en: 'Contact Us & Factory Location' },
-      specifications: { fa: 'مشخصات فنی و استانداردهای کپسول گاز', en: 'Technical Specifications' },
+    const sectionNames: Record<string, { fa: string; en: string; path: string }> = {
+      products: { fa: 'فروشگاه و کاتالوگ محصولات', en: 'LPG Cylinders Catalog', path: '/products' },
+      quality: { fa: 'کنترل کیفیت و آزمون فشار ۳۰ بار', en: 'Quality & 30-Bar Hydro Test', path: '/quality' },
+      'factory-tour': { fa: 'مستند ویدئویی خطوط تولید کارخانه', en: 'Factory Video Tour', path: '/factory-tour' },
+      articles: { fa: 'مقالات مهندسی و متالورژی', en: 'Technical Engineering Articles', path: '/articles' },
+      about: { fa: 'تاریخچه و سوابق ۵۰ ساله کارخانه', en: '50-Year Heritage & History', path: '/about' },
+      history: { fa: 'تاریخچه و سوابق ۵۰ ساله کارخانه', en: '50-Year Heritage & History', path: '/about' },
+      faq: { fa: 'پرسش‌های متداول مشتریان و صادرات', en: 'Frequently Asked Questions', path: '/faq' },
+      calculator: { fa: 'محاسبه‌گر آنلاین استعلام قیمت و کانتینر', en: 'Online RFQ & Container Calculator', path: '/calculator' },
+      contact: { fa: 'اطلاعات تماس و نشانی کارخانه کرج', en: 'Contact Us & Factory Location', path: '/contact' },
     };
     const sName = sectionNames[activeSection];
     const label = sName ? (lang === 'fa' ? sName.fa : sName.en) : activeSection;
+    const cleanSectionPath = sName ? sName.path : `/${activeSection}`;
     items.push({
       '@type': 'ListItem',
       position: 2,
       name: label,
-      item: `${baseUrl}/#${activeSection}`,
+      item: `${baseUrl}${cleanSectionPath}`,
     });
   } else {
     items.push({
       '@type': 'ListItem',
       position: 2,
-      name: lang === 'fa' ? 'محصولات و سیلندرهای گاز' : 'LPG Cylinders & Tanks',
-      item: `${baseUrl}/#products`,
+      name: lang === 'fa' ? 'کمپانی تولید سیلندر گاز مایع در ایران' : 'LPG Cylinders & Tanks',
+      item: `${baseUrl}/products`,
     });
   }
 
@@ -279,14 +280,14 @@ export function generateSingleProductSchema(prod: Product, lang: LanguageCode) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
-    '@id': `${baseUrl}/#product=${prod.slug}`,
+    '@id': `${baseUrl}/products/${prod.slug}`,
     name: loc.name,
     image: `${SEO_CONFIG.siteUrl}${prod.image}`,
     description: loc.fullDescription || loc.shortDescription,
     sku: prod.id,
     brand: {
       '@type': 'Brand',
-      name: 'ام گاز (M Gas)',
+      name: 'ام گاز (M Gas) - کمپانی تولید سیلندر گاز مایع در ایران',
     },
     manufacturer: {
       '@id': `${baseUrl}/#organization`,
@@ -307,6 +308,11 @@ export function generateSingleProductSchema(prod: Product, lang: LanguageCode) {
       unitCode: 'CMT',
     },
     additionalProperty: [
+      {
+        '@type': 'PropertyValue',
+        name: 'Manufacturer',
+        value: 'کمپانی تولید سیلندر گاز مایع در ایران (M Gas Co.)',
+      },
       {
         '@type': 'PropertyValue',
         name: 'Test Pressure',
@@ -330,7 +336,7 @@ export function generateSingleProductSchema(prod: Product, lang: LanguageCode) {
     ],
     offers: {
       '@type': 'Offer',
-      url: `${baseUrl}/#product=${prod.slug}`,
+      url: `${baseUrl}/products/${prod.slug}`,
       priceCurrency: 'USD',
       price: prod.unitPriceUsd ? String(prod.unitPriceUsd) : undefined,
       priceValidUntil: '2027-12-31',
@@ -411,7 +417,7 @@ export function generateArticleSchema(article: Article, lang: LanguageCode) {
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `${baseUrl}/#article=${article.slug}`,
+      '@id': `${baseUrl}/articles/${article.slug}`,
     },
   };
 }

@@ -86,22 +86,28 @@ export function stripLangQueryParam(search: string): string {
 
 /**
  * Builds the URL to switch to a different language via its dedicated subdomain or query.
- * Returns { url, shouldNavigate }
+ * In production on mgas.ir, directs directly to the target subdomain (e.g. https://en.mgas.ir/products).
+ * In local preview, maintains current origin.
  */
 export function buildSwitchLanguageUrl(
   targetLang: LanguageCode,
-  currentPath: string = '/',
-  currentHash: string = ''
+  currentPath: string = '/'
 ): { url: string; shouldNavigate: boolean } {
+  const isProd = typeof window !== 'undefined' ? isProductionMgas(window.location.hostname) : false;
   const domain = getDomainForLanguage(targetLang);
-  const path = typeof window !== 'undefined' ? window.location.pathname : currentPath;
-  const hash = typeof window !== 'undefined' ? window.location.hash : currentHash;
+  const cleanPath = (typeof window !== 'undefined' ? window.location.pathname : currentPath).replace(/\/+$/, '') || '/';
 
   const targetUrl = targetLang === 'fa'
-    ? `${ROOT_URL}${path}${hash}`
-    : `https://${domain}${path}${hash}`;
+    ? `${ROOT_URL}${cleanPath === '/' ? '' : cleanPath}`
+    : `https://${domain}${cleanPath === '/' ? '' : cleanPath}`;
 
-  // Never force-break client SPA with hard window.location.href redirects
+  if (isProd && typeof window !== 'undefined') {
+    const currentHost = window.location.hostname.toLowerCase();
+    const shouldNavigate = currentHost !== domain;
+    return { url: targetUrl, shouldNavigate };
+  }
+
   return { url: targetUrl, shouldNavigate: false };
 }
+
 

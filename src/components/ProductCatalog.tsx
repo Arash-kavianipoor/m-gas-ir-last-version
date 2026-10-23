@@ -140,7 +140,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
 
                     {/* Product Image on Desktop with Hover Zoom Feature and crawlable link */}
                     <a
-                      href={`#product=${product.slug}`}
+                      href={`/products/${product.slug}`}
                       onClick={(e) => {
                         e.preventDefault();
                         onSelectProductForSpecs(product);
@@ -172,7 +172,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
                     <div className="mt-4 space-y-1.5">
                       <h3 className="text-base font-bold text-white leading-snug line-clamp-2">
                         <a
-                          href={`#product=${product.slug}`}
+                          href={`/products/${product.slug}`}
                           onClick={(e) => {
                             e.preventDefault();
                             onSelectProductForSpecs(product);
@@ -204,7 +204,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
                     {/* Action Buttons */}
                     <div className="grid grid-cols-2 gap-2 pt-1">
                       <a
-                        href={`#product=${product.slug}`}
+                        href={`/products/${product.slug}`}
                         onClick={(e) => {
                           e.preventDefault();
                           onSelectProductForSpecs(product);
@@ -231,6 +231,21 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
               </GlowCard>
             );
           })}
+        </div>
+
+        {/* View All Store Products Button */}
+        <div className="mt-12 text-center">
+          <a
+            href="/products"
+            className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black text-sm shadow-xl shadow-emerald-500/20 hover:scale-105 active:scale-95 transition-all"
+          >
+            <Layers className="w-5 h-5" />
+            <span>
+              {currentLanguage === 'fa'
+                ? 'ورود به فروشگاه مستقل و مشاهده مشخصات کامل تمام ۱۴ مدل'
+                : 'Enter Official Store & Explore All 14 Models'}
+            </span>
+          </a>
         </div>
 
       </div>

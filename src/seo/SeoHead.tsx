@@ -4,7 +4,6 @@ import { SEO_CONFIG, TARGET_SEO_PHRASES } from './config';
 import { SUPPORTED_LANGUAGES } from '../i18n/languages';
 import {
   getBaseUrlForLanguage,
-  getDomainForLanguage,
   ROOT_URL,
 } from '../utils/subdomains';
 import {
@@ -28,27 +27,32 @@ interface SectionSeoItem {
   description: Record<string, string>;
 }
 
-const MENU_SECTIONS_SEO: Record<string, SectionSeoItem> = {
-  products: {
+const CLEAN_PAGES_SEO: Record<string, SectionSeoItem> = {
+  '/products': {
     title: {
-      fa: 'کاتالوگ و مشخصات فنی کپسول و سیلندر گاز مایع LPG | ام گاز',
-      en: 'LPG Gas Cylinders Catalog & Technical Specifications | M Gas',
-      ar: 'كتالوج ومواصفات أسطوانات غاز البترول المسال LPG | إم غاز',
-      de: 'LPG Gasflaschen Katalog & Technische Daten | M Gas',
-      ur: 'ایل پی جی گیس سلنڈرز کیٹلاگ اور تکنیکی خصوصیات | ایم گیس',
-      tr: 'LPG Gaz Tüpleri Kataloğu ve Teknik Özellikleri | M Gas',
-      ru: 'Каталог и характеристики баллонов для сжиженного газа LPG | M Gas',
-      hy: 'LPG Գազի բալոնների կատալոգ և տեխնիկական բնութագրեր | M Gas',
+      fa: 'کاتالوگ و فروشگاه کمپانی تولید سیلندر گاز مایع در ایران | ام گاز',
+      en: 'LPG Gas Cylinders Store & Catalog | Premier Cylinder Manufacturer in Iran',
+      ar: 'متجر وكتالوج أسطوانات الغاز المسال LPG | أكبر شركة لتصنيع أسطوانات الغاز في إيران',
+      de: 'LPG Gasflaschen Katalog & Shop | Führender Hersteller von Flüssiggasflaschen im Iran',
+      ur: 'ایل پی جی گیس سلنڈرز اسٹور اور کیٹلاگ | ایران میں ایل پی جی گیس سلنڈر بنانے والی صف اول کی کمپنی',
+      tr: 'LPG Gaz Tüpleri Mağazası ve Kataloğu | İran’ın Önde Gelen Sıvılaştırılmış Gaz Silindiri Üreticisi',
+      ru: 'Магазин и каталог баллонов LPG | Крупнейший завод-производитель газовых баллонов в Иране',
+      hy: 'LPG Գազի բալոնների խանութ և կատալոգ | Իրանում հեղուկ գազի գազաբալոնների առաջատար արտադրող ընկերություն',
     },
     description: {
-      fa: 'مشاهده و بررسی کاتالوگ جامع ۱۳ مدل کپسول گاز مایع از ۰.۵ تا ۶۰ لیتری و مخازن اتوگاز خودرو با آزمون فشار ۳۰ بار در کارخانه ام گاز کرج.',
-      en: 'Explore technical specifications for 13 LPG cylinder models (0.5L to 60L) and automotive auto tanks manufactured under strict 30-bar pressure tests at M Gas.',
-      ar: 'استكشف مواصفات ۱۳ طرازاً من أسطوانات الغاز المسال من ۰.۵ لتر إلى ۶۰ لتراً وخزانات السيارات بموجب اختبار ضغط ۳۰ بار.',
+      fa: 'فروشگاه و کاتالوگ رسمی کمپانی تولید سیلندر گاز مایع در ایران؛ خرید عمده و استعلام قیمت ۱۳ مدل کپسول گاز خانگی، پیکنیک، صنعتی و مخازن اتوگاز خودرو با تست فشار ۳۰ بار.',
+      en: 'Official store and catalog of Iran’s leading LPG cylinder manufacturing company. Wholesale pricing and technical specs for 13 domestic, industrial, and auto autogas tanks.',
+      ar: 'المتجر والكتالوج الرسمي لأكبر شركة لتصنيع أسطوانات الغاز المسال في إيران؛ شراء بالجملة واستعلام أسعار ۱۳ طرازاً لأسطوانات الغاز المنزلية والصناعية وخزانات السيارات.',
+      de: 'Offizieller Katalog und Shop des führenden Herstellers von Flüssiggasflaschen im Iran. Großhandelspreise für 13 Modelle von Haushalts-, Industrie- und Autogastanks.',
+      ur: 'ایران میں ایل پی جی سلنڈر بنانے والی معروف کمپنی کا آفیشل اسٹور اور کیٹلاگ؛ گھریلو، صنعتی اور آٹو گیس ٹینکوں کے ۱۳ ماڈلز کی تھوک قیمتیں اور تکنیکی تفصیلات۔',
+      tr: 'İran’ın lider LPG tüpü üretici şirketinin resmi mağaza ve kataloğu; 13 çeşit evsel, endüstriyel tüp ve araç otogaz tankı için toptan fiyat ve teknik özellikler.',
+      ru: 'Официальный магазин и каталог ведущего завода газовых баллонов в Иране: оптовые поставки 13 моделей бытовых, промышленных баллонов и автомобильных емкостей СУГ.',
+      hy: 'Իրանում հեղուկ գազի բալոնների առաջատար ընկերության պաշտոնական կատալոգ. 13 մոդելի կենցաղային, արդյունաբերական և ավտոգազի բաքերի մեծածախ գներ:',
     },
   },
-  quality: {
+  '/quality': {
     title: {
-      fa: 'فرآیند کنترل کیفیت، استانداردها و تست هیدرواستاتیک ۳۰ بار | ام گاز',
+      fa: 'کنترل کیفیت و آزمون فشار ۳۰ بار | کمپانی تولید سیلندر گاز مایع در ایران',
       en: 'Quality Assurance, Standards & 30-Bar Hydrostatic Testing | M Gas',
       ar: 'ضمان الجودة والمعايير واختبار الضغط ۳۰ بار | إم غاز',
       de: 'Qualitätssicherung, Normen & 30-Bar hydrostatischer Drucktest | M Gas',
@@ -58,14 +62,14 @@ const MENU_SECTIONS_SEO: Record<string, SectionSeoItem> = {
       hy: 'Որակի վերահսկողություն, ստանդարտներ և 30 բար հիդրոստատիկ փորձարկում | M Gas',
     },
     description: {
-      fa: 'فرآیند تضمین کیفیت سیلندرهای LPG ام گاز: کشش عمیق هیدرولیک، جوشکاری اتوماتیک زیرپودری SAW، تنش‌زدایی کوره و تست هیدرواستاتیک ۱۰۰٪ با ۳۰ بار فشار.',
+      fa: 'فرآیند تضمین کیفیت در معتبرترین کمپانی تولید سیلندر گاز مایع در ایران: کشش عمیق هیدرولیک، جوشکاری اتوماتیک زیرپودری SAW، کوره تنش‌زدایی و تست هیدرواستاتیک ۱۰۰٪ با ۳۰ بار فشار.',
       en: 'Comprehensive M Gas quality control: deep drawing hydraulic press, automated SAW submerged arc welding, heat treatment, 100% 30-bar hydrostatic proof test.',
       ar: 'إجراءات مراقبة الجودة الشاملة في مصنع إم غاز: اللحام القوسي المغمور الآلي، والمعالجة الحرارية، واختبار الضغط الهيدروستاتيكي بنسبة ۱۰۰٪ عند ۳۰ بار.',
     },
   },
-  'factory-tour': {
+  '/factory-tour': {
     title: {
-      fa: 'مستند ویدئویی و تور خطوط تولید کارخانه ام گاز | مدیریت موسی عمویی',
+      fa: 'مستند ویدئویی خطوط تولید کارخانه ام گاز | مدیریت موسی عمویی',
       en: 'Factory Video Tour & Production Lines Documentary | M Gas',
       ar: 'جولة فيديو وثائقية لخطوط الإنتاج في مصنع إم غاز',
       de: 'Fabrik-Videorundgang & Dokumentation der Produktionslinien | M Gas',
@@ -75,14 +79,14 @@ const MENU_SECTIONS_SEO: Record<string, SectionSeoItem> = {
       hy: 'Գործարանի վիդեո շրջայց և արտադրական գծեր | M Gas',
     },
     description: {
-      fa: 'مشاهده مستند ویدئویی خطوط تولید کپسول گاز مایع و نظارت مستقیم آقای موسی عمویی مدیر و بنیانگذار کارخانه ام گاز.',
+      fa: 'مشاهده مستند ویدئویی خطوط تولید کپسول گاز مایع و نظارت مستقیم آقای موسی عمویی مدیر و بنیانگذار کارخانه ام گاز در کرج.',
       en: 'Watch authentic high-definition video footage of LPG cylinder manufacturing lines and automated testing led by Managing Director Mousa Amooie.',
       ar: 'شاهد لقطات فيديو أصلية لخطوط تصنيع أسطوانات غاز البترول المسال والاختبارات الآلية بقيادة المدير موسى عموئي.',
     },
   },
-  articles: {
+  '/articles': {
     title: {
-      fa: 'مقالات مهندسی، متالورژی و استانداردهای کپسول گاز مایع | ام گاز',
+      fa: 'مقالات مهندسی و متالورژی ساخت کپسول گاز | کمپانی تولید سیلندر گاز مایع در ایران',
       en: 'Engineering Articles & LPG Safety Standards Knowledge Base | M Gas',
       ar: 'مقالات هندسية ومعايير سلامة غاز البترول المسال | إم غاز',
       de: 'Fachartikel zu Ingenieurwesen & LPG-Sicherheitsnormen | M Gas',
@@ -92,14 +96,14 @@ const MENU_SECTIONS_SEO: Record<string, SectionSeoItem> = {
       hy: 'Ինժեներական հոդվածներ և LPG անվտանգության ստանդարտներ | M Gas',
     },
     description: {
-      fa: 'پایگاه مقالات تخصصی مهندسی ام گاز: متالورژی ورق‌های فولادی، استانداردهای بازرسی جوشکاری، NFPA 58 و ایمنی انبارش و حمل سیلندرهای گاز.',
+      fa: 'پایگاه مقالات تخصصی مهندسی ام گاز: متالورژی ورق‌های فولادی مخازن تحت فشار، استانداردهای بازرسی جوشکاری، NFPA 58 و ایمنی انبارش و حمل سیلندرهای گاز.',
       en: 'Technical engineering publications covering LPG metallurgy, weld inspection protocols, NFPA 58, ISO standards, and pressurized storage safety.',
       ar: 'منشورات هندسية متخصصة تغطي متالورجيا غاز البترول المسال وفحص اللحام ومعايير NFPA 58 وإرشادات تخزين الأسطوانات.',
     },
   },
-  history: {
+  '/about': {
     title: {
-      fa: 'تاریخچه و سوابق ۵۰ ساله کارخانه ام گاز (تأسیس ۱۳۴۹) | مدیریت موسی عمویی',
+      fa: 'تاریخچه ۵۰ ساله و مدیریت موسی عمویی (تأسیس ۱۳۴۹) | کارخانه ام گاز',
       en: '50+ Years Heritage & Vision (Est. 1970) | M Gas Cylinder Co.',
       ar: 'أكثر من ۵۰ عاماً من الخبرة والريادة (تأسس ۱۹۷۰) | إم غاز',
       de: 'Über 50 Jahre Tradition & Vision (Gegr. 1970) | M Gas',
@@ -109,14 +113,14 @@ const MENU_SECTIONS_SEO: Record<string, SectionSeoItem> = {
       hy: 'Ավելի քան 50 տարվա փորձ և պատմություն (հիմնադրված 1970 թ.) | M Gas',
     },
     description: {
-      fa: 'بیش از نیم قرن نوآوری در تولید کپسول گاز مایع از سال ۱۳۴۹ با مدیریت آقای موسی عمویی و صادرات گسترده به ۱۲+ کشور منطقه و خاورمیانه.',
+      fa: 'بیش از نیم قرن نوآوری در تولید کپسول گاز مایع از سال ۱۳۴۹ با مدیریت آقای موسی عمویی در نخستین کمپانی تولید سیلندر گاز مایع در ایران و صادرات به ۱۲+ کشور جهان.',
       en: 'Half a century of manufacturing excellence since 1970 led by founder Mousa Amooie, exporting high-grade LPG cylinders to over 12 countries.',
       ar: 'نصف قرن من التميز في التصنيع منذ عام ۱۹۷۰ بقيادة المؤسس موسى عموئي والتصدير إلى أكثر من ۱۲ دولة حول العالم.',
     },
   },
-  faq: {
+  '/faq': {
     title: {
-      fa: 'پرسش‌های متداول مشتریان کپسول و سیلندر گاز مایع | ام گاز',
+      fa: 'پرسش‌های متداول مشتریان و صادرات کپسول گاز | کمپانی تولید سیلندر گاز مایع در ایران',
       en: 'Frequently Asked Questions (FAQ) - LPG Cylinders & Export | M Gas',
       ar: 'الأسئلة الشائعة حول أسطوانات الغاز والتصدير | إم غاز',
       de: 'Häufig gestellte Fragen (FAQ) zu LPG-Gasflaschen & Export | M Gas',
@@ -126,14 +130,14 @@ const MENU_SECTIONS_SEO: Record<string, SectionSeoItem> = {
       hy: 'Հաճախակի տրվող հարցեր (FAQ) - LPG գազի բալոններ և արտահանում | M Gas',
     },
     description: {
-      fa: 'پاسخ به تمام پرسش‌های متداول درباره ضخامت ورق سیلندر گاز، آزمون فشار ۳۰ بار، حداقل تعداد سفارش MOQ، ظرفیت کانتینر و رنگ سفارشی RAL.',
+      fa: 'پاسخ جامع به تمام پرسش‌های متداول خریداران درباره ضخامت ورق سیلندر، آزمون فشار ۳۰ بار، حداقل سفارش MOQ، کانتینربندی صادراتی و رنگ سفارشی در کارخانه ام گاز.',
       en: 'Answers to frequently asked questions regarding cylinder steel grades, 30-bar pressure proofing, MOQ, shipping container capacity, and RAL color customization.',
       ar: 'إجابات على الأسئلة الشائعة حول درجات الفولاذ، واختبار الضغط ۳۰ بار، والحد الأدنى للطلب، وتخصيص ألوان RAL.',
     },
   },
-  calculator: {
+  '/calculator': {
     title: {
-      fa: 'محاسبه‌گر آنلاین استعلام قیمت و کانتینربندی صادراتی کپسول گاز | ام گاز',
+      fa: 'محاسبه‌گر آنلاین استعلام قیمت و کانتینربندی کپسول گاز | کمپانی ام گاز',
       en: 'Online RFQ & Container Shipping Capacity Calculator | M Gas',
       ar: 'حاسبة عروض الأسعار وحمولة الحاويات للتصدير | إم غاز',
       de: 'Online-Preisanfrage & Containerkapazitätsrechner | M Gas',
@@ -143,14 +147,14 @@ const MENU_SECTIONS_SEO: Record<string, SectionSeoItem> = {
       hy: 'Առցանց գնառաջարկի և կոնտեյների բեռնման հաշվիչ | M Gas',
     },
     description: {
-      fa: 'استعلام آنلاین و محاسبه تعداد کپسول در کانتینر ۲۰ و ۴۰ فوت، محاسبه وزن ناخالص و ارسال مستقیم پیش‌فاکتور به کارخانه ام گاز از طریق واتس‌اپ.',
+      fa: 'استعلام آنلاین و محاسبه ظرفیت بارگیری کپسول گاز در کانتینر ۲۰ و ۴۰ فوت، محاسبه وزن ناخالص بار و ارسال مستقیم استعلام قیمت به کارخانه ام گاز در واتس‌اپ.',
       en: 'Interactive calculation tool for LPG cylinder wholesale volumes, 20ft & 40ft HQ container loading capacities, gross shipping weights, and instant RFQ dispatch.',
       ar: 'أداة تفاعلية لحساب أحجام الطلبات بالجملة وحمولة حاويات ۲۰ و ۴۰ قدماً وإرسال طلبات الأسعار الفورية مباشرة عبر واتساب.',
     },
   },
-  contact: {
+  '/contact': {
     title: {
-      fa: 'تماس با کارخانه ام گاز، نشانی کرج و واحد فروش صادراتی',
+      fa: 'تماس با کارخانه، نشانی کرج و واحد فروش صادراتی | کمپانی تولید سیلندر گاز مایع در ایران',
       en: 'Contact Us, Karaj Factory Location & Export Directorate | M Gas',
       ar: 'اتصل بنا، موقع مصنع كرج وإدارة المبيعات والتصدير | إم غاز',
       de: 'Kontakt, Standort der Fabrik Karadsch & Exportabteilung | M Gas',
@@ -160,47 +164,30 @@ const MENU_SECTIONS_SEO: Record<string, SectionSeoItem> = {
       hy: 'Կապ, Քարաջի գործարանի հասցե և արտահանման բաժին | M Gas',
     },
     description: {
-      fa: 'راه‌های ارتباط با کارخانه ام گاز در کرج: شماره تلفن‌های مستقیم، ساعات کاری، شماره واتس‌اپ مدیر فروش بین‌الملل و لوکیشن دقیق کارخانه.',
+      fa: 'راه‌های ارتباط مستقیم با کارخانه ام گاز در کرج: تلفن‌های فروش، ساعات کاری، شماره واتس‌اپ مدیر فروش بین‌الملل و لوکیشن دقیق کارخانه روی نقشه گوگل.',
       en: 'Direct contact with M Gas factory management in Karaj, working hours, phone numbers, WhatsApp export desk, and Google Maps directions.',
       ar: 'تواصل مباشر مع إدارة مصنع إم غاز في كرج، وساعات العمل، وأرقام الهواتف، ومكتب التصدير عبر واتساب، وخريطة الموقع.',
-    },
-  },
-  specifications: {
-    title: {
-      fa: 'مشخصات فنی و استانداردهای مهندسی انواع کپسول گاز مایع | ام گاز',
-      en: 'Technical Specifications & Engineering Standards | M Gas Cylinders',
-      ar: 'المواصفات الفنية والمخططات الهندسية لأسطوانات الغاز | إم غاز',
-      de: 'Technische Spezifikationen & Konstruktionszeichnungen | M Gas',
-      ur: 'تکنیکی خصوصیات اور انجینئرنگ نقشے | ایم گیس',
-      tr: 'Teknik Özellikler ve Mühendislik Çizimleri | M Gas',
-      ru: 'Технические характеристики и инженерные чертежи | M Gas',
-      hy: 'Տեխնիկական բնութագրեր և ինժեներական գծագրեր | M Gas',
-    },
-    description: {
-      fa: 'جدول کامل مشخصات فنی سیلندرهای گاز مایع ام گاز شامل ضخامت ورق، وزن، فشار کاری، فشار تست ۳۰ بار و نوع شیرآلات استاندارد.',
-      en: 'Comprehensive technical specifications table including wall thickness, height, water capacity, test pressure limits, and valve standards for all LPG models.',
-      ar: 'جدول المواصفات الفنية الشاملة لأسطوانات غاز البترول المسال بما في ذلك سمك الجدار والسعة وضغط الاختبار.',
     },
   },
 };
 
 interface SeoHeadProps {
+  currentPath: string;
   activeArticle?: Article | null;
   activeProduct?: Product | null;
-  activeSection?: string | null;
 }
 
-export const SeoHead: React.FC<SeoHeadProps> = ({ activeArticle, activeProduct, activeSection }) => {
+export const SeoHead: React.FC<SeoHeadProps> = ({ currentPath, activeArticle, activeProduct }) => {
   const { currentLanguage, languageInfo } = useLanguage();
 
   useEffect(() => {
     if (typeof document === 'undefined') return;
 
     const langConfig = SEO_CONFIG.languages[currentLanguage] || SEO_CONFIG.languages.fa;
-    const targetPhrases = TARGET_SEO_PHRASES[currentLanguage] || TARGET_SEO_PHRASES.fa;
     const currentBaseUrl = getBaseUrlForLanguage(currentLanguage);
+    const normalizedPath = currentPath.replace(/\/+$/, '') || '/';
 
-    let currentUrl = `${currentBaseUrl}/`;
+    let currentUrl = `${currentBaseUrl}${normalizedPath === '/' ? '' : normalizedPath}`;
     let pageTitle = langConfig.title;
     let pageDescription = langConfig.description;
     let pageOgImage = SEO_CONFIG.defaultImage;
@@ -208,22 +195,32 @@ export const SeoHead: React.FC<SeoHeadProps> = ({ activeArticle, activeProduct, 
 
     if (activeProduct) {
       const loc = activeProduct.locales[currentLanguage] || activeProduct.locales.fa || activeProduct.locales.en;
-      currentUrl = `${currentBaseUrl}/#product=${activeProduct.slug}`;
-      pageTitle = `${loc.name} | ${currentLanguage === 'fa' ? 'ام گاز' : 'M Gas'}`;
-      pageDescription = loc.seoDescription || loc.shortDescription;
+      currentUrl = `${currentBaseUrl}/products/${activeProduct.slug}`;
+      pageTitle = `${loc.name} | ${
+        currentLanguage === 'fa'
+          ? 'کمپانی تولید سیلندر گاز مایع در ایران'
+          : 'LPG Cylinder Manufacturer in Iran'
+      }`;
+      pageDescription =
+        loc.seoDescription ||
+        `${loc.name} ${
+          currentLanguage === 'fa'
+            ? `تولید شده در برترین کمپانی تولید سیلندر گاز مایع در ایران با آزمون هیدرواستاتیک ۳۰ بار، ضخامت ورق ${activeProduct.bodyThicknessMm} میلی‌متر و استاندارد ملی ISIRI 841.`
+            : `Manufactured by premier LPG cylinder manufacturing company in Iran under 30-bar pressure proof testing and ISO 9001 quality management.`
+        }`;
       pageOgImage = `${SEO_CONFIG.siteUrl}${activeProduct.image}`;
       ogType = 'product';
     } else if (activeArticle) {
-      currentUrl = `${currentBaseUrl}/#article=${activeArticle.slug}`;
-      pageTitle = `${activeArticle.title[currentLanguage] || activeArticle.title.fa || activeArticle.title.en} | ${SEO_CONFIG.siteName}`;
+      currentUrl = `${currentBaseUrl}/articles/${activeArticle.slug}`;
+      const artTitle = activeArticle.title[currentLanguage] || activeArticle.title.fa || activeArticle.title.en;
+      pageTitle = `${artTitle} | ${currentLanguage === 'fa' ? 'کمپانی ام گاز' : 'M Gas Cylinders'}`;
       pageDescription = activeArticle.abstract[currentLanguage] || activeArticle.abstract.fa || activeArticle.abstract.en;
       pageOgImage = activeArticle.coverImage
         ? `${SEO_CONFIG.siteUrl}${activeArticle.coverImage}`
         : SEO_CONFIG.defaultImage;
       ogType = 'article';
-    } else if (activeSection && activeSection !== 'hero' && MENU_SECTIONS_SEO[activeSection]) {
-      const secMeta = MENU_SECTIONS_SEO[activeSection];
-      currentUrl = `${currentBaseUrl}/#${activeSection}`;
+    } else if (CLEAN_PAGES_SEO[normalizedPath]) {
+      const secMeta = CLEAN_PAGES_SEO[normalizedPath];
       pageTitle = secMeta.title[currentLanguage] || secMeta.title.fa || secMeta.title.en || langConfig.title;
       pageDescription = secMeta.description[currentLanguage] || secMeta.description.fa || secMeta.description.en || langConfig.description;
       ogType = 'website';
@@ -264,32 +261,32 @@ export const SeoHead: React.FC<SeoHeadProps> = ({ activeArticle, activeProduct, 
     // Standard SEO Tags
     setMetaTag('name', 'description', pageDescription);
     setMetaTag('name', 'robots', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1');
-    setMetaTag('name', 'author', 'M Gas Cylinder Manufacturing Co. (Mousa Amooie)');
+    setMetaTag('name', 'author', 'کارخانه ام گاز (موسی عمویی) - M Gas Cylinder Manufacturing Co.');
 
-    // Ensure stale meta keywords tags are eliminated per Google SEO guidelines
+    // Eliminate any deprecated keywords tag
     const existingKeywords = document.querySelector('meta[name="keywords"]');
     if (existingKeywords) {
       existingKeywords.remove();
     }
 
-    // Canonical Link for this specific page state
+    // Canonical Link for this exact clean URL path
     setLinkTag('canonical', currentUrl);
 
-    // Hreflang Multi-language Alternate Links
+    // Multi-Language Alternate Hreflang Tags (Points strictly to dedicated subdomains with CLEAN path)
+    const relativeCleanPath = activeProduct
+      ? `/products/${activeProduct.slug}`
+      : activeArticle
+      ? `/articles/${activeArticle.slug}`
+      : normalizedPath === '/'
+      ? ''
+      : normalizedPath;
+
     Object.keys(SUPPORTED_LANGUAGES).forEach((langKey) => {
       const code = langKey as LanguageCode;
       const info = SUPPORTED_LANGUAGES[code];
       const targetBase = getBaseUrlForLanguage(code);
+      const targetUrl = `${targetBase}${relativeCleanPath}`;
 
-      let targetUrl = `${targetBase}/`;
-      if (activeProduct) {
-        targetUrl = `${targetBase}/#product=${activeProduct.slug}`;
-      } else if (activeArticle) {
-        targetUrl = `${targetBase}/#article=${activeArticle.slug}`;
-      } else if (activeSection && activeSection !== 'hero') {
-        targetUrl = `${targetBase}/#${activeSection}`;
-      }
-      
       setLinkTag('alternate', targetUrl, code);
 
       if (info && info.locale && info.locale !== code) {
@@ -297,14 +294,8 @@ export const SeoHead: React.FC<SeoHeadProps> = ({ activeArticle, activeProduct, 
       }
     });
 
-    // x-default hreflang pointing to canonical Persian root
-    const xDefaultTarget = activeProduct
-      ? `${ROOT_URL}/#product=${activeProduct.slug}`
-      : activeArticle
-      ? `${ROOT_URL}/#article=${activeArticle.slug}`
-      : activeSection && activeSection !== 'hero'
-      ? `${ROOT_URL}/#${activeSection}`
-      : `${ROOT_URL}/`;
+    // x-default hreflang pointing to canonical Persian root clean URL
+    const xDefaultTarget = `${ROOT_URL}${relativeCleanPath}`;
     setLinkTag('alternate', xDefaultTarget, 'x-default');
 
     // Open Graph Metadata
@@ -322,7 +313,7 @@ export const SeoHead: React.FC<SeoHeadProps> = ({ activeArticle, activeProduct, 
     if (activeArticle) {
       setMetaTag('property', 'article:published_time', activeArticle.publishDate);
       setMetaTag('property', 'article:modified_time', activeArticle.modifyDate);
-      setMetaTag('property', 'article:author', 'Mousa Amooie & M Gas Technical Directorate');
+      setMetaTag('property', 'article:author', 'موسی عمویی - کارخانه ام گاز');
       setMetaTag('property', 'article:section', activeArticle.category[currentLanguage] || activeArticle.category.fa || activeArticle.category.en);
     }
 
@@ -338,12 +329,13 @@ export const SeoHead: React.FC<SeoHeadProps> = ({ activeArticle, activeProduct, 
     document.documentElement.dir = languageInfo.dir;
 
     // Structured Data (JSON-LD) Injections
+    const pageSectionKey = normalizedPath.replace(/^\//, '') || null;
     const structuredDataScripts = [
       { id: 'schema-org', data: generateOrganizationSchema(currentLanguage) },
       { id: 'schema-localbusiness', data: generateLocalBusinessSchema(currentLanguage) },
       { id: 'schema-website', data: generateWebSiteSchema(currentLanguage) },
       { id: 'schema-core-competencies', data: generateCoreCompetenciesSchema(currentLanguage) },
-      { id: 'schema-breadcrumbs', data: generateBreadcrumbSchema(currentLanguage, activeArticle, activeProduct, activeSection) },
+      { id: 'schema-breadcrumbs', data: generateBreadcrumbSchema(currentLanguage, activeArticle, activeProduct, pageSectionKey) },
       { id: 'schema-videos', data: generateVideosSchema(currentLanguage) },
       {
         id: 'schema-products',
@@ -371,7 +363,7 @@ export const SeoHead: React.FC<SeoHeadProps> = ({ activeArticle, activeProduct, 
       script.textContent = JSON.stringify(data);
     });
 
-  }, [currentLanguage, languageInfo, activeArticle, activeProduct, activeSection]);
+  }, [currentLanguage, languageInfo, activeArticle, activeProduct, currentPath]);
 
   return null;
 };

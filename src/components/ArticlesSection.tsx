@@ -94,7 +94,7 @@ export const ArticlesSection: React.FC<ArticlesSectionProps> = ({ onSelectArticl
               >
                 {/* Article Cover Image Banner */}
                 <a
-                  href={`#article=${article.slug}`}
+                  href={`/articles/${article.slug}`}
                   onClick={(e) => {
                     e.preventDefault();
                     onSelectArticle(article);
@@ -145,7 +145,7 @@ export const ArticlesSection: React.FC<ArticlesSectionProps> = ({ onSelectArticl
                   {/* Article Title */}
                   <h3 className="text-xl sm:text-2xl font-bold text-white group-hover:text-emerald-300 transition-colors leading-snug mb-4">
                     <a
-                      href={`#article=${article.slug}`}
+                      href={`/articles/${article.slug}`}
                       onClick={(e) => {
                         e.preventDefault();
                         onSelectArticle(article);
@@ -209,7 +209,7 @@ export const ArticlesSection: React.FC<ArticlesSectionProps> = ({ onSelectArticl
                   </div>
 
                   <a
-                    href={`#article=${article.slug}`}
+                    href={`/articles/${article.slug}`}
                     onClick={(e) => {
                       e.preventDefault();
                       onSelectArticle(article);

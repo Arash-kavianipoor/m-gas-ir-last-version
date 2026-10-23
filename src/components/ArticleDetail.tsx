@@ -76,10 +76,9 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
   }, [article]);
 
   const handleCopyLink = () => {
-    const baseUrl = window.location.origin;
     const url = currentLanguage === 'fa'
-      ? `${baseUrl}/#article=${article.slug}`
-      : `${baseUrl}/?lang=${currentLanguage}#article=${article.slug}`;
+      ? `https://mgas.ir/articles/${article.slug}`
+      : `https://${currentLanguage}.mgas.ir/articles/${article.slug}`;
     navigator.clipboard.writeText(url);
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
@@ -438,7 +437,7 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
                 <a
-                  href="#product=cylinder-11-kg"
+                  href="/products/cylinder-11-kg"
                   className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/60 transition-all group block"
                 >
                   <span className="text-xs font-bold text-white group-hover:text-emerald-300 block mb-1">
@@ -450,7 +449,7 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
                 </a>
 
                 <a
-                  href="#product=cylinder-50-kg"
+                  href="/products/cylinder-50-kg"
                   className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/60 transition-all group block"
                 >
                   <span className="text-xs font-bold text-white group-hover:text-emerald-300 block mb-1">
@@ -462,7 +461,7 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
                 </a>
 
                 <a
-                  href="#product=cylinder-auto-lpg-tank"
+                  href="/products/cylinder-auto-lpg-tank"
                   className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/60 transition-all group block"
                 >
                   <span className="text-xs font-bold text-white group-hover:text-emerald-300 block mb-1">
