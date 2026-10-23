@@ -47,11 +47,11 @@ export const CatalogDownloadModal: React.FC<CatalogDownloadModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fadeIn"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fadeIn cursor-pointer"
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-xl bg-[#0C1520] border border-emerald-500/30 rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden text-slate-200"
+        className="relative w-full max-w-xl bg-[#0C1520] border border-emerald-500/30 rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden text-slate-200 cursor-default"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Background decorative glows - desktop only */}

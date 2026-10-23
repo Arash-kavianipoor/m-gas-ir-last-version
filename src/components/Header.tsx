@@ -39,11 +39,37 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [pinnedDropdown, setPinnedDropdown] = useState<string | null>(null);
   const [catalogModalOpen, setCatalogModalOpen] = useState(false);
   
   const headerRef = useRef<HTMLElement | null>(null);
   const langDropdownRef = useRef<HTMLDivElement | null>(null);
   const navDropdownsRef = useRef<{ [key: string]: HTMLDivElement | null }>({});
+  const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const cancelCloseTimeout = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+  };
+
+  const handleMouseEnter = (menuKey: string) => {
+    cancelCloseTimeout();
+    setActiveDropdown(menuKey);
+  };
+
+  const handleMouseLeave = (menuKey: string) => {
+    // If user clicked to pin this dropdown open, do not close on mouse leave
+    if (pinnedDropdown === menuKey) {
+      return;
+    }
+    cancelCloseTimeout();
+    // 300ms generous grace period so the pointer moves freely without premature closing
+    closeTimeoutRef.current = setTimeout(() => {
+      setActiveDropdown((current) => (current === menuKey ? null : current));
+    }, 300);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,7 +80,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Handle clicking outside to close all open dropdowns
+  // Handle clicking outside to close all open dropdowns on empty space click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent | TouchEvent) => {
       const target = event.target as Node;
@@ -64,11 +90,12 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
         setLangDropdownOpen(false);
       }
 
-      // Close navigation dropdowns if clicked outside
+      // Close navigation dropdowns if clicked outside on empty space
       if (activeDropdown) {
         const activeNavEl = navDropdownsRef.current[activeDropdown];
         if (activeNavEl && !activeNavEl.contains(target)) {
           setActiveDropdown(null);
+          setPinnedDropdown(null);
         }
       }
     };
@@ -77,6 +104,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
     document.addEventListener('touchstart', handleClickOutside, { passive: true });
 
     return () => {
+      cancelCloseTimeout();
       document.removeEventListener('mousedown', handleClickOutside);
       document.removeEventListener('touchstart', handleClickOutside);
     };
@@ -84,8 +112,10 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
     e.preventDefault();
+    cancelCloseTimeout();
     setMobileMenuOpen(false);
     setActiveDropdown(null);
+    setPinnedDropdown(null);
     setLangDropdownOpen(false);
     
     // Normalize path to clean page URL
@@ -100,13 +130,31 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
     navigate(cleanPath);
   };
 
-  const toggleNavDropdown = (menuKey: string) => {
+  const toggleNavDropdown = (menuKey: string, e?: React.MouseEvent) => {
+    if (e) {
+      e.stopPropagation();
+    }
+    cancelCloseTimeout();
     setLangDropdownOpen(false);
-    setActiveDropdown((prev) => (prev === menuKey ? null : menuKey));
+
+    // If already pinned and open, close it
+    if (pinnedDropdown === menuKey) {
+      setActiveDropdown(null);
+      setPinnedDropdown(null);
+    } else {
+      // Pin open so it stays open across all devices until empty space is clicked
+      setActiveDropdown(menuKey);
+      setPinnedDropdown(menuKey);
+    }
   };
 
-  const toggleLangDropdown = () => {
+  const toggleLangDropdown = (e?: React.MouseEvent) => {
+    if (e) {
+      e.stopPropagation();
+    }
+    cancelCloseTimeout();
     setActiveDropdown(null);
+    setPinnedDropdown(null);
     setLangDropdownOpen((prev) => !prev);
   };
 
@@ -295,6 +343,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
               {/* Dropdown Menus */}
               {menuCategories.map((category) => {
                 const isOpen = activeDropdown === category.id;
+                const isPinned = pinnedDropdown === category.id;
                 const IconComp = category.icon;
 
                 return (
@@ -304,20 +353,18 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
                       navDropdownsRef.current[category.id] = el;
                     }}
                     className="relative"
-                    onMouseEnter={() => {
-                      setActiveDropdown(category.id);
-                    }}
-                    onMouseLeave={() => {
-                      setActiveDropdown(null);
-                    }}
+                    onMouseEnter={() => handleMouseEnter(category.id)}
+                    onMouseLeave={() => handleMouseLeave(category.id)}
                   >
                     <button
                       type="button"
-                      onClick={() => toggleNavDropdown(category.id)}
-                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-colors ${
+                      aria-haspopup="true"
+                      aria-expanded={isOpen}
+                      onClick={(e) => toggleNavDropdown(category.id, e)}
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-150 cursor-pointer select-none ${
                         isOpen
-                          ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm'
-                          : 'text-slate-200 hover:text-white hover:bg-slate-800/80 border border-transparent'
+                          ? 'bg-emerald-500/25 text-emerald-300 border border-emerald-500/60 shadow-[0_0_12px_rgba(16,185,129,0.3)] ring-1 ring-emerald-500/40'
+                          : 'text-slate-200 hover:text-white hover:bg-slate-800/80 border border-transparent hover:border-slate-700/60'
                       }`}
                     >
                       <IconComp className="w-3.5 h-3.5 text-emerald-400" />
@@ -329,37 +376,44 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
                       />
                     </button>
 
-                    {/* Glass Dropdown Panel */}
+                    {/* Glass Dropdown Panel with Zero-Gap Bridge */}
                     {isOpen && (
                       <div
-                        className={`absolute top-full mt-2 w-64 rounded-2xl p-2 bg-[#09151F]/98 border border-emerald-500/30 shadow-[0_16px_40px_rgba(0,0,0,0.8)] z-50 animate-in fade-in slide-in-from-top-1 duration-150 ${
+                        className={`absolute top-full pt-1.5 w-64 z-50 animate-in fade-in slide-in-from-top-1 duration-150 ${
                           isRTL ? 'right-0' : 'left-0'
                         }`}
+                        onMouseEnter={() => handleMouseEnter(category.id)}
+                        onMouseLeave={() => handleMouseLeave(category.id)}
                       >
-                        <div className="space-y-0.5">
-                          {category.items.map((item, idx) => {
-                            const ItemIcon = item.icon;
-                            return (
-                              <a
-                                key={idx}
-                                href={item.href}
-                                onClick={(e) => handleNavClick(e, item.href)}
-                                className="group flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-800/80 transition-colors"
-                              >
-                                <div className="p-1.5 rounded-lg bg-emerald-950/60 border border-emerald-800/40 text-emerald-400 group-hover:bg-emerald-500 group-hover:text-slate-950 transition-colors shrink-0">
-                                  <ItemIcon className="w-3.5 h-3.5" />
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                  <div className="text-xs font-bold text-slate-100 group-hover:text-emerald-300 transition-colors truncate">
-                                    {item.label}
+                        {/* Invisible hover bridge to eliminate pointer gap between trigger and menu */}
+                        <div className="absolute -top-2 left-0 right-0 h-3 bg-transparent pointer-events-auto" />
+
+                        <div className="rounded-2xl p-2 bg-[#09151F]/98 backdrop-blur-2xl border border-emerald-500/30 shadow-[0_16px_40px_rgba(0,0,0,0.85)]">
+                          <div className="space-y-0.5">
+                            {category.items.map((item, idx) => {
+                              const ItemIcon = item.icon;
+                              return (
+                                <a
+                                  key={idx}
+                                  href={item.href}
+                                  onClick={(e) => handleNavClick(e, item.href)}
+                                  className="group flex items-center gap-2.5 p-2 rounded-xl hover:bg-slate-800/80 transition-colors"
+                                >
+                                  <div className="p-1.5 rounded-lg bg-emerald-950/60 border border-emerald-800/40 text-emerald-400 group-hover:bg-emerald-500 group-hover:text-slate-950 transition-colors shrink-0">
+                                    <ItemIcon className="w-3.5 h-3.5" />
                                   </div>
-                                  <div className="text-[10px] text-slate-400 truncate">
-                                    {item.desc}
+                                  <div className="flex-1 min-w-0">
+                                    <div className="text-xs font-bold text-slate-100 group-hover:text-emerald-300 transition-colors truncate">
+                                      {item.label}
+                                    </div>
+                                    <div className="text-[10px] text-slate-400 truncate">
+                                      {item.desc}
+                                    </div>
                                   </div>
-                                </div>
-                              </a>
-                            );
-                          })}
+                                </a>
+                              );
+                            })}
+                          </div>
                         </div>
                       </div>
                     )}
@@ -408,13 +462,14 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
               <div className="relative" ref={langDropdownRef}>
                 <button
                   type="button"
-                  onClick={toggleLangDropdown}
-                  className={`inline-flex items-center justify-center gap-1.5 rounded-xl transition-colors border ${
+                  onClick={(e) => toggleLangDropdown(e)}
+                  className={`inline-flex items-center justify-center gap-1.5 rounded-xl transition-all duration-150 border cursor-pointer select-none ${
                     langDropdownOpen
                       ? 'bg-slate-800 text-white border-emerald-500 shadow-sm ring-1 ring-emerald-500/40'
                       : 'bg-slate-900/90 hover:bg-slate-800 text-slate-200 border-slate-700/80'
                   } px-2.5 py-1.5 text-xs`}
                   aria-expanded={langDropdownOpen}
+                  aria-haspopup="true"
                   aria-label="Select Language"
                 >
                   <FlagIcon code={currentLangInfo.code} size="sm" className="shadow-sm" />
@@ -427,50 +482,55 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
 
                 {langDropdownOpen && (
                   <div
-                    className={`absolute top-full mt-2 w-56 rounded-2xl p-1.5 bg-[#09151F]/98 border border-emerald-500/30 shadow-[0_16px_40px_rgba(0,0,0,0.8)] z-50 animate-in fade-in duration-150 ${
+                    className={`absolute top-full pt-1.5 w-56 z-50 animate-in fade-in duration-150 ${
                       isRTL ? 'left-0' : 'right-0'
                     }`}
                   >
-                    {geoInfo?.countryCode && (
-                      <div className="px-2.5 py-1.5 mb-1 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-[10px] text-emerald-300 flex items-center justify-between">
-                        <span className="truncate">IP: {geoInfo.countryName || geoInfo.countryCode}</span>
-                        <span className="font-mono text-[9px] px-1 py-0.5 rounded bg-emerald-500/20 text-emerald-200">AUTO</span>
-                      </div>
-                    )}
-                    <div className="max-h-60 overflow-y-auto space-y-0.5 custom-scrollbar">
-                      {Object.values(SUPPORTED_LANGUAGES).map((lang) => (
-                        <button
-                          key={lang.code}
-                          type="button"
-                          onClick={() => handleLanguageSelect(lang.code)}
-                          className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl text-xs transition-colors ${
-                            currentLanguage === lang.code
-                              ? 'bg-emerald-500 text-slate-950 font-bold shadow-sm'
-                              : 'text-slate-200 hover:bg-slate-800 hover:text-white'
-                          }`}
-                        >
-                          <div className="flex items-center gap-2 min-w-0">
-                            <FlagIcon code={lang.code} size="sm" />
-                            <div className="flex flex-col text-start leading-tight min-w-0">
-                              <span className="text-xs font-medium truncate">{lang.nativeName}</span>
-                              <span className={`text-[9px] font-mono truncate ${
-                                currentLanguage === lang.code ? 'text-slate-900 font-semibold' : 'text-emerald-400/80'
-                              }`}>
-                                {lang.domain}
-                              </span>
-                            </div>
-                          </div>
-                          <span
-                            className={`text-[10px] font-mono px-1 py-0.5 rounded shrink-0 ${
+                    {/* Invisible hover bridge */}
+                    <div className="absolute -top-2 left-0 right-0 h-3 bg-transparent pointer-events-auto" />
+
+                    <div className="rounded-2xl p-1.5 bg-[#09151F]/98 backdrop-blur-2xl border border-emerald-500/30 shadow-[0_16px_40px_rgba(0,0,0,0.85)]">
+                      {geoInfo?.countryCode && (
+                        <div className="px-2.5 py-1.5 mb-1 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-[10px] text-emerald-300 flex items-center justify-between">
+                          <span className="truncate">IP: {geoInfo.countryName || geoInfo.countryCode}</span>
+                          <span className="font-mono text-[9px] px-1 py-0.5 rounded bg-emerald-500/20 text-emerald-200">AUTO</span>
+                        </div>
+                      )}
+                      <div className="max-h-60 overflow-y-auto space-y-0.5 custom-scrollbar">
+                        {Object.values(SUPPORTED_LANGUAGES).map((lang) => (
+                          <button
+                            key={lang.code}
+                            type="button"
+                            onClick={() => handleLanguageSelect(lang.code)}
+                            className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl text-xs transition-colors cursor-pointer ${
                               currentLanguage === lang.code
-                                ? 'bg-slate-950/20 text-slate-950'
-                                : 'bg-slate-800 text-slate-400'
+                                ? 'bg-emerald-500 text-slate-950 font-bold shadow-sm'
+                                : 'text-slate-200 hover:bg-slate-800 hover:text-white'
                             }`}
                           >
-                            {lang.code.toUpperCase()}
-                          </span>
-                        </button>
-                      ))}
+                            <div className="flex items-center gap-2 min-w-0">
+                              <FlagIcon code={lang.code} size="sm" />
+                              <div className="flex flex-col text-start leading-tight min-w-0">
+                                <span className="text-xs font-medium truncate">{lang.nativeName}</span>
+                                <span className={`text-[9px] font-mono truncate ${
+                                  currentLanguage === lang.code ? 'text-slate-900 font-semibold' : 'text-emerald-400/80'
+                                }`}>
+                                  {lang.domain}
+                                </span>
+                              </div>
+                            </div>
+                            <span
+                              className={`text-[10px] font-mono px-1 py-0.5 rounded shrink-0 ${
+                                currentLanguage === lang.code
+                                  ? 'bg-slate-950/20 text-slate-950'
+                                  : 'bg-slate-800 text-slate-400'
+                              }`}
+                            >
+                              {lang.code.toUpperCase()}
+                            </span>
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 )}

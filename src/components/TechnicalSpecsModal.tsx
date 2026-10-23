@@ -57,8 +57,14 @@ export const TechnicalSpecsModal: React.FC<TechnicalSpecsModalProps> = ({
   const galleryImages = product.images?.gallery || (product.image ? [product.image] : []);
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/85 backdrop-blur-xl flex items-center justify-center p-3 sm:p-6 animate-fadeIn">
-      <div className="relative w-full max-w-5xl bg-[#081218] border border-emerald-500/30 rounded-3xl shadow-2xl overflow-hidden max-h-[94vh] flex flex-col">
+    <div
+      className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/85 backdrop-blur-xl flex items-center justify-center p-3 sm:p-6 animate-fadeIn cursor-pointer"
+      onClick={onClose}
+    >
+      <div
+        className="relative w-full max-w-5xl bg-[#081218] border border-emerald-500/30 rounded-3xl shadow-2xl overflow-hidden max-h-[94vh] flex flex-col cursor-default"
+        onClick={(e) => e.stopPropagation()}
+      >
         
         {/* Modal Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-slate-800/80 bg-slate-950/70">
