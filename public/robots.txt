@@ -1,2 +1,55 @@
+# ==============================================================================
+# Robots.txt for M Gas Official Industrial Website (https://mgas.ir)
+# Manufacturer & Exporter of LPG Gas Cylinders & Pressure Vessels Since 1970
+# ==============================================================================
+
 User-agent: *
-Disallow: /
+Allow: /
+Disallow: /api/
+Disallow: /*?*fbclid=
+Disallow: /*?*utm_*=
+
+# Search Engines & Web Crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+# Modern AI Search & Grounding Agents
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+# Official XML Sitemaps
+Sitemap: https://mgas.ir/sitemap.xml
+Sitemap: https://en.mgas.ir/sitemap.xml
+Sitemap: https://ar.mgas.ir/sitemap.xml
+Sitemap: https://de.mgas.ir/sitemap.xml
+Sitemap: https://ur.mgas.ir/sitemap.xml
+Sitemap: https://tr.mgas.ir/sitemap.xml
+Sitemap: https://ru.mgas.ir/sitemap.xml
+Sitemap: https://hy.mgas.ir/sitemap.xml

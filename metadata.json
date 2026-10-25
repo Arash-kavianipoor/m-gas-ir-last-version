@@ -1,6 +1,6 @@
 {
-  "name": "Remix Remix Remix Remix Remix Remix Remix Remix Remix Remix Remix Remix Remix Remix Remix Remix Remix Remix Remix Remix Remix Remix Remix 2 سامانه مدیریت انبارداری ام گاز  (همگام‌سازی سه دیتابیس)",
-  "description": "سامانه جامع انبارداری و مدیریت زنجیره تأمین ام گاز با معماری همگام‌سازی سه دیتابیس (Cloudflare D1 و دو دیتابیس محلی SQLite آفلاین برای ویندوز ۷ و ۱۱) و پشتیبانی کامل از زبان فارسی و راست‌چین",
+  "name": "Remix M Gas - Industrial LPG \u0026 Gas Cylinder Manufacturing",
+  "description": "Official website of M Gas (mgas.ir), premier manufacturer and international exporter of LPG cylinders for home, workshops, laboratories, and automotive applications since 1970.",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
