@@ -23,6 +23,7 @@ import { CylinderAngleViewer } from './CylinderAngleViewer';
 import { RalColorPicker } from './RalColorPicker';
 import { RalColor, getRalColorByCode } from '../data/ralColors';
 import { COMPANY_INFO } from '../data/company';
+import { PAGE_TRANSLATIONS } from '../i18n/pageTranslations';
 
 interface TechnicalSpecsModalProps {
   product: Product | null;
@@ -36,6 +37,7 @@ export const TechnicalSpecsModal: React.FC<TechnicalSpecsModalProps> = ({
   onAddToRfq,
 }) => {
   const { currentLanguage, t, formatNumber } = useLanguage();
+  const pt = PAGE_TRANSLATIONS[currentLanguage] || PAGE_TRANSLATIONS.fa;
   const [activeTab, setActiveTab] = useState<'angles' | 'blueprint' | 'gallery'>('angles');
   const [selectedColor, setSelectedColor] = useState<RalColor | null>(null);
   const [activeAngle, setActiveAngle] = useState<'front' | 'perspective' | 'valveDetail' | 'real'>('real');
@@ -109,7 +111,7 @@ export const TechnicalSpecsModal: React.FC<TechnicalSpecsModalProps> = ({
             }`}
           >
             <Compass className="w-4 h-4" />
-            <span>{currentLanguage === 'fa' ? 'زوایای محصول و کاتالوگ رنگ (4:3)' : '3-Angle Views & RAL Colors (4:3)'}</span>
+            <span>{pt.specsModalAnglesTab}</span>
           </button>
 
           <button
@@ -122,7 +124,7 @@ export const TechnicalSpecsModal: React.FC<TechnicalSpecsModalProps> = ({
             }`}
           >
             <Layers className="w-4 h-4" />
-            <span>{t.viewTechnicalDrawing}</span>
+            <span>{pt.specsModalBlueprintTab}</span>
           </button>
 
           {galleryImages.length > 1 && (
@@ -137,7 +139,7 @@ export const TechnicalSpecsModal: React.FC<TechnicalSpecsModalProps> = ({
             >
               <Images className="w-4 h-4" />
               <span>
-                {currentLanguage === 'fa' ? `گالری عکس کارخانه (${galleryImages.length})` : `Factory Gallery (${galleryImages.length})`}
+                {`${pt.specsModalGalleryTab} (${galleryImages.length})`}
               </span>
             </button>
           )}
@@ -174,7 +176,7 @@ export const TechnicalSpecsModal: React.FC<TechnicalSpecsModalProps> = ({
                   <div className="flex items-center justify-between text-xs text-slate-400">
                     <span className="flex items-center gap-1">
                       <DollarSign className="w-3.5 h-3.5 text-emerald-400" />
-                      <span>{currentLanguage === 'fa' ? 'قیمت واحد (تقریبی صادراتی):' : 'Unit Price (Export):'}</span>
+                      <span>{pt.detailWhatsAppSales}:</span>
                     </span>
                     <span className="font-mono text-base font-black text-emerald-400">
                       ${product.unitPriceUsd || '--'} USD
@@ -184,7 +186,7 @@ export const TechnicalSpecsModal: React.FC<TechnicalSpecsModalProps> = ({
                   <div className="flex items-center justify-between text-xs text-slate-400 pt-1 border-t border-slate-800/80">
                     <span>{t.minOrder}:</span>
                     <span className="font-mono font-bold text-amber-400">
-                      {formatNumber(product.minOrder)} {currentLanguage === 'fa' ? 'عدد' : 'units'}
+                      {formatNumber(product.minOrder)} {pt.detailUnitPcs}
                     </span>
                   </div>
                 </div>
@@ -225,7 +227,7 @@ export const TechnicalSpecsModal: React.FC<TechnicalSpecsModalProps> = ({
             <div className="space-y-4">
               <h4 className="text-sm font-bold text-white flex items-center gap-2">
                 <Camera className="w-4 h-4 text-emerald-400" />
-                <span>{currentLanguage === 'fa' ? 'تصاویر واقعی کارخانه و خط تولید' : 'Authentic Factory & Line Photos'}</span>
+                <span>{pt.specsModalGalleryTab}</span>
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {galleryImages.map((imgSrc, idx) => (

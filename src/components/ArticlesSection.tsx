@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { TECHNICAL_ARTICLES, Article } from '../data/articles';
 import { BookOpen, Clock, Calendar, ArrowRight, ArrowLeft, Award, CheckCircle2, ShieldCheck, Tag, ExternalLink } from 'lucide-react';
+import { PAGE_TRANSLATIONS } from '../i18n/pageTranslations';
 
 interface ArticlesSectionProps {
   onSelectArticle: (article: Article) => void;
@@ -9,6 +10,7 @@ interface ArticlesSectionProps {
 
 export const ArticlesSection: React.FC<ArticlesSectionProps> = ({ onSelectArticle }) => {
   const { currentLanguage, t, isRTL } = useLanguage();
+  const pt = PAGE_TRANSLATIONS[currentLanguage] || PAGE_TRANSLATIONS.fa;
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
   const getLoc = (dict: Record<string, any>) => dict[currentLanguage] || dict.fa || dict.en;
@@ -59,7 +61,7 @@ export const ArticlesSection: React.FC<ArticlesSectionProps> = ({ onSelectArticl
                 : 'bg-slate-900/80 text-slate-400 hover:text-white border border-slate-800 hover:border-slate-700'
             }`}
           >
-            {currentLanguage === 'fa' ? 'همه موضوعات' : 'All Topics'}
+            {pt.allTopics}
           </button>
           {allTags.map((tag) => (
             <button

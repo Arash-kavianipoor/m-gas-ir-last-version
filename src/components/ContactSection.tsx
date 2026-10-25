@@ -12,10 +12,12 @@ import {
 } from 'lucide-react';
 import { WhatsAppIcon } from './WhatsAppIcon';
 import { useLanguage } from '../i18n/LanguageContext';
-import { COMPANY_INFO } from '../data/company';
+import { COMPANY_INFO, COMPANY_ADDRESS, DIRECTOR_ROLES } from '../data/company';
+import { PAGE_TRANSLATIONS } from '../i18n/pageTranslations';
 
 export const ContactSection: React.FC = () => {
   const { currentLanguage, t, isRTL } = useLanguage();
+  const pt = PAGE_TRANSLATIONS[currentLanguage] || PAGE_TRANSLATIONS.fa;
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -119,14 +121,10 @@ export const ContactSection: React.FC = () => {
 
               <div className="space-y-1">
                 <span className="text-sm font-bold text-white block">
-                  {currentLanguage === 'fa'
-                    ? COMPANY_INFO.contacts.domesticDirector.persianName
-                    : COMPANY_INFO.contacts.domesticDirector.name}
+                  {(DIRECTOR_ROLES[currentLanguage] || DIRECTOR_ROLES.fa).name}
                 </span>
                 <span className="text-xs text-slate-400 block">
-                  {currentLanguage === 'fa'
-                    ? COMPANY_INFO.contacts.domesticDirector.roleFa
-                    : COMPANY_INFO.contacts.domesticDirector.roleEn}
+                  {(DIRECTOR_ROLES[currentLanguage] || DIRECTOR_ROLES.fa).role}
                 </span>
               </div>
 
@@ -140,7 +138,7 @@ export const ContactSection: React.FC = () => {
                     <Phone className="w-3.5 h-3.5 text-emerald-400" />
                     <span>{COMPANY_INFO.contacts.domesticDirector.mobileDisplay}</span>
                   </span>
-                  <span className="text-[10px] text-slate-400">Mobile Hotline</span>
+                  <span className="text-[10px] text-slate-400">{pt.contactMobileHotline}</span>
                 </a>
 
                 <a
@@ -152,7 +150,7 @@ export const ContactSection: React.FC = () => {
                     <Phone className="w-3.5 h-3.5 text-slate-500" />
                     <span>{COMPANY_INFO.contacts.domesticDirector.landlineDisplay}</span>
                   </span>
-                  <span className="text-[10px] text-slate-400">Factory Landline</span>
+                  <span className="text-[10px] text-slate-400">{pt.contactFactoryLandline}</span>
                 </a>
               </div>
             </div>
@@ -181,7 +179,7 @@ export const ContactSection: React.FC = () => {
                 </div>
 
                 <p className="text-xs text-slate-300 leading-relaxed">
-                  {currentLanguage === 'fa' ? COMPANY_INFO.address.fullPersian : COMPANY_INFO.address.fullEnglish}
+                  {COMPANY_ADDRESS[currentLanguage] || COMPANY_ADDRESS.fa}
                 </p>
 
                 {/* Live Rectangular Google Map Container */}
@@ -312,7 +310,7 @@ export const ContactSection: React.FC = () => {
                     required
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    placeholder={currentLanguage === 'fa' ? 'لطفاً تناژ، ظرفیت مخازن یا مشخصات سفارش خود را بنویسید...' : 'Please specify cylinder capacities, quantity, or requirements...'}
+                    placeholder={pt.contactMessagePlaceholder}
                     className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-emerald-500 transition-colors resize-none"
                   />
                 </div>

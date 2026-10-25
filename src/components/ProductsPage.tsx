@@ -25,6 +25,7 @@ import {
 } from 'lucide-react';
 import { WhatsAppIcon } from './WhatsAppIcon';
 import { COMPANY_INFO } from '../data/company';
+import { PAGE_TRANSLATIONS } from '../i18n/pageTranslations';
 
 interface ProductsPageProps {
   onAddToRfq: (product: Product) => void;
@@ -33,6 +34,7 @@ interface ProductsPageProps {
 
 export const ProductsPage: React.FC<ProductsPageProps> = ({ onAddToRfq, onOpenSpecsModal }) => {
   const { currentLanguage, isRTL, t, formatNumber } = useLanguage();
+  const pt = PAGE_TRANSLATIONS[currentLanguage] || PAGE_TRANSLATIONS.fa;
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -83,14 +85,14 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onAddToRfq, onOpenSp
           <ol className="flex items-center gap-2 text-xs text-slate-400">
             <li>
               <Link to="/" className="hover:text-emerald-400 transition-colors">
-                {isRTL ? 'صفحه اصلی' : 'Home'}
+                {pt.detailBreadcrumbHome}
               </Link>
             </li>
             <li>
               <ChevronRight className={`w-3.5 h-3.5 text-slate-600 ${isRTL ? 'rotate-180' : ''}`} />
             </li>
             <li className="text-emerald-400 font-semibold" aria-current="page">
-              {isRTL ? 'فروشگاه و کاتالوگ محصولات' : 'Products & Catalog'}
+              {pt.productsBreadcrumb}
             </li>
           </ol>
         </nav>
@@ -99,23 +101,15 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onAddToRfq, onOpenSp
         <header className="mb-10 text-center max-w-4xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs sm:text-sm font-medium mb-4">
             <Flame className="w-4 h-4 text-emerald-400" />
-            <span>
-              {isRTL
-                ? 'کمپانی تولید سیلندر گاز مایع در ایران | کاتالوگ رسمی کارخانه ام گاز'
-                : 'Premier LPG Cylinder Manufacturing Company in Iran | Official Store'}
-            </span>
+            <span>{pt.productsBadge}</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight mb-4">
-            {isRTL
-              ? 'کاتالوگ و فروشگاه کمپانی تولید سیلندر گاز مایع در ایران'
-              : 'LPG Gas Cylinders Store & Complete Engineering Catalog'}
+            {pt.productsMainTitle}
           </h1>
 
           <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-3xl mx-auto">
-            {isRTL
-              ? 'مجموعه کامل ۱۳ مدل کپسول گاز مایع از ۰.۵ تا ۶۰ لیتری و مخازن استاندارد اتوگاز خودرو، تولید شده در برترین کمپانی تولید سیلندر گاز مایع در ایران با گواهی استاندارد ملی ISIRI 841، آزمون ۱۰۰٪ هیدرواستاتیک ۳۰ بار و جوشکاری اتوماتیک زیرپودری.'
-              : 'Explore the full portfolio of 13 certified LPG cylinders (0.5L to 60L) and automotive autogas tanks manufactured by Iran’s leading LPG cylinder manufacturing company under ISO 9001 and strict 30-bar pressure proof testing.'}
+            {pt.productsHeroDesc}
           </p>
         </header>
 
@@ -155,7 +149,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onAddToRfq, onOpenSp
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={isRTL ? 'جستجوی مدل، ظرفیت یا وزن...' : 'Search cylinder model or capacity...'}
+              placeholder={pt.searchPlaceholder}
               className={`w-full py-2 bg-slate-950 border border-slate-700 rounded-xl text-xs sm:text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500 ${
                 isRTL ? 'pr-9 pl-3 text-right' : 'pl-9 pr-3 text-left'
               }`}
@@ -170,20 +164,33 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onAddToRfq, onOpenSp
             return (
               <GlowCard key={product.id} className="flex flex-col justify-between group overflow-hidden">
                 <div className="p-4 sm:p-5 pb-0 flex flex-col">
-                  {/* Product Image & Badges */}
+                  {/* Product Image & Badges: Slot 1 Factory Photo, Slot 2 Realistic 3D Render */}
                   <div className="relative aspect-4/3 overflow-hidden rounded-2xl bg-gradient-to-b from-slate-900 via-slate-900/90 to-slate-950 p-4 flex items-center justify-center border border-slate-800/80 shadow-inner group-hover:border-emerald-500/30 transition-colors">
+                    {/* Image 1: Authentic Factory Photograph */}
                     <img
-                      src={product.image}
-                      alt={loc.name}
+                      src={product.images?.referenceReal || product.images?.front || product.image}
+                      alt={loc.imageAlt || `${loc.name} - ${pt.realPhotoBadge}`}
                       loading="lazy"
-                      className="max-h-full max-w-full object-contain filter drop-shadow-2xl transition-transform duration-300 group-hover:scale-105"
+                      className={`max-h-full max-w-full object-contain filter drop-shadow-2xl transition-all duration-300 ${
+                        product.images?.realisticRender ? 'group-hover:opacity-0 group-hover:scale-95' : 'group-hover:scale-105'
+                      }`}
                     />
+
+                    {/* Image 2: Photorealistic 3D Render (shown on hover) */}
+                    {product.images?.realisticRender && (
+                      <img
+                        src={product.images.realisticRender}
+                        alt={`${loc.name} - ${pt.realPlusRenderBadge}`}
+                        loading="lazy"
+                        className="max-h-full max-w-full object-contain filter drop-shadow-2xl transition-all duration-300 absolute inset-0 m-auto p-4 opacity-0 group-hover:opacity-100 group-hover:scale-105 pointer-events-none"
+                      />
+                    )}
 
                     {/* Popular / New Badges */}
                     <div className="absolute top-2.5 right-2.5 flex flex-col gap-1 z-10">
                       {product.isPopular && (
                         <span className="px-2.5 py-0.5 rounded-full bg-emerald-500 text-slate-950 text-[10px] font-black uppercase tracking-wider shadow-md">
-                          {isRTL ? 'پرفروش‌ترین' : 'Popular'}
+                          {pt.popularBadge}
                         </span>
                       )}
                       {product.category === 'automotive' && (
@@ -191,6 +198,13 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onAddToRfq, onOpenSp
                           Auto LPG
                         </span>
                       )}
+                    </div>
+
+                    {/* Slot 1 / Slot 2 Indicator */}
+                    <div className="absolute top-2.5 left-2.5 z-10">
+                      <span className="px-2 py-0.5 rounded-md bg-slate-950/85 backdrop-blur-md border border-slate-700/60 text-slate-300 text-[10px] font-medium shadow-sm">
+                        {product.images?.realisticRender ? pt.realPlusRenderBadge : pt.realPhotoBadge}
+                      </span>
                     </div>
 
                     <div className="absolute bottom-2.5 left-2.5 px-2.5 py-1 rounded-lg bg-slate-950/85 backdrop-blur-md border border-slate-700/60 text-slate-200 text-[11px] font-mono shadow-sm">
@@ -229,7 +243,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onAddToRfq, onOpenSp
                         </span>
                       </div>
                       <div className="p-1.5 rounded-lg bg-slate-900/60 border border-slate-800/50">
-                        <span className="text-slate-400 block text-[10px] font-medium mb-0.5">{isRTL ? 'ضخامت ورق' : 'Thickness'}:</span>
+                        <span className="text-slate-400 block text-[10px] font-medium mb-0.5">{pt.detailWallThickness}:</span>
                         <span className="font-bold text-slate-100 font-mono text-xs">
                           {formatNumber(product.bodyThicknessMm)} {t.unitMm}
                         </span>
@@ -237,7 +251,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onAddToRfq, onOpenSp
                       <div className="p-1.5 rounded-lg bg-slate-900/60 border border-slate-800/50">
                         <span className="text-slate-400 block text-[10px] font-medium mb-0.5">{t.minOrder}:</span>
                         <span className="font-bold text-amber-400 font-mono text-xs">
-                          {formatNumber(product.minOrder)} {isRTL ? 'عدد' : 'pcs'}
+                          {formatNumber(product.minOrder)} {pt.detailUnitPcs}
                         </span>
                       </div>
                     </div>
@@ -250,7 +264,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onAddToRfq, onOpenSp
                     to={`/products/${product.slug}`}
                     className="w-full py-2.5 px-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-750 text-slate-100 hover:text-white font-semibold text-xs flex items-center justify-center gap-2 transition-all border border-slate-700/80 hover:border-emerald-500/40 shadow-sm group/btn"
                   >
-                    <span>{isRTL ? 'مشاهده مشخصات کامل و نقشه' : 'View Full Specs & Blueprint'}</span>
+                    <span>{pt.viewSpecsBtn}</span>
                     <ArrowIcon className="w-3.5 h-3.5 text-emerald-400 transition-transform group-hover/btn:translate-x-0.5 rtl:group-hover/btn:-translate-x-0.5" />
                   </Link>
 

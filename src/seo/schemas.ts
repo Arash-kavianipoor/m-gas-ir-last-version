@@ -5,6 +5,8 @@ import { PRODUCTS } from '../data/products';
 import { TECHNICAL_ARTICLES, Article } from '../data/articles';
 import { FACTORY_VIDEOS } from '../data/factoryVideos';
 import { getBaseUrlForLanguage } from '../utils/subdomains';
+import { FAQS_DATA } from '../data/faqs';
+import { PAGE_TRANSLATIONS } from '../i18n/pageTranslations';
 
 export function generateOrganizationSchema(lang: LanguageCode = 'fa') {
   const baseUrl = getBaseUrlForLanguage(lang);
@@ -159,13 +161,14 @@ export function generateCoreCompetenciesSchema(lang: LanguageCode) {
 
 export function generateWebSiteSchema(lang: LanguageCode) {
   const baseUrl = getBaseUrlForLanguage(lang);
+  const langConfig = SEO_CONFIG.languages[lang] || SEO_CONFIG.languages.fa;
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     '@id': `${baseUrl}/#website`,
     url: baseUrl,
     name: SEO_CONFIG.siteName,
-    inLanguage: lang === 'fa' ? 'fa-IR' : 'en-US',
+    inLanguage: langConfig.locale.replace('_', '-'),
     publisher: {
       '@id': `${baseUrl}/#organization`,
     },
@@ -179,11 +182,12 @@ export function generateBreadcrumbSchema(
   activeSection?: string | null
 ) {
   const baseUrl = getBaseUrlForLanguage(lang);
+  const pt = PAGE_TRANSLATIONS[lang] || PAGE_TRANSLATIONS.fa;
   const items = [
     {
       '@type': 'ListItem',
       position: 1,
-      name: lang === 'fa' ? 'صفحه اصلی' : 'Home',
+      name: pt.navHome,
       item: `${baseUrl}/`,
     },
   ];
@@ -192,7 +196,7 @@ export function generateBreadcrumbSchema(
     items.push({
       '@type': 'ListItem',
       position: 2,
-      name: lang === 'fa' ? 'فروشگاه و محصولات' : 'Products & Catalog',
+      name: pt.productsBreadcrumb,
       item: `${baseUrl}/products`,
     });
     const loc = activeProduct.locales[lang] || activeProduct.locales.fa || activeProduct.locales.en;
@@ -206,7 +210,7 @@ export function generateBreadcrumbSchema(
     items.push({
       '@type': 'ListItem',
       position: 2,
-      name: lang === 'fa' ? 'مقالات و پایگاه دانش' : 'Articles & Technical Papers',
+      name: pt.navArticlesStandards,
       item: `${baseUrl}/articles`,
     });
     items.push({
@@ -216,19 +220,19 @@ export function generateBreadcrumbSchema(
       item: `${baseUrl}/articles/${activeArticle.slug}`,
     });
   } else if (activeSection && activeSection !== 'hero') {
-    const sectionNames: Record<string, { fa: string; en: string; path: string }> = {
-      products: { fa: 'فروشگاه و کاتالوگ محصولات', en: 'LPG Cylinders Catalog', path: '/products' },
-      quality: { fa: 'کنترل کیفیت و آزمون فشار ۳۰ بار', en: 'Quality & 30-Bar Hydro Test', path: '/quality' },
-      'factory-tour': { fa: 'مستند ویدئویی خطوط تولید کارخانه', en: 'Factory Video Tour', path: '/factory-tour' },
-      articles: { fa: 'مقالات مهندسی و متالورژی', en: 'Technical Engineering Articles', path: '/articles' },
-      about: { fa: 'تاریخچه و سوابق ۵۰ ساله کارخانه', en: '50-Year Heritage & History', path: '/about' },
-      history: { fa: 'تاریخچه و سوابق ۵۰ ساله کارخانه', en: '50-Year Heritage & History', path: '/about' },
-      faq: { fa: 'پرسش‌های متداول مشتریان و صادرات', en: 'Frequently Asked Questions', path: '/faq' },
-      calculator: { fa: 'محاسبه‌گر آنلاین استعلام قیمت و کانتینر', en: 'Online RFQ & Container Calculator', path: '/calculator' },
-      contact: { fa: 'اطلاعات تماس و نشانی کارخانه کرج', en: 'Contact Us & Factory Location', path: '/contact' },
+    const sectionNames: Record<string, { label: string; path: string }> = {
+      products: { label: pt.productsBreadcrumb, path: '/products' },
+      quality: { label: pt.navQualityIso, path: '/quality' },
+      'factory-tour': { label: pt.navQualityVideoTour, path: '/factory-tour' },
+      articles: { label: pt.navArticlesStandards, path: '/articles' },
+      about: { label: pt.navAboutHeritage, path: '/about' },
+      history: { label: pt.navAboutHeritage, path: '/about' },
+      faq: { label: pt.navAboutFaq, path: '/faq' },
+      calculator: { label: pt.navAboutRfq, path: '/calculator' },
+      contact: { label: pt.navAboutContact, path: '/contact' },
     };
     const sName = sectionNames[activeSection];
-    const label = sName ? (lang === 'fa' ? sName.fa : sName.en) : activeSection;
+    const label = sName ? sName.label : activeSection;
     const cleanSectionPath = sName ? sName.path : `/${activeSection}`;
     items.push({
       '@type': 'ListItem',
@@ -240,7 +244,7 @@ export function generateBreadcrumbSchema(
     items.push({
       '@type': 'ListItem',
       position: 2,
-      name: lang === 'fa' ? 'کمپانی تولید سیلندر گاز مایع در ایران' : 'LPG Cylinders & Tanks',
+      name: pt.productsMainTitle,
       item: `${baseUrl}/products`,
     });
   }
@@ -354,44 +358,20 @@ export function generateProductsSchema(lang: LanguageCode) {
 }
 
 export function generateFaqSchema(lang: LanguageCode) {
-  const faqs = [
-    {
-      qFa: 'آیا کلیه سیلندرهای ام گاز دارای آزمون هیدرواستاتیک ۳۰ بار هستند؟',
-      aFa: 'بله، ۱۰۰٪ سیلندرهای تولیدی در کارخانه ام گاز تحت آزمون فشار هیدرواستاتیک ۳۰ بار در ژاکت آب و تست نشت حباب زیر آب قرار می‌گیرند.',
-      qEn: 'Are all M Gas cylinders tested with 30-bar hydrostatic proof pressure?',
-      aEn: 'Yes, 100% of manufactured cylinders undergo 30-bar hydrostatic proof water-jacket testing and underwater leak tests.',
-    },
-    {
-      qFa: 'حداقل سفارش برای صادرات سیلندر گاز چقدر است؟',
-      aFa: 'حداقل سفارش برای پارت‌های صادراتی بسته به حجم سیلندر بین ۲۰۰ تا ۱۰۰۰ عدد متغیر است و امکان بارگیری کانتینری در مرزهای خروجی وجود دارد.',
-      qEn: 'What is the minimum order quantity (MOQ) for cylinder export?',
-      aEn: 'MOQ for export containers ranges between 200 and 1,000 units depending on cylinder volume.',
-    },
-    {
-      qFa: 'سیلندرهای ام گاز با چه نوع شیرها و استانداردهایی مونتاژ می‌شوند؟',
-      aFa: 'سیلندرهای صادراتی متناسب با کشور مقصد با شیرهای استاندارد برنجی با رزوه W21.8، رزوه چپ‌گرد، شیرهای سوپاپ‌دار یا مولتی‌والوهای خودرویی ECE R67 مونتاژ و آزمایش می‌شوند.',
-      qEn: 'What valve specifications and international standards are fitted?',
-      aEn: 'Cylinders are assembled according to destination market standards with certified brass valves (W21.8, POL, left-hand threads, compact camping valves, or ECE R67 automotive multivalves).',
-    },
-    {
-      qFa: 'چه استانداردهای ملی و بین‌المللی برای سیلندرهای ام گاز اخذ شده است؟',
-      aFa: 'کارخانه ام گاز دارنده نشان استاندارد ملی ایران (ISIRI 841 و ISIRI 406)، گواهینامه مدیریت کیفیت بین‌المللی ISO 9001:2015 و تاییدیه مقاومت تست فشار مخازن است.',
-      qEn: 'Which national and international certifications does M Gas hold?',
-      aEn: 'M Gas holds the National Standard of Iran (ISIRI 841 / ISIRI 406), ISO 9001:2015 Quality Management Certification, and Pressure Equipment Directive approvals.',
-    },
-  ];
-
   return {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: faqs.map((f) => ({
-      '@type': 'Question',
-      name: lang === 'fa' ? f.qFa : f.qEn,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: lang === 'fa' ? f.aFa : f.aEn,
-      },
-    })),
+    mainEntity: FAQS_DATA.map((f) => {
+      const loc = f.locales[lang] || f.locales.fa;
+      return {
+        '@type': 'Question',
+        name: loc.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: loc.answer,
+        },
+      };
+    }),
   };
 }
 

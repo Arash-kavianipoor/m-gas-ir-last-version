@@ -78,6 +78,28 @@ export const COMPANY_INFO = {
   ],
 };
 
+export const COMPANY_ADDRESS: Record<import('../types').LanguageCode, string> = {
+  fa: 'استان البرز، کرج، جاده ملارد، پشت انبار نفت (مخازن شرکت نفت)، خیابان ترانس برق، پلاک ۳۶',
+  en: 'No. 36, behind Oil Reservoir, Trans-Electric St., Karaj-Malard Rd., Karaj, Alborz Province, Iran',
+  ar: 'مبنى ۳۶، خلف مستودع النفط، شارع ترانس كهرباء، طريق كرج-ملارد، كرج، محافظة البرز، إيران',
+  de: 'Nr. 36, hinter dem Öllager, Trans-Electric-Str., Karaj-Malard-Str., Karaj, Provinz Alborz, Iran',
+  ur: 'مکان نمبر ۳۶، آئل ڈپو کے پیچھے، ٹرانس الیکٹرک اسٹریٹ، کرج - ملارد روڈ، کرج، صوبہ البرز، ایران',
+  tr: 'No: 36, Petrol Deposu arkası, Trans Elektrik Cad., Karac-Malard Yolu, Karac, Elburz Eyaleti, İran',
+  ru: '№ 36, за нефтебазой, ул. Транс-Электрик, шоссе Карадж-Малард, Карадж, провинция Альборз, Иран',
+  hy: 'Թիվ 36, Նավթաբազայի հետևում, Տրանս-Էլեկտրիկ փողոց, Քարաջ-Մալարդ ճանապարհ, Քարաջ, Ալբորզի նահանգ, Իրան',
+};
+
+export const DIRECTOR_ROLES: Record<import('../types').LanguageCode, { name: string; role: string }> = {
+  fa: { name: 'موسی عمویی', role: 'مدیریت کارخانه و مدیر ارشد تولید' },
+  en: { name: 'Mousa Amooie', role: 'Factory Director & General Manager' },
+  ar: { name: 'موسى عموئي', role: 'مدير المصنع والمدير العام للإنتاج' },
+  de: { name: 'Mousa Amooie', role: 'Werksleiter & Generaldirektor' },
+  ur: { name: 'موسیٰ عموئی', role: 'فیکٹری ڈائریکٹر اور جنرل منیجر' },
+  tr: { name: 'Mousa Amooie', role: 'Fabrika Müdürü ve Genel Müdür' },
+  ru: { name: 'Муса Амуи', role: 'Директор завода и генеральный управляющий' },
+  hy: { name: 'Մուսա Ամուի', role: 'Գործարանի տնօրեն և գլխավոր մենեջեր' },
+};
+
 export const SEO_CONFIG: SeoConfig = {
   siteName: 'M Gas | کارخانه تولید کپسول گاز ام گاز',
   siteUrl: 'https://mgas.ir',

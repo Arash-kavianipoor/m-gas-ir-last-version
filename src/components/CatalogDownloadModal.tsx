@@ -16,6 +16,7 @@ import {
 import { useLanguage } from '../i18n/LanguageContext';
 import { generateAndDownloadCatalogPdf } from '../utils/pdfGenerator';
 import { COMPANY_INFO } from '../data/company';
+import { PAGE_TRANSLATIONS } from '../i18n/pageTranslations';
 
 interface CatalogDownloadModalProps {
   isOpen: boolean;
@@ -27,6 +28,7 @@ export const CatalogDownloadModal: React.FC<CatalogDownloadModalProps> = ({
   onClose,
 }) => {
   const { currentLanguage, isRTL, t } = useLanguage();
+  const pt = PAGE_TRANSLATIONS[currentLanguage] || PAGE_TRANSLATIONS.fa;
   const [downloading, setDownloading] = useState(false);
   const [downloadSuccess, setDownloadSuccess] = useState(false);
 
@@ -78,17 +80,13 @@ export const CatalogDownloadModal: React.FC<CatalogDownloadModalProps> = ({
           <div>
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 text-[11px] font-semibold mb-1 border border-emerald-500/20">
               <Sparkles className="w-3 h-3 text-emerald-400" />
-              <span>{currentLanguage === 'fa' ? 'نسخه رسمی ۲۰۲۶' : 'Official 2026 Edition'}</span>
+              <span>{pt.catalogEditionBadge}</span>
             </div>
             <h3 className="text-xl font-bold text-white">
-              {currentLanguage === 'fa'
-                ? 'دریافت کاتالوگ جامع محصولات و مشخصات فنی'
-                : 'Download Official LPG Cylinders Catalog'}
+              {pt.catalogModalTitle}
             </h3>
             <p className="text-xs text-slate-400 mt-1">
-              {currentLanguage === 'fa'
-                ? 'شامل مشخصات مهندسی تمام ۱۳ مدل کپسول، گواهینامه‌های ISO و EN 1442، کدهای رنگ RAL و شرایط ارسال صادراتی'
-                : 'Comprehensive guide covering 13 cylinder models, ISO/EN certifications, RAL color charts, and container logistics'}
+              {pt.catalogModalDesc}
             </p>
           </div>
         </div>
@@ -97,19 +95,19 @@ export const CatalogDownloadModal: React.FC<CatalogDownloadModalProps> = ({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 p-4 rounded-2xl bg-slate-900/80 border border-slate-800 mb-6 text-xs text-slate-300">
           <div className="flex items-center gap-2">
             <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0" />
-            <span>{currentLanguage === 'fa' ? '۱۳ مدل کپسول (خانگی، صنعتی، خودرویی)' : '13 Cylinder Models (Home, Industry, Auto)'}</span>
+            <span>{pt.catalogFeature1}</span>
           </div>
           <div className="flex items-center gap-2">
             <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0" />
-            <span>{currentLanguage === 'fa' ? 'آزمون فشار ۳۰ بار و متالورژی ورق' : '30-Bar Hydrostatic Test Specs'}</span>
+            <span>{pt.catalogFeature2}</span>
           </div>
           <div className="flex items-center gap-2">
             <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0" />
-            <span>{currentLanguage === 'fa' ? 'استاندارد EN 1442 و ISO 9001' : 'EN 1442 & ISO 9001 Compliance'}</span>
+            <span>{pt.catalogFeature3}</span>
           </div>
           <div className="flex items-center gap-2">
             <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0" />
-            <span>{currentLanguage === 'fa' ? 'ظرفیت بارگیری کانتینرهای ۲۰ و ۴۰ فوت' : '20ft & 40ft HQ Container Capacities'}</span>
+            <span>{pt.catalogFeature4}</span>
           </div>
         </div>
 
@@ -125,21 +123,17 @@ export const CatalogDownloadModal: React.FC<CatalogDownloadModalProps> = ({
             {downloading ? (
               <>
                 <div className="w-4 h-4 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
-                <span>{currentLanguage === 'fa' ? 'در حال آماده‌سازی کاتالوگ...' : 'Generating PDF Catalog...'}</span>
+                <span>{pt.catalogGeneratingPdf}</span>
               </>
             ) : downloadSuccess ? (
               <>
                 <CheckCircle className="w-4 h-4 text-slate-950" />
-                <span>{currentLanguage === 'fa' ? 'کاتالوگ با موفقیت دانلود شد!' : 'Catalog Downloaded Successfully!'}</span>
+                <span>{pt.catalogDownloadSuccess}</span>
               </>
             ) : (
               <>
                 <Download className="w-4 h-4 text-slate-950" />
-                <span>
-                  {currentLanguage === 'fa'
-                    ? 'دانلود مستقیم فایل PDF کاتالوگ (رایگان)'
-                    : 'Download Official PDF Catalog (Free)'}
-                </span>
+                <span>{pt.catalogDownloadBtn}</span>
               </>
             )}
           </button>
@@ -153,7 +147,7 @@ export const CatalogDownloadModal: React.FC<CatalogDownloadModalProps> = ({
               className="flex-1 inline-flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700/80 text-xs font-medium text-slate-300 hover:text-white transition-colors"
             >
               <ExternalLink className="w-3.5 h-3.5 text-emerald-400" />
-              <span>{currentLanguage === 'fa' ? 'مشاهده آنلاین فایل PDF' : 'View PDF in Browser'}</span>
+              <span>{pt.catalogDirectInquiry}</span>
             </a>
 
             <a
@@ -165,7 +159,7 @@ export const CatalogDownloadModal: React.FC<CatalogDownloadModalProps> = ({
               className="flex-1 inline-flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-emerald-950/60 hover:bg-emerald-900/80 border border-emerald-800/60 text-xs font-medium text-emerald-300 transition-colors"
             >
               <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
-              <span>{currentLanguage === 'fa' ? 'دریافت در واتس‌اپ' : 'Request on WhatsApp'}</span>
+              <span>WhatsApp</span>
             </a>
           </div>
         </div>

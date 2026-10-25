@@ -1,9 +1,11 @@
 import React from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { Award, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { PAGE_TRANSLATIONS } from '../i18n/pageTranslations';
 
 export const CustomerBrandsStrip: React.FC = () => {
   const { currentLanguage, t } = useLanguage();
+  const pt = PAGE_TRANSLATIONS[currentLanguage] || PAGE_TRANSLATIONS.fa;
 
   const brands = [
     { name: 'Iran Khodro (IKCO)', logo: '/customers/ikco.svg', alt: 'Iran Khodro Industrial Group' },
@@ -24,10 +26,10 @@ export const CustomerBrandsStrip: React.FC = () => {
             </div>
             <div>
               <span className="text-xs font-bold uppercase tracking-wider text-emerald-400 block">
-                {currentLanguage === 'fa' ? 'مشتریان عمده و طرف‌های تجاری' : 'OEM & Major Industrial Partners'}
+                {pt.brandsBadge}
               </span>
               <p className="text-sm font-semibold text-slate-200">
-                {currentLanguage === 'fa' ? 'تأمین‌کننده مورد اعتماد صنایع بزرگ و خودروسازان' : 'Trusted by Leading Automotive & Gas Corporations'}
+                {pt.brandsHeadline}
               </p>
             </div>
           </div>

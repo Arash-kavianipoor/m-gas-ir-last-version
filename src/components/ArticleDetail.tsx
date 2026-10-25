@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { Article, TECHNICAL_ARTICLES } from '../data/articles';
+import { PRODUCTS } from '../data/products';
 import { scrollToElement, scrollToTop as smoothOrInstantScrollToTop } from '../utils/scrollHelper';
+import { PAGE_TRANSLATIONS } from '../i18n/pageTranslations';
 import {
   ArrowLeft,
   ArrowRight,
@@ -36,6 +38,7 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
   onOpenRfq,
 }) => {
   const { currentLanguage, t, isRTL } = useLanguage();
+  const pt = PAGE_TRANSLATIONS[currentLanguage] || PAGE_TRANSLATIONS.fa;
   const [copied, setCopied] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeSectionId, setActiveSectionId] = useState<string>('');
@@ -121,7 +124,7 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
               className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-300 hover:text-white bg-slate-900 px-3 py-2 rounded-xl border border-slate-800 hover:border-slate-700 transition-all"
             >
               {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-              <span className="hidden sm:inline">{copied ? (currentLanguage === 'fa' ? 'کپی شد' : 'Copied') : t.shareArticle}</span>
+              <span className="hidden sm:inline">{copied ? pt.copiedTooltip : t.shareArticle}</span>
             </button>
 
             <button
@@ -304,12 +307,10 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
               <div className="pt-4 border-t border-slate-800">
                 <div className="bg-slate-950 p-4 rounded-xl border border-emerald-500/20 text-center">
                   <div className="text-xs font-bold text-white mb-1">
-                    {currentLanguage === 'fa' ? 'سفارش سیلندر استاندارد' : 'Standard Cylinder Procurement'}
+                    {pt.procurementCalloutTitle}
                   </div>
                   <p className="text-[11px] text-slate-400 mb-3">
-                    {currentLanguage === 'fa'
-                      ? 'تولید کپسول مطابق کدهای EN 1442 و DOT-4BA'
-                      : 'Certified manufacturing per EN 1442 & DOT-4BA'}
+                    {pt.procurementCalloutDesc}
                   </p>
                   <button
                     onClick={onOpenRfq}
@@ -428,49 +429,29 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
             <section className="bg-slate-900/60 p-6 sm:p-8 rounded-3xl border border-emerald-500/30 space-y-4">
               <div className="flex items-center gap-2.5 text-sm font-bold text-emerald-400 uppercase tracking-wider border-b border-slate-800 pb-3">
                 <ShieldCheck className="w-5 h-5 text-emerald-400" />
-                <span>{currentLanguage === 'fa' ? 'محصولات منطبق با استانداردهای این مقاله' : 'Cylinders Conforming to These Standards'}</span>
+                <span>{pt.detailRelatedProducts}</span>
               </div>
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                {currentLanguage === 'fa'
-                  ? 'کلیه محصولات کارخانه ام گاز منطبق بر الزامات مهندسی، تست هیدرواستاتیک ۳۰ بار و کدهای استاندارد ISIRI 841 و EN 1442 تولید می‌شوند:'
-                  : 'All M Gas cylinders undergo 30-bar hydrostatic proof expansion testing and are certified to ISIRI 841, ISO 9001, and EN 1442:'}
+                {pt.detailCertifiedBadge}
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-                <a
-                  href="/products/cylinder-11-kg"
-                  className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/60 transition-all group block"
-                >
-                  <span className="text-xs font-bold text-white group-hover:text-emerald-300 block mb-1">
-                    {currentLanguage === 'fa' ? 'سیلندر ۱۱ کیلویی خانگی' : '11kg Domestic Cylinder'}
-                  </span>
-                  <span className="text-[11px] text-slate-400 block font-mono">
-                    {currentLanguage === 'fa' ? 'آزمون ۳۰ بار • شیر استاندارد' : '30-Bar Proof • G.56 Valve'}
-                  </span>
-                </a>
-
-                <a
-                  href="/products/cylinder-50-kg"
-                  className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/60 transition-all group block"
-                >
-                  <span className="text-xs font-bold text-white group-hover:text-emerald-300 block mb-1">
-                    {currentLanguage === 'fa' ? 'سیلندر ۵۰ کیلویی صنعتی' : '50kg Industrial Cylinder'}
-                  </span>
-                  <span className="text-[11px] text-slate-400 block font-mono">
-                    {currentLanguage === 'fa' ? 'مخزن سنگین کارگاهی • POL' : 'Heavy Gauge Steel • POL Valve'}
-                  </span>
-                </a>
-
-                <a
-                  href="/products/cylinder-auto-lpg-tank"
-                  className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/60 transition-all group block"
-                >
-                  <span className="text-xs font-bold text-white group-hover:text-emerald-300 block mb-1">
-                    {currentLanguage === 'fa' ? 'مخزن گاز مایع خودرو' : 'Automotive LPG Autogas Tank'}
-                  </span>
-                  <span className="text-[11px] text-slate-400 block font-mono">
-                    {currentLanguage === 'fa' ? 'استاندارد ECE R67 • ضخامت ۳.۵mm' : 'ECE R67 • 3.5mm Steel'}
-                  </span>
-                </a>
+                {PRODUCTS.filter((p) => ['cylinder-11-kg', 'cylinder-50-kg', 'cylinder-auto-lpg-tank'].includes(p.slug)).map((prod) => {
+                  const locProd = prod.locales[currentLanguage] || prod.locales.fa || prod.locales.en;
+                  return (
+                    <a
+                      key={prod.id}
+                      href={`/products/${prod.slug}`}
+                      className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 hover:border-emerald-500/60 transition-all group block"
+                    >
+                      <span className="text-xs font-bold text-white group-hover:text-emerald-300 block mb-1">
+                        {locProd.name}
+                      </span>
+                      <span className="text-[11px] text-slate-400 block font-mono">
+                        {prod.testPressureBar} Bar • {prod.valveStandard}
+                      </span>
+                    </a>
+                  );
+                })}
               </div>
             </section>
 

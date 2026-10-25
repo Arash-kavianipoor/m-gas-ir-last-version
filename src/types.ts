@@ -34,6 +34,7 @@ export interface ProductImages {
   perspective: string;
   valveDetail: string;
   referenceReal: string;
+  realisticRender?: string;
   gallery: string[];
 }
 

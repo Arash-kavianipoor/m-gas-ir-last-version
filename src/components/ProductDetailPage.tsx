@@ -27,6 +27,7 @@ import { CylinderBlueprint } from './CylinderBlueprint';
 import { CylinderAngleViewer } from './CylinderAngleViewer';
 import { RalColorModal } from './RalColorModal';
 import { RalColor } from '../data/ralColors';
+import { PAGE_TRANSLATIONS } from '../i18n/pageTranslations';
 
 interface ProductDetailPageProps {
   product: Product;
@@ -35,6 +36,7 @@ interface ProductDetailPageProps {
 
 export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product, onAddToRfq }) => {
   const { currentLanguage, isRTL, t, formatNumber } = useLanguage();
+  const pt = PAGE_TRANSLATIONS[currentLanguage] || PAGE_TRANSLATIONS.fa;
   const { navigate } = useRouter();
   const [showBlueprint, setShowBlueprint] = useState(false);
   const [showRalModal, setShowRalModal] = useState(false);
@@ -64,7 +66,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product, o
           <ol className="flex flex-wrap items-center gap-2 text-xs text-slate-400">
             <li>
               <Link to="/" className="hover:text-emerald-400 transition-colors">
-                {isRTL ? 'صفحه اصلی' : 'Home'}
+                {pt.detailBreadcrumbHome}
               </Link>
             </li>
             <li>
@@ -72,7 +74,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product, o
             </li>
             <li>
               <Link to="/products" className="hover:text-emerald-400 transition-colors">
-                {isRTL ? 'فروشگاه و کاتالوگ' : 'Products Store'}
+                {pt.detailBreadcrumbStore}
               </Link>
             </li>
             <li>
@@ -95,7 +97,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product, o
               {/* 30-Bar Pressure Proof Seal */}
               <div className="absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold">
                 <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                <span>30 BAR TESTED</span>
+                <span>{pt.detailPressureTestedBadge}</span>
               </div>
             </div>
 
@@ -111,7 +113,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product, o
                 }`}
               >
                 <Eye className="w-4 h-4" />
-                <span>{showBlueprint ? (isRTL ? 'نمایش عکس سیلندر' : 'Show 3D Angles') : (isRTL ? 'نمایش نقشه مهندسی' : 'View Blueprint')}</span>
+                <span>{showBlueprint ? pt.detailShowAngles : pt.detailShowBlueprint}</span>
               </button>
 
               <button
@@ -120,7 +122,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product, o
                 className="py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 text-xs font-semibold flex items-center justify-center gap-2 transition-all cursor-pointer"
               >
                 <Palette className="w-4 h-4 text-emerald-400" />
-                <span>{isRTL ? 'انتخاب رنگ سفارشی RAL' : 'Custom RAL Color'}</span>
+                <span>{pt.detailCustomColor}</span>
               </button>
             </div>
 
@@ -140,7 +142,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product, o
                   onClick={() => setSelectedColor(null)}
                   className="text-slate-400 hover:text-rose-400 text-[11px] underline cursor-pointer"
                 >
-                  {isRTL ? 'تنظیم مجدد' : 'Reset'}
+                  {pt.detailResetColor}
                 </button>
               </div>
             )}
@@ -152,11 +154,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product, o
               {/* Product Badge with SEO Keywords */}
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold mb-3">
                 <Flame className="w-3.5 h-3.5" />
-                <span>
-                  {isRTL
-                    ? 'کمپانی تولید سیلندر گاز مایع در ایران | استاندارد ملی ISIRI 841'
-                    : 'Certified by Top LPG Cylinder Manufacturing Company in Iran'}
-                </span>
+                <span>{pt.detailCertifiedBadge}</span>
               </div>
 
               {/* Main Heading H1 */}
@@ -173,7 +171,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product, o
               <div className="rounded-2xl bg-slate-900/80 border border-slate-800 p-5 mb-6">
                 <h2 className="text-sm font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
                   <Gauge className="w-4 h-4 text-emerald-400" />
-                  <span>{isRTL ? 'مشخصات فنی و استانداردهای متالورژی' : 'Technical Specifications & Metallurgy'}</span>
+                  <span>{pt.detailSpecsHeader}</span>
                 </h2>
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 text-xs">
@@ -199,7 +197,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product, o
                   </div>
 
                   <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800">
-                    <span className="text-slate-500 block mb-1">{isRTL ? 'ضخامت ورق بدنه' : 'Wall Thickness'}</span>
+                    <span className="text-slate-500 block mb-1">{pt.detailWallThickness}</span>
                     <span className="text-slate-100 font-mono font-bold text-sm">
                       {formatNumber(product.bodyThicknessMm)} {t.unitMm}
                     </span>
@@ -220,19 +218,19 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product, o
                   </div>
 
                   <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800">
-                    <span className="text-slate-500 block mb-1">{isRTL ? 'استاندارد شیر' : 'Valve Standard'}</span>
+                    <span className="text-slate-500 block mb-1">{pt.detailValveStandard}</span>
                     <span className="text-slate-100 font-medium">{product.valveStandard}</span>
                   </div>
 
                   <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800">
-                    <span className="text-slate-500 block mb-1">{isRTL ? 'گرید فولاد' : 'Steel Grade'}</span>
+                    <span className="text-slate-500 block mb-1">{pt.detailSteelGrade}</span>
                     <span className="text-slate-100 font-mono font-semibold">{product.material}</span>
                   </div>
 
                   <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800">
                     <span className="text-slate-500 block mb-1">{t.minOrder}</span>
                     <span className="text-amber-400 font-mono font-bold text-sm">
-                      {formatNumber(product.minOrder)} {isRTL ? 'عدد' : 'pcs'}
+                      {formatNumber(product.minOrder)} {pt.detailUnitPcs}
                     </span>
                   </div>
                 </div>
@@ -241,7 +239,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product, o
               {/* Key Features & Certified Applications */}
               <div className="mb-6">
                 <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
-                  {isRTL ? 'ویژگی‌های فنی و کاربردها:' : 'Engineering Features & Verified Applications:'}
+                  {pt.detailFeaturesTitle}
                 </h3>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-300">
                   {loc.features.map((feat, idx) => (
@@ -268,7 +266,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product, o
                 className="w-full sm:w-auto flex-1 py-3.5 px-6 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-xl shadow-emerald-500/25 active:scale-98 cursor-pointer"
               >
                 <Send className="w-4 h-4" />
-                <span>{isRTL ? 'افزودن به پیش‌فاکتور و استعلام رسمی (RFQ)' : 'Add to RFQ & Request Quote'}</span>
+                <span>{pt.detailAddToRfq}</span>
               </button>
 
               <button
@@ -277,7 +275,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product, o
                 className="w-full sm:w-auto py-3.5 px-6 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-slate-950 font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-xl shadow-[#25D366]/20 active:scale-98 cursor-pointer"
               >
                 <WhatsAppIcon className="w-4 h-4 text-slate-950" />
-                <span>{isRTL ? 'استعلام فوری در واتس‌اپ مدیر فروش' : 'WhatsApp Sales Manager'}</span>
+                <span>{pt.detailWhatsAppSales}</span>
               </button>
             </div>
           </div>
@@ -288,7 +286,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product, o
           <div className="mb-16 p-6 sm:p-8 rounded-3xl bg-slate-900/90 border border-slate-800">
             <h2 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
               <FileText className="w-5 h-5 text-emerald-400" />
-              <span>{isRTL ? `نقشه مهندسی و ابعاد استاندارد ${loc.name}` : `Technical Blueprint & Engineering Dimensions`}</span>
+              <span>{`${pt.detailBlueprintHeading}: ${loc.name}`}</span>
             </h2>
             <CylinderBlueprint product={product} />
           </div>
@@ -299,17 +297,17 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product, o
           <div className="flex items-center justify-between mb-8">
             <div>
               <h2 className="text-xl sm:text-2xl font-bold text-white mb-1">
-                {isRTL ? 'سایر مدل‌های کپسول گاز کارخانه ام گاز' : 'Other LPG Cylinder Models by M Gas'}
+                {pt.detailRelatedProducts}
               </h2>
               <p className="text-xs sm:text-sm text-slate-400">
-                {isRTL ? 'تولید شده در بزرگترین کمپانی تولید سیلندر گاز مایع در ایران' : 'Manufactured by leading LPG cylinder company in Iran'}
+                {pt.productsBadge}
               </p>
             </div>
             <Link
               to="/products"
               className="py-2 px-3.5 rounded-xl bg-slate-850 hover:bg-slate-800 text-emerald-400 font-semibold text-xs flex items-center gap-1.5 transition-colors border border-slate-700/80"
             >
-              <span>{isRTL ? 'مشاهده همه ۱۳ مدل' : 'View All Models'}</span>
+              <span>{pt.viewSpecsBtn}</span>
               <ArrowIcon className="w-3.5 h-3.5" />
             </Link>
           </div>

@@ -9,15 +9,45 @@ interface CylinderAngleViewerProps {
 
 export const CylinderAngleViewer: React.FC<CylinderAngleViewerProps> = ({ product }) => {
   const { currentLanguage, t } = useLanguage();
-  const [activeAngle, setActiveAngle] = useState<'real' | 'front' | 'perspective' | 'valveDetail'>('real');
+  const [activeAngle, setActiveAngle] = useState<'real' | 'render' | 'front' | 'valveDetail'>('real');
   const [isHovered, setIsHovered] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
 
+  const loc = product.locales[currentLanguage] || product.locales.en || product.locales.fa;
+
   const angles = [
-    { key: 'real' as const, labelFa: 'تصویر واقعی کارخانه', labelEn: 'Real Factory Unit', src: product.images?.referenceReal || product.image },
-    { key: 'front' as const, labelFa: 'نمای روبرو (Front)', labelEn: 'Front Elevation', src: product.images?.front || product.image },
-    { key: 'perspective' as const, labelFa: 'زاویه سه‌بعدی (3/4)', labelEn: '3/4 Perspective', src: product.images?.perspective || product.image },
-    { key: 'valveDetail' as const, labelFa: 'جزئیات شیر و گارد', labelEn: 'Valve & Collar Detail', src: product.images?.valveDetail || product.image },
+    {
+      key: 'real' as const,
+      labelFa: '۱. تصویر واقعی کارخانه',
+      labelEn: '1. Real Factory Photo',
+      labelDe: '1. Echtes Werksfoto',
+      src: product.images?.referenceReal || product.image,
+      alt: `${loc.name} - ${loc.imageAlt || 'تصویر واقعی خط تولید و کپسول گاز کارخانه'}`,
+    },
+    {
+      key: 'render' as const,
+      labelFa: '۲. رندر واقع‌گرایانه',
+      labelEn: '2. Realistic 3D Render',
+      labelDe: '2. Realistisches 3D-Modell',
+      src: product.images?.realisticRender || product.images?.perspective || product.image,
+      alt: `${loc.name} - رندر استودیویی واقع گرایانه و مدل سه بعدی صنعتی مهندسی مخازن تحت فشار ام گاز`,
+    },
+    {
+      key: 'front' as const,
+      labelFa: '۳. نمای روبرو',
+      labelEn: '3. Front View',
+      labelDe: '3. Frontansicht',
+      src: product.images?.front || product.image,
+      alt: `${loc.name} - نمای روبرو و مشخصات بدنه کپسول گاز استاندارد ۳۰ بار`,
+    },
+    {
+      key: 'valveDetail' as const,
+      labelFa: '۴. جزئیات شیر و گارد',
+      labelEn: '4. Valve & Collar',
+      labelDe: '4. Ventil & Kragen',
+      src: product.images?.valveDetail || product.image,
+      alt: `${loc.name} - جزئیات شیر برنجی، سوپاپ اطمینان و گارد محافظ دسته کپسول گاز`,
+    },
   ];
 
   const currentAngleObj = angles.find((a) => a.key === activeAngle) || angles[0];
@@ -50,7 +80,7 @@ export const CylinderAngleViewer: React.FC<CylinderAngleViewerProps> = ({ produc
         {/* The Cylinder Image with Precision Zoom on Mouse Hover */}
         <img
           src={currentAngleObj.src}
-          alt={product.locales[currentLanguage]?.name || product.slug}
+          alt={currentAngleObj.alt}
           className={`max-h-full max-w-full object-contain transition-transform duration-200 pointer-events-none drop-shadow-2xl ${
             isHovered ? 'scale-[1.8]' : 'scale-100'
           }`}
@@ -62,12 +92,13 @@ export const CylinderAngleViewer: React.FC<CylinderAngleViewerProps> = ({ produc
               : undefined
           }
           loading="lazy"
+          referrerPolicy="no-referrer"
         />
 
         {/* Hover Hint Badge */}
         <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-slate-900/80 backdrop-blur-md border border-slate-700/60 text-[11px] text-slate-300 flex items-center gap-1.5 opacity-80 group-hover:opacity-100 transition-opacity">
           <Eye className="w-3.5 h-3.5 text-emerald-400" />
-          <span>{currentLanguage === 'fa' ? 'حاور ماوس برای بزرگ‌نمایی ۱۰۰٪' : 'Hover for 100% zoom'}</span>
+          <span>{currentLanguage === 'fa' ? 'هاور ماوس برای بزرگ‌نمایی ۱۰۰٪' : currentLanguage === 'de' ? 'Hover für 100% Zoom' : 'Hover for 100% zoom'}</span>
         </div>
 
         {/* 30-Bar Testing Badge */}
@@ -84,7 +115,7 @@ export const CylinderAngleViewer: React.FC<CylinderAngleViewerProps> = ({ produc
             key={angle.key}
             type="button"
             onClick={() => setActiveAngle(angle.key)}
-            className={`p-1.5 rounded-xl border text-center transition-all flex flex-col items-center gap-1 ${
+            className={`p-1.5 rounded-xl border text-center transition-all flex flex-col items-center gap-1 cursor-pointer ${
               activeAngle === angle.key
                 ? 'border-emerald-500 bg-emerald-500/10 shadow-lg shadow-emerald-500/20 ring-1 ring-emerald-500/50'
                 : 'border-slate-800 bg-slate-900/40 hover:bg-slate-800 text-slate-400 hover:text-slate-200'
@@ -93,13 +124,14 @@ export const CylinderAngleViewer: React.FC<CylinderAngleViewerProps> = ({ produc
             <div className="w-full aspect-[4/3] rounded-lg overflow-hidden bg-slate-950/60 flex items-center justify-center">
               <img
                 src={angle.src}
-                alt={angle.labelEn}
+                alt={angle.alt}
                 className="w-full h-full object-contain p-0.5"
                 loading="lazy"
+                referrerPolicy="no-referrer"
               />
             </div>
             <span className="text-[10px] font-medium truncate w-full px-1">
-              {currentLanguage === 'fa' ? angle.labelFa : angle.labelEn}
+              {currentLanguage === 'fa' ? angle.labelFa : currentLanguage === 'de' ? angle.labelDe : angle.labelEn}
             </span>
           </button>
         ))}

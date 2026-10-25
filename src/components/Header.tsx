@@ -26,15 +26,39 @@ import { FlagIcon } from './FlagIcon';
 import { scrollToElement } from '../utils/scrollHelper';
 import { CatalogDownloadModal } from './CatalogDownloadModal';
 import { useRouter } from '../router/RouterContext';
+import { PAGE_TRANSLATIONS } from '../i18n/pageTranslations';
 
 interface HeaderProps {
   onOpenRfq?: () => void;
 }
 
+const SHORT_CATALOG_LABELS: Record<LanguageCode, string> = {
+  fa: 'کاتالوگ',
+  en: 'Catalog',
+  ar: 'الكتالوج',
+  de: 'Katalog',
+  ur: 'کیٹلاگ',
+  hy: 'Կատալոգ',
+  tr: 'Katalog',
+  ru: 'Каталог',
+};
+
+const SHORT_RFQ_LABELS: Record<LanguageCode, string> = {
+  fa: 'استعلام سریع',
+  en: 'RFQ',
+  ar: 'طلب تسعير',
+  de: 'RFQ',
+  ur: 'کوٹیشن',
+  hy: 'Գնառաջարկ',
+  tr: 'Teklif Al',
+  ru: 'Запрос КП',
+};
+
 export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
   const { currentLanguage, setLanguage, t, isRTL, geoInfo } = useLanguage();
   const { navigate } = useRouter();
   const isVazir = currentLanguage === 'fa' || currentLanguage === 'ar' || isRTL;
+  const isGerman = currentLanguage === 'de';
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
@@ -165,6 +189,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
   };
 
   const currentLangInfo = SUPPORTED_LANGUAGES[currentLanguage];
+  const pt = PAGE_TRANSLATIONS[currentLanguage] || PAGE_TRANSLATIONS.fa;
 
   // Standalone Clean Dropdown Menu Categories
   const menuCategories = [
@@ -176,26 +201,26 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
       badge: '14',
       items: [
         {
-          label: isRTL ? 'فروشگاه و تمام ۱۴ مدل' : 'Store & All 14 Models',
-          desc: isRTL ? 'کاتالوگ جامع کپسول‌ها' : 'Complete portfolio & shop',
+          label: pt.navProductsAll,
+          desc: pt.navProductsAllDesc,
           href: '/products',
           icon: Layers,
         },
         {
-          label: isRTL ? 'خانگی و پیکنیک' : 'Domestic & Camping',
-          desc: isRTL ? '۰.۵ تا ۱۱ کیلوگرم' : '0.5kg – 11kg cylinders',
+          label: pt.navProductsDomestic,
+          desc: pt.navProductsDomesticDesc,
           href: '/products',
           icon: Flame,
         },
         {
-          label: isRTL ? 'صنعتی و کارگاهی' : 'Industrial & Heavy',
-          desc: isRTL ? '۲۵ تا ۵۰ کیلوگرم' : '25kg – 50kg heavy duty',
+          label: pt.navProductsIndustrial,
+          desc: pt.navProductsIndustrialDesc,
           href: '/products',
           icon: Building2,
         },
         {
-          label: isRTL ? 'مخازن خودرویی' : 'Automotive LPG Tanks',
-          desc: isRTL ? 'مخازن ۶۰ لیتر استانداردی' : '60L auto LPG tanks',
+          label: pt.navProductsAuto,
+          desc: pt.navProductsAutoDesc,
           href: '/products',
           icon: Compass,
         },
@@ -209,14 +234,14 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
       badge: 'ISO',
       items: [
         {
-          label: isRTL ? 'استانداردها و کنترل کیفیت' : 'Quality & ISO Standards',
-          desc: isRTL ? 'ISO 9001 و آزمون هیدرواستاتیک ۳۰ بار' : 'Accredited global standards & testing',
+          label: pt.navQualityIso,
+          desc: pt.navQualityIsoDesc,
           href: '/quality',
           icon: ShieldCheck,
         },
         {
-          label: isRTL ? 'مستند ویدئویی خطوط تولید' : 'Factory Video Tour',
-          desc: isRTL ? 'بازدید مدیر کارخانه (آقای موسی عمویی)' : 'Production lines & inspection tour',
+          label: pt.navQualityVideoTour,
+          desc: pt.navQualityVideoTourDesc,
           href: '/factory-tour',
           icon: Video,
         },
@@ -230,14 +255,14 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
       badge: 'NEW',
       items: [
         {
-          label: isRTL ? 'استانداردهای مهندسی و ساخت' : 'Manufacturing Standards',
-          desc: isRTL ? 'تحلیل متالورژی، جوشکاری و PWHT' : 'Metallurgy, SAW welding & PWHT',
+          label: pt.navArticlesStandards,
+          desc: pt.navArticlesStandardsDesc,
           href: '/articles/engineering-standards-lpg-cylinder-manufacturing',
           icon: FileText,
         },
         {
-          label: isRTL ? 'مدیریت، نگهداری و حمل‌ونقل' : 'Storage & Logistics Safety',
-          desc: isRTL ? 'NFPA 58، OSHA و استانداردهای ADR' : 'NFPA 58, OSHA & ADR compliance',
+          label: pt.navArticlesSafety,
+          desc: pt.navArticlesSafetyDesc,
           href: '/articles/lpg-cylinder-management-storage-transportation-safety',
           icon: ShieldCheck,
         },
@@ -251,26 +276,26 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
       badge: '1970',
       items: [
         {
-          label: isRTL ? 'درباره کارخانه و بنیانگذار' : 'Factory Heritage & Founder',
-          desc: isRTL ? 'تأسیس از سال ۱۳۴۹ (مدیریت موسی عمویی)' : 'Since 1970 (50+ years experience)',
+          label: pt.navAboutHeritage,
+          desc: pt.navAboutHeritageDesc,
           href: '/about',
           icon: Building2,
         },
         {
-          label: isRTL ? 'پرسش‌های متداول' : 'FAQ & Certification',
-          desc: isRTL ? 'پاسخ به سوالات فنی و بازرگانی' : 'Technical & export questions',
+          label: pt.navAboutFaq,
+          desc: pt.navAboutFaqDesc,
           href: '/faq',
           icon: Award,
         },
         {
-          label: isRTL ? 'استعلام قیمت و کانتینربندی' : 'Online RFQ Calculator',
-          desc: isRTL ? 'محاسبه کانتینر ۲۰ و ۴۰ فوت' : 'Container stuffing & weight',
+          label: pt.navAboutRfq,
+          desc: pt.navAboutRfqDesc,
           href: '/calculator',
           icon: Calculator,
         },
         {
-          label: isRTL ? 'تماس و صادرات' : 'Export & Karaj Factory',
-          desc: isRTL ? 'تماس با واحد فروش و آدرس کارخانه' : 'Global sales desk & direct contact',
+          label: pt.navAboutContact,
+          desc: pt.navAboutContactDesc,
           href: '/contact',
           icon: Phone,
         },
@@ -285,7 +310,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
         ref={headerRef}
         className={`fixed top-0 left-0 right-0 z-[100] w-full transition-all duration-200 ${
           isVazir ? 'font-vazir' : ''
-        } ${
+        } ${isGerman ? 'header-locale-de' : ''} ${
           isScrolled
             ? 'bg-[#061017]/98 backdrop-blur-xl border-b border-emerald-500/30 shadow-[0_8px_30px_rgba(0,0,0,0.7)] py-2 sm:py-2.5'
             : 'bg-[#061017]/90 backdrop-blur-lg border-b border-slate-800/80 shadow-[0_4px_20px_rgba(0,0,0,0.5)] py-2.5 sm:py-3.5'
@@ -328,14 +353,14 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
               </div>
             </a>
 
-            {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5">
+            {/* Desktop Navigation Links (Sleek Compact across all languages) */}
+            <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1 text-[11px] xl:text-xs">
               
               {/* Home Direct Link */}
               <a
                 href="/"
                 onClick={(e) => handleNavClick(e, '/')}
-                className="px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-200 hover:text-white hover:bg-slate-800/80 transition-colors"
+                className="px-1.5 xl:px-2 py-1 rounded-xl text-[11px] xl:text-xs font-semibold text-slate-200 hover:text-white hover:bg-slate-800/80 transition-colors"
               >
                 {t.navHome}
               </a>
@@ -361,7 +386,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
                       aria-haspopup="true"
                       aria-expanded={isOpen}
                       onClick={(e) => toggleNavDropdown(category.id, e)}
-                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-150 cursor-pointer select-none ${
+                      className={`flex items-center gap-1 px-1.5 xl:px-2 py-1 rounded-xl text-[11px] xl:text-xs font-semibold transition-all duration-150 cursor-pointer select-none tracking-tight ${
                         isOpen
                           ? 'bg-emerald-500/25 text-emerald-300 border border-emerald-500/60 shadow-[0_0_12px_rgba(16,185,129,0.3)] ring-1 ring-emerald-500/40'
                           : 'text-slate-200 hover:text-white hover:bg-slate-800/80 border border-transparent hover:border-slate-700/60'
@@ -425,7 +450,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
               <a
                 href="/contact"
                 onClick={(e) => handleNavClick(e, '/contact')}
-                className="px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-200 hover:text-white hover:bg-slate-800/80 transition-colors"
+                className="px-1.5 xl:px-2 py-1 rounded-xl text-[11px] xl:text-xs font-semibold text-slate-200 hover:text-white hover:bg-slate-800/80 transition-colors"
               >
                 {t.navContact}
               </a>
@@ -438,11 +463,11 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
               <button
                 type="button"
                 onClick={() => setCatalogModalOpen(true)}
-                className="hidden sm:inline-flex items-center gap-1.5 rounded-xl bg-amber-950/40 hover:bg-amber-900/60 text-amber-300 hover:text-amber-200 border border-amber-500/40 px-2.5 sm:px-3 py-1.5 text-xs font-semibold transition-colors shadow-sm"
+                className="header-action-btn hidden sm:inline-flex items-center rounded-xl bg-amber-950/40 hover:bg-amber-900/60 text-amber-300 hover:text-amber-200 border border-amber-500/40 font-semibold transition-colors shadow-sm gap-1 px-2 py-1 text-[11px]"
                 title={t.navDownloadCatalog}
               >
                 <FileDown className="w-3.5 h-3.5 text-amber-400" />
-                <span className="hidden md:inline">{t.navDownloadCatalog}</span>
+                <span className="hidden md:inline">{SHORT_CATALOG_LABELS[currentLanguage] || t.navDownloadCatalog}</span>
                 <span className="md:hidden font-mono">PDF</span>
               </button>
 
@@ -451,7 +476,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
                 href={`https://wa.me/${COMPANY_INFO.contacts.internationalSalesManager.whatsapp.replace('+', '')}?text=Hello%20M%20Gas%20Sales`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden xs:inline-flex items-center gap-1 rounded-xl bg-emerald-950/50 hover:bg-emerald-900/70 text-emerald-300 border border-emerald-500/40 px-2.5 py-1.5 text-xs font-semibold transition-colors"
+                className="header-action-btn hidden xs:inline-flex items-center rounded-xl bg-emerald-950/50 hover:bg-emerald-900/70 text-emerald-300 border border-emerald-500/40 font-semibold transition-colors gap-1 px-2 py-1 text-[11px]"
                 title={t.salesManagerWhatsApp}
               >
                 <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
@@ -463,11 +488,11 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
                 <button
                   type="button"
                   onClick={(e) => toggleLangDropdown(e)}
-                  className={`inline-flex items-center justify-center gap-1.5 rounded-xl transition-all duration-150 border cursor-pointer select-none ${
+                  className={`header-action-btn inline-flex items-center justify-center rounded-xl transition-all duration-150 border cursor-pointer select-none ${
                     langDropdownOpen
                       ? 'bg-slate-800 text-white border-emerald-500 shadow-sm ring-1 ring-emerald-500/40'
                       : 'bg-slate-900/90 hover:bg-slate-800 text-slate-200 border-slate-700/80'
-                  } px-2.5 py-1.5 text-xs`}
+                  } gap-1 px-2 py-1 text-[11px]`}
                   aria-expanded={langDropdownOpen}
                   aria-haspopup="true"
                   aria-label="Select Language"
@@ -540,10 +565,10 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
               <button
                 type="button"
                 onClick={onOpenRfq}
-                className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold px-2.5 sm:px-3 py-1.5 text-xs shadow-md shadow-emerald-500/20 transition-colors shrink-0"
+                className="header-action-btn inline-flex items-center rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold shadow-md shadow-emerald-500/20 transition-colors shrink-0 gap-1 px-2 py-1 text-[11px]"
               >
                 <Calculator className="w-3.5 h-3.5 text-slate-950" />
-                <span className="truncate">{t.navCalculator}</span>
+                <span className="truncate">{SHORT_RFQ_LABELS[currentLanguage] || t.navCalculator}</span>
               </button>
 
               {/* Mobile Menu Toggle Button */}
@@ -652,7 +677,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
                 onClick={(e) => handleNavClick(e, '/factory-tour')}
                 className="px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-200 hover:text-white hover:bg-white/10 transition-colors"
               >
-                {isRTL ? 'مستند ویدئویی خطوط تولید' : 'Factory Video Tour'}
+                {pt.navQualityVideoTour}
               </a>
               <a
                 href="/articles"
@@ -673,7 +698,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
                 onClick={(e) => handleNavClick(e, '/faq')}
                 className="px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-200 hover:text-white hover:bg-white/10 transition-colors"
               >
-                {isRTL ? 'پرسش‌های متداول' : 'FAQ'}
+                {pt.navAboutFaq}
               </a>
               <a
                 href="/calculator"

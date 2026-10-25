@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { X, Search, Check, Sparkles, Paintbrush, Filter, Layers } from 'lucide-react';
 import { RAL_COLORS, RAL_POPULAR_COLORS, RalColor, RalCategory, getRalColorsByCategory, searchRalColors } from '../data/ralColors';
 import { useLanguage } from '../i18n/LanguageContext';
+import { PAGE_TRANSLATIONS } from '../i18n/pageTranslations';
 
 interface RalColorModalProps {
   isOpen: boolean;
@@ -17,21 +18,135 @@ export const RalColorModal: React.FC<RalColorModalProps> = ({
   onSelectColor,
 }) => {
   const { currentLanguage } = useLanguage();
+  const pt = PAGE_TRANSLATIONS[currentLanguage] || PAGE_TRANSLATIONS.fa;
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<RalCategory | 'all' | 'popular'>('popular');
 
-  const categories: { key: RalCategory | 'all' | 'popular'; nameFa: string; nameEn: string }[] = [
-    { key: 'popular', nameFa: 'پرکاربردترین‌ها (صنعتی)', nameEn: 'Popular Industrial' },
-    { key: 'all', nameFa: 'همه ۲۰۰+ رنگ', nameEn: 'All 200+ Colors' },
-    { key: 'green', nameFa: 'سبز و زیتونی', nameEn: 'Greens' },
-    { key: 'blue', nameFa: 'آبی و لاجوردی', nameEn: 'Blues' },
-    { key: 'red', nameFa: 'قرمز و شرابی', nameEn: 'Reds' },
-    { key: 'orange', nameFa: 'نارنجی و آجری', nameEn: 'Oranges' },
-    { key: 'yellow', nameFa: 'زرد و اخرایی', nameEn: 'Yellows' },
-    { key: 'grey', nameFa: 'طوسی و دودی', nameEn: 'Greys' },
-    { key: 'white_black', nameFa: 'سفید و مشکی', nameEn: 'White & Black' },
-    { key: 'brown', nameFa: 'قهوه‌ای', nameEn: 'Browns' },
-    { key: 'violet', nameFa: 'بنفش', nameEn: 'Violets' },
+  const categoryLabels: Record<RalCategory | 'all' | 'popular', Record<string, string>> = {
+    popular: {
+      fa: 'پرکاربردترین‌ها (صنعتی)',
+      en: 'Popular Industrial',
+      de: 'Industrie-Bestseller',
+      ar: 'الأكثر استخداماً (صناعي)',
+      ur: 'سب سے زیادہ استعمال شدہ',
+      tr: 'En Popüler Endüstriyel',
+      ru: 'Популярные промышленные',
+      hy: 'Հանրաճանաչ արդյունաբերական',
+    },
+    all: {
+      fa: 'همه ۲۰۰+ رنگ',
+      en: 'All 200+ Colors',
+      de: 'Alle 200+ Farben',
+      ar: 'جميع الألوان (+200)',
+      ur: 'تمام ۲۰۰+ رنگ',
+      tr: 'Tüm 200+ Renk',
+      ru: 'Все 200+ цветов',
+      hy: 'Բոլոր 200+ գույները',
+    },
+    green: {
+      fa: 'سبز و زیتونی',
+      en: 'Greens',
+      de: 'Grüntöne',
+      ar: 'أخضر وزيتوني',
+      ur: 'سبز اور زیتونی',
+      tr: 'Yeşil Tonları',
+      ru: 'Зеленые',
+      hy: 'Կանաչ երանգներ',
+    },
+    blue: {
+      fa: 'آبی و لاجوردی',
+      en: 'Blues',
+      de: 'Blautöne',
+      ar: 'أزرق ولازوردي',
+      ur: 'نیلا اور فیروزی',
+      tr: 'Mavi Tonları',
+      ru: 'Синие',
+      hy: 'Կապույտ երանգներ',
+    },
+    red: {
+      fa: 'قرمز و شرابی',
+      en: 'Reds',
+      de: 'Rottöne',
+      ar: 'أحمر وعنابي',
+      ur: 'سرخ اور عنابی',
+      tr: 'Kırmızı Tonları',
+      ru: 'Красные',
+      hy: 'Կարմիր երանգներ',
+    },
+    orange: {
+      fa: 'نارنجی و آجری',
+      en: 'Oranges',
+      de: 'Orangetöne',
+      ar: 'برتقالي وآجوري',
+      ur: 'نارنجی اور اینٹ جیسا',
+      tr: 'Turuncu Tonları',
+      ru: 'Оранжевые',
+      hy: 'Նարնջագույն երանգներ',
+    },
+    yellow: {
+      fa: 'زرد و اخرایی',
+      en: 'Yellows',
+      de: 'Gelbtöne',
+      ar: 'أصفر ومغرة',
+      ur: 'پیلا اور گہرا پیلا',
+      tr: 'Sarı Tonları',
+      ru: 'Желтые',
+      hy: 'Դեղին երանգներ',
+    },
+    grey: {
+      fa: 'طوسی و دودی',
+      en: 'Greys',
+      de: 'Grautöne',
+      ar: 'رمادي ودخاني',
+      ur: 'سرمئی اور دھواں دار',
+      tr: 'Gri Tonları',
+      ru: 'Серые',
+      hy: 'Մոխրագույն երանգներ',
+    },
+    white_black: {
+      fa: 'سفید و مشکی',
+      en: 'White & Black',
+      de: 'Weiß & Schwarz',
+      ar: 'أبيض وأسود',
+      ur: 'سفید اور سیاہ',
+      tr: 'Beyaz & Siyah',
+      ru: 'Белые и черные',
+      hy: 'Սպիտակ և սև',
+    },
+    brown: {
+      fa: 'قهوه‌ای',
+      en: 'Browns',
+      de: 'Brauntöne',
+      ar: 'بني',
+      ur: 'بھورا',
+      tr: 'Kahverengi Tonları',
+      ru: 'Коричневые',
+      hy: 'Շագանակագույն երանգներ',
+    },
+    violet: {
+      fa: 'بنفش',
+      en: 'Violets',
+      de: 'Violetttöne',
+      ar: 'بنفسجي',
+      ur: 'جامنی',
+      tr: 'Mor Tonları',
+      ru: 'Фиолетовые',
+      hy: 'Մանուշակագույն երանգներ',
+    },
+  };
+
+  const categoryKeys: (RalCategory | 'all' | 'popular')[] = [
+    'popular',
+    'all',
+    'green',
+    'blue',
+    'red',
+    'orange',
+    'yellow',
+    'grey',
+    'white_black',
+    'brown',
+    'violet',
   ];
 
   const filteredColors = useMemo(() => {
@@ -66,12 +181,10 @@ export const RalColorModal: React.FC<RalColorModalProps> = ({
             </div>
             <div>
               <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                {currentLanguage === 'fa' ? 'کاتالوگ رنگ‌های پودری الکترواستاتیک RAL' : 'RAL Electrostatic Powder Color Chart'}
+                {pt.ralModalTitle}
               </h3>
               <p className="text-xs text-slate-400">
-                {currentLanguage === 'fa'
-                  ? 'انتخاب رنگ سفارشی کوره‌ای طبق استاندارد بین‌المللی رال'
-                  : 'Select certified electrostatic oven-cured coating according to international RAL standards'}
+                {pt.ralModalDesc}
               </p>
             </div>
           </div>
@@ -91,11 +204,7 @@ export const RalColorModal: React.FC<RalColorModalProps> = ({
             <Search className="absolute start-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <input
               type="text"
-              placeholder={
-                currentLanguage === 'fa'
-                  ? 'جستجو بر اساس کد (مثلاً 6018 یا RAL 5015) یا نام رنگ...'
-                  : 'Search by RAL code (e.g. 6018 or RAL 5015) or color name...'
-              }
+              placeholder={pt.ralSearchPlaceholder}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full ps-10 pe-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
@@ -105,30 +214,33 @@ export const RalColorModal: React.FC<RalColorModalProps> = ({
                 onClick={() => setSearchTerm('')}
                 className="absolute end-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-white bg-slate-800 px-2 py-0.5 rounded-md"
               >
-                {currentLanguage === 'fa' ? 'پاک کردن' : 'Clear'}
+                {pt.ralClear}
               </button>
             )}
           </div>
 
           {/* Category Tabs */}
           <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-thin">
-            {categories.map((cat) => (
-              <button
-                key={cat.key}
-                type="button"
-                onClick={() => {
-                  setSelectedCategory(cat.key);
-                  setSearchTerm('');
-                }}
-                className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all shrink-0 ${
-                  selectedCategory === cat.key && !searchTerm
-                    ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-950/50'
-                    : 'bg-slate-800/70 text-slate-400 hover:bg-slate-800 hover:text-slate-200'
-                }`}
-              >
-                {currentLanguage === 'fa' ? cat.nameFa : cat.nameEn}
-              </button>
-            ))}
+            {categoryKeys.map((catKey) => {
+              const label = (categoryLabels[catKey] && (categoryLabels[catKey][currentLanguage] || categoryLabels[catKey].fa)) || catKey;
+              return (
+                <button
+                  key={catKey}
+                  type="button"
+                  onClick={() => {
+                    setSelectedCategory(catKey);
+                    setSearchTerm('');
+                  }}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all shrink-0 ${
+                    selectedCategory === catKey && !searchTerm
+                      ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-950/50'
+                      : 'bg-slate-800/70 text-slate-400 hover:bg-slate-800 hover:text-slate-200'
+                  }`}
+                >
+                  {label}
+                </button>
+              );
+            })}
           </div>
         </div>
 
@@ -176,10 +288,18 @@ export const RalColorModal: React.FC<RalColorModalProps> = ({
                     <span className="text-[10px] font-mono text-slate-500">{color.hex}</span>
                   </div>
                   <div className="text-xs text-slate-200 font-medium truncate mt-0.5">
-                    {currentLanguage === 'fa' ? color.nameFa : color.nameEn}
+                    {currentLanguage === 'fa'
+                      ? color.nameFa
+                      : currentLanguage === 'de' && color.nameDe
+                      ? color.nameDe
+                      : color.nameEn}
                   </div>
                   <div className="text-[10px] text-slate-400 truncate">
-                    {currentLanguage === 'fa' ? color.nameEn : color.nameDe}
+                    {currentLanguage === 'fa'
+                      ? color.nameEn
+                      : currentLanguage === 'de'
+                      ? color.nameEn
+                      : color.nameDe || color.nameFa}
                   </div>
                 </div>
               </button>
@@ -191,15 +311,11 @@ export const RalColorModal: React.FC<RalColorModalProps> = ({
         <div className="p-4 border-t border-slate-800 bg-slate-950/80 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-400">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-400" />
-            <span>
-              {currentLanguage === 'fa'
-                ? 'پوشش رنگ کلیه سیلندرها با ضخامت ۸۰ الی ۱۲۰ میکرون در کوره ۱۸۰ درجه پخت می‌شود.'
-                : 'All cylinders are coated with 80-120μm electrostatic powder, baked at 180°C.'}
-            </span>
+            <span>{pt.specsColorCoatingNote}</span>
           </div>
 
           <div className="text-slate-300 font-mono">
-            {filteredColors.length} {currentLanguage === 'fa' ? 'رنگ یافت شد' : 'colors found'}
+            {filteredColors.length} {pt.specsColorsFound}
           </div>
         </div>
       </div>

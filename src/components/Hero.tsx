@@ -23,6 +23,7 @@ import {
 import { useLanguage } from '../i18n/LanguageContext';
 import { COMPANY_INFO } from '../data/company';
 import { HERO_BANNERS, HeroBannerSlide } from '../data/heroBanners';
+import { PAGE_TRANSLATIONS } from '../i18n/pageTranslations';
 
 interface HeroProps {
   onOpenRfq: () => void;
@@ -31,6 +32,7 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ onOpenRfq, onExploreProducts }) => {
   const { t, isRTL, currentLanguage } = useLanguage();
+  const pt = PAGE_TRANSLATIONS[currentLanguage] || PAGE_TRANSLATIONS.fa;
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isZoomOpen, setIsZoomOpen] = useState(false);
@@ -412,7 +414,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenRfq, onExploreProducts }) => {
             <div className="flex items-center justify-between p-4 sm:p-5 border-b border-slate-800 bg-slate-950/70">
               <div className="flex items-center gap-3">
                 <span className="px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-400 text-xs font-mono font-bold border border-emerald-500/40">
-                  بنر 0{currentSlideIndex + 1}
+                  {pt.heroBannerLabel} 0{currentSlideIndex + 1}
                 </span>
                 <div>
                   <h3 className="text-sm sm:text-base font-bold text-white">
@@ -429,7 +431,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenRfq, onExploreProducts }) => {
                   type="button"
                   onClick={isRTL ? handleNext : handlePrev}
                   className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white transition-colors"
-                  title="بنر قبلی"
+                  title={pt.heroPrevBanner}
                 >
                   {isRTL ? <ChevronRight className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
                 </button>
@@ -437,7 +439,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenRfq, onExploreProducts }) => {
                   type="button"
                   onClick={isRTL ? handlePrev : handleNext}
                   className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white transition-colors"
-                  title="بنر بعدی"
+                  title={pt.heroNextBanner}
                 >
                   {isRTL ? <ChevronLeft className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
                 </button>
@@ -445,7 +447,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenRfq, onExploreProducts }) => {
                   type="button"
                   onClick={() => setIsZoomOpen(false)}
                   className="p-2 rounded-xl bg-red-950/60 hover:bg-red-900/80 text-red-300 border border-red-800/40 transition-colors"
-                  title="بستن"
+                  title={pt.heroClose}
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -481,7 +483,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenRfq, onExploreProducts }) => {
                         : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
                     }`}
                   >
-                    بنر 0{bIdx + 1}
+                    {pt.heroBannerLabel} 0{bIdx + 1}
                   </button>
                 ))}
               </div>
@@ -493,7 +495,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenRfq, onExploreProducts }) => {
                 className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow transition-colors"
               >
                 <MessageCircle className="w-3.5 h-3.5" />
-                <span>استعلام در واتساپ</span>
+                <span>WhatsApp</span>
               </a>
             </div>
           </div>

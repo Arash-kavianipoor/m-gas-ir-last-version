@@ -16,9 +16,11 @@ import {
 } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { FACTORY_VIDEOS, FactoryVideo } from '../data/factoryVideos';
+import { PAGE_TRANSLATIONS } from '../i18n/pageTranslations';
 
 export const FactoryVideoTour: React.FC = () => {
   const { currentLanguage, isRTL } = useLanguage();
+  const pt = PAGE_TRANSLATIONS[currentLanguage] || PAGE_TRANSLATIONS.fa;
   const [selectedVideo, setSelectedVideo] = useState<FactoryVideo>(FACTORY_VIDEOS[0]);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isMuted, setIsMuted] = useState<boolean>(true);
@@ -89,27 +91,18 @@ export const FactoryVideoTour: React.FC = () => {
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-950/80 border border-emerald-500/30 text-emerald-300 text-xs font-bold mb-4 shadow-lg">
             <VideoIcon className="w-3.5 h-3.5 text-emerald-400" />
-            <span>
-              {isFa ? 'تور تصویری و مستند خطوط تولید' : 'Factory Video Tour & Production Process'}
-            </span>
+            <span>{pt.tourBadge}</span>
           </div>
 
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">
-            {isFa ? (
-              <>
-                مشاهده مستقیم <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-amber-300">فرآیند تولید و کارخانه</span>
-              </>
-            ) : (
-              <>
-                Inside <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-amber-300">M Gas Factory & Production Lines</span>
-              </>
-            )}
+            {pt.tourTitlePart1}{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-amber-300">
+              {pt.tourTitleHighlight}
+            </span>
           </h2>
 
           <p className="text-xs sm:text-base text-slate-300 mt-3 leading-relaxed">
-            {isFa
-              ? 'بازدید از سالن‌های مجهز قالب‌گیری، پرس‌های تناژ بالا، ربات‌های جوشکاری استاندارد و نظارت مستقیم مدیریت کارخانه بر کیفیت کپسول‌ها'
-              : 'Explore our high-tonnage hydraulic presses, automated welding lines, oven powder coating, and executive leadership supervision.'}
+            {pt.tourDesc}
           </p>
         </div>
 
@@ -140,8 +133,6 @@ export const FactoryVideoTour: React.FC = () => {
                   <track kind="captions" srcLang="fa" label="فارسی" />
                 </video>
 
-                {/* Video screen area (clicking video toggles play/pause) */}
-
                 {/* Top Badge Overlay */}
                 <div className="absolute top-4 start-4 z-20 flex items-center gap-2">
                   <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold shadow-lg backdrop-blur-md ${
@@ -171,7 +162,7 @@ export const FactoryVideoTour: React.FC = () => {
                       type="button"
                       onClick={togglePlay}
                       className="p-2 sm:p-2.5 rounded-xl bg-slate-900/80 hover:bg-emerald-500 hover:text-slate-950 text-white border border-white/20 backdrop-blur-md transition-colors"
-                      title={isPlaying ? 'توقف' : 'پخش'}
+                      title={isPlaying ? pt.tourPauseTooltip : pt.tourPlayTooltip}
                     >
                       {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-current" />}
                     </button>
@@ -180,7 +171,7 @@ export const FactoryVideoTour: React.FC = () => {
                       type="button"
                       onClick={toggleMute}
                       className="p-2 sm:p-2.5 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-white border border-white/20 backdrop-blur-md transition-colors"
-                      title={isMuted ? 'صدا' : 'بی‌صدا'}
+                      title={isMuted ? pt.tourUnmuteTooltip : pt.tourMuteTooltip}
                     >
                       {isMuted ? <VolumeX className="w-4 h-4 text-amber-400" /> : <Volume2 className="w-4 h-4 text-emerald-400" />}
                     </button>
@@ -194,7 +185,7 @@ export const FactoryVideoTour: React.FC = () => {
                     type="button"
                     onClick={toggleFullscreen}
                     className="p-2 sm:p-2.5 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-white border border-white/20 backdrop-blur-md transition-colors"
-                    title="تمام صفحه"
+                    title={pt.tourFullscreenTooltip}
                   >
                     <Maximize2 className="w-4 h-4" />
                   </button>
@@ -218,7 +209,7 @@ export const FactoryVideoTour: React.FC = () => {
 
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-emerald-950 text-emerald-400 border border-emerald-800/40 text-xs font-semibold shrink-0 self-start sm:self-auto">
                   <ShieldCheck className="w-4 h-4" />
-                  {isFa ? 'استاندارد معتبر' : 'ISO & ISIRI Certified'}
+                  {pt.tourStandardBadge}
                 </span>
               </div>
 
@@ -246,7 +237,7 @@ export const FactoryVideoTour: React.FC = () => {
             <div className="flex items-center justify-between pb-2">
               <h4 className="text-sm font-bold text-slate-200 flex items-center gap-2">
                 <Layers className="w-4 h-4 text-emerald-400" />
-                <span>{isFa ? 'فهرست ویدیوهای کارخانه (۴ ویدیو)' : 'Factory Video Gallery (4 Videos)'}</span>
+                <span>{pt.tourPlaylistTitle}</span>
               </h4>
               <span className="text-[11px] font-mono text-emerald-400 bg-slate-900 px-2 py-0.5 rounded border border-emerald-500/30">
                 {FACTORY_VIDEOS.length} Videos

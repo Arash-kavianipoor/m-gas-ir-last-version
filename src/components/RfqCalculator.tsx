@@ -3,6 +3,7 @@ import { RfqItem, Product } from '../types';
 import { PRODUCTS, getProductById } from '../data/products';
 import { useLanguage } from '../i18n/LanguageContext';
 import { COMPANY_INFO } from '../data/company';
+import { PAGE_TRANSLATIONS } from '../i18n/pageTranslations';
 import {
   Calculator,
   Plus,
@@ -28,6 +29,7 @@ export const RfqCalculator: React.FC<RfqCalculatorProps> = ({
   onClearItems,
 }) => {
   const { currentLanguage, t, formatNumber } = useLanguage();
+  const pt = PAGE_TRANSLATIONS[currentLanguage] || PAGE_TRANSLATIONS.fa;
   const [items, setItems] = useState<RfqItem[]>(initialItems);
   const [selectedProductId, setSelectedProductId] = useState<string>(PRODUCTS[0].id);
   const [selectedQuantity, setSelectedQuantity] = useState<number>(PRODUCTS[0].minOrder);
@@ -137,17 +139,15 @@ export const RfqCalculator: React.FC<RfqCalculatorProps> = ({
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold">
             <Calculator className="w-4 h-4" />
-            <span>{currentLanguage === 'fa' ? 'استعلام قیمت آنلاین و بارگیری کانتینری' : 'Interactive RFQ & Logistics Estimator'}</span>
+            <span>{pt.rfqBadge}</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight">
-            {currentLanguage === 'fa' ? 'محاسبه‌گر تیراژ، وزن و ارسال استعلام به کارخانه' : 'Instant Bulk RFQ & Container Loadout Calculator'}
+            {pt.rfqTitle}
           </h2>
 
           <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
-            {currentLanguage === 'fa'
-              ? 'محصولات و تیراژ مورد نظر را انتخاب نمایید تا تناژ بار و ظرفیت کانتینری به طور خودکار محاسبه و پیش‌فاکتور برای واحد فروش ارسال گردد.'
-              : 'Select your required gas cylinder models, capacities and volumes to estimate total tonnage, container loads and directly request official factory pricing.'}
+            {pt.rfqDesc}
           </p>
         </div>
 
@@ -159,13 +159,13 @@ export const RfqCalculator: React.FC<RfqCalculatorProps> = ({
             <div className="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 space-y-5">
               <h3 className="text-base font-bold text-white flex items-center gap-2">
                 <Box className="w-5 h-5 text-emerald-400" />
-                <span>{currentLanguage === 'fa' ? 'انتخاب مدل سیلندر و تعداد' : 'Add Cylinder to RFQ'}</span>
+                <span>{pt.rfqAddTitle}</span>
               </h3>
 
               {/* Product Selector */}
               <div className="space-y-1.5">
                 <label className="text-xs text-slate-400 font-medium block">
-                  {currentLanguage === 'fa' ? 'نوع کپسول گاز / مخزن:' : 'Cylinder Model & Capacity:'}
+                  {pt.rfqModelLabel}
                 </label>
                 <select
                   value={selectedProductId}
@@ -190,7 +190,7 @@ export const RfqCalculator: React.FC<RfqCalculatorProps> = ({
               {/* Quantity Input */}
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between text-xs text-slate-400">
-                  <span>{currentLanguage === 'fa' ? 'تیراژ مورد نظر (عدد):' : 'Required Quantity (pcs):'}</span>
+                  <span>{pt.rfqQuantityLabel}</span>
                   <span className="text-emerald-400 font-mono font-bold">
                     MOQ: {selectedProduct.minOrder}
                   </span>
@@ -212,27 +212,27 @@ export const RfqCalculator: React.FC<RfqCalculatorProps> = ({
                 className="w-full py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-400 font-bold text-xs sm:text-sm border border-emerald-500/30 transition-all flex items-center justify-center gap-2 hover:scale-[1.01]"
               >
                 <Plus className="w-4 h-4" />
-                <span>{currentLanguage === 'fa' ? 'افزودن به لیست استعلام' : 'Add to Order List'}</span>
+                <span>{pt.rfqAddBtn}</span>
               </button>
             </div>
 
             {/* Optional Client Info */}
             <div className="p-6 rounded-3xl bg-slate-900/60 border border-slate-800 space-y-4">
               <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                {currentLanguage === 'fa' ? 'اطلاعات اختیاری خریدار (جهت صدور پیش‌فاکتور)' : 'Optional Buyer Details for Proforma'}
+                {pt.rfqBuyerInfoTitle}
               </h4>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <input
                   type="text"
-                  placeholder={currentLanguage === 'fa' ? 'نام و نام خانوادگی' : 'Full Name'}
+                  placeholder={pt.rfqNamePlaceholder}
                   value={clientName}
                   onChange={(e) => setClientName(e.target.value)}
                   className="p-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500"
                 />
                 <input
                   type="text"
-                  placeholder={currentLanguage === 'fa' ? 'نام شرکت یا بازرگانی' : 'Company Name'}
+                  placeholder={pt.rfqCompanyPlaceholder}
                   value={clientCompany}
                   onChange={(e) => setClientCompany(e.target.value)}
                   className="p-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500"
@@ -240,7 +240,7 @@ export const RfqCalculator: React.FC<RfqCalculatorProps> = ({
               </div>
               <input
                 type="text"
-                placeholder={currentLanguage === 'fa' ? 'کشور و شهر مقصد تخلیه بار' : 'Destination Port / Country'}
+                placeholder={pt.rfqDestPlaceholder}
                 value={destinationCountry}
                 onChange={(e) => setDestinationCountry(e.target.value)}
                 className="w-full p-2.5 rounded-xl bg-slate-950 border border-slate-700/80 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500"
@@ -257,7 +257,7 @@ export const RfqCalculator: React.FC<RfqCalculatorProps> = ({
               <div className="flex items-center justify-between pb-3 border-b border-slate-800">
                 <h3 className="text-base font-bold text-white flex items-center gap-2">
                   <FileSpreadsheet className="w-5 h-5 text-emerald-400" />
-                  <span>{currentLanguage === 'fa' ? 'اقلام انتخابی پیش‌فاکتور' : 'RFQ Items & Logistics Summary'}</span>
+                  <span>{pt.rfqSummaryTitle}</span>
                 </h3>
 
                 {items.length > 0 && (
@@ -270,7 +270,7 @@ export const RfqCalculator: React.FC<RfqCalculatorProps> = ({
                     className="text-xs text-rose-400 hover:text-rose-300 flex items-center gap-1 font-semibold"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
-                    <span>{currentLanguage === 'fa' ? 'پاک‌کردن' : 'Clear'}</span>
+                    <span>{pt.rfqClearBtn}</span>
                   </button>
                 )}
               </div>
@@ -278,7 +278,7 @@ export const RfqCalculator: React.FC<RfqCalculatorProps> = ({
               {/* Items List */}
               {items.length === 0 ? (
                 <div className="py-12 text-center text-slate-500 text-xs">
-                  {currentLanguage === 'fa' ? 'هنوز آیتمی به لیست اضافه نشده است.' : 'No cylinders added yet. Select a model above to begin.'}
+                  {pt.rfqEmptyText}
                 </div>
               ) : (
                 <div className="space-y-3 max-h-64 overflow-y-auto pr-1">
@@ -313,17 +313,17 @@ export const RfqCalculator: React.FC<RfqCalculatorProps> = ({
               {/* Logistics & Metrics Cards */}
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-3 border-t border-slate-800">
                 <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800/80">
-                  <span className="text-[10px] text-slate-500 block uppercase">{currentLanguage === 'fa' ? 'مجموع تیراژ' : 'Total Units'}</span>
+                  <span className="text-[10px] text-slate-500 block uppercase">{pt.rfqTotalUnits}</span>
                   <span className="font-mono text-base font-black text-white">{totals.totalUnits.toLocaleString()}</span>
                 </div>
                 <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800/80">
-                  <span className="text-[10px] text-slate-500 block uppercase">{currentLanguage === 'fa' ? 'وزن کل بار' : 'Total Weight'}</span>
+                  <span className="text-[10px] text-slate-500 block uppercase">{pt.rfqTotalWeight}</span>
                   <span className="font-mono text-base font-black text-emerald-400">
-                    {(totals.totalWeightKg / 1000).toFixed(1)} {currentLanguage === 'fa' ? 'تن' : 'tons'}
+                    {(totals.totalWeightKg / 1000).toFixed(1)} {pt.rfqTonsUnit}
                   </span>
                 </div>
                 <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800/80 col-span-2 sm:col-span-1">
-                  <span className="text-[10px] text-slate-500 block uppercase">{currentLanguage === 'fa' ? 'تخمین کانتینر ۴۰HQ' : '40HQ Load'}</span>
+                  <span className="text-[10px] text-slate-500 block uppercase">{pt.rfqContainerEstimate}</span>
                   <span className="font-mono text-base font-black text-amber-400">~{totals.fcl40ftContainers} FCL</span>
                 </div>
               </div>
@@ -340,7 +340,7 @@ export const RfqCalculator: React.FC<RfqCalculatorProps> = ({
                 }`}
               >
                 <MessageCircle className="w-5 h-5 fill-slate-950 stroke-none" />
-                <span>{currentLanguage === 'fa' ? 'ارسال رسمی استعلام به مدیر صادرات (واتس‌اپ)' : 'Submit Official RFQ via WhatsApp'}</span>
+                <span>{pt.rfqSubmitWhatsApp}</span>
               </button>
 
             </div>

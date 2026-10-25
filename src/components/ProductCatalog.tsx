@@ -138,7 +138,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
                       </span>
                     </div>
 
-                    {/* Product Image on Desktop with Hover Zoom Feature and crawlable link */}
+                    {/* Product Image: Slot 1 Real Factory Photo, Slot 2 Realistic 3D Render on Hover */}
                     <a
                       href={`/products/${product.slug}`}
                       onClick={(e) => {
@@ -146,24 +146,47 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
                         onSelectProductForSpecs(product);
                       }}
                       className="block relative aspect-square w-full rounded-xl bg-slate-950/80 border border-slate-800/80 p-4 overflow-hidden group cursor-pointer"
-                      onMouseEnter={() => setHoveredPreviewImage(product.images?.referenceReal || product.image)}
-                      onMouseLeave={() => setHoveredPreviewImage(null)}
                       title={loc.name}
                     >
+                      {/* Image 1: Authentic Factory Photograph */}
                       <img
-                        src={product.images?.front || product.image}
-                        alt={loc.imageAlt || loc.name}
+                        src={product.images?.referenceReal || product.images?.front || product.image}
+                        alt={loc.imageAlt || `${loc.name} - تصویر واقعی کپسول گاز مایع تولید کارخانه`}
                         width={300}
                         height={300}
                         style={{ aspectRatio: '1/1' }}
-                        className="max-h-full max-w-full object-contain mx-auto transition-transform duration-300 group-hover:scale-110"
+                        className={`max-h-full max-w-full object-contain mx-auto transition-all duration-300 ${
+                          product.images?.realisticRender ? 'group-hover:opacity-0 group-hover:scale-95' : 'group-hover:scale-110'
+                        }`}
                         loading="lazy"
                         decoding="async"
                       />
+
+                      {/* Image 2: Photorealistic 3D Render (shown on hover) */}
+                      {product.images?.realisticRender && (
+                        <img
+                          src={product.images.realisticRender}
+                          alt={`${loc.name} - رندر استودیویی سه‌بعدی واقع گرایانه مخزن و کپسول گاز مایع`}
+                          width={300}
+                          height={300}
+                          style={{ aspectRatio: '1/1' }}
+                          className="max-h-full max-w-full object-contain mx-auto transition-all duration-300 absolute inset-0 m-auto p-4 opacity-0 group-hover:opacity-100 group-hover:scale-105 pointer-events-none"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      )}
+
+                      {/* View Indicator Badge */}
+                      <div className="absolute top-2 left-2 z-10 flex items-center gap-1">
+                        <span className="px-2 py-0.5 rounded-md bg-slate-900/90 border border-slate-700/70 text-[10px] text-slate-300 font-medium">
+                          {product.images?.realisticRender ? (currentLanguage === 'fa' ? 'عکس واقعی + رندر ۲' : currentLanguage === 'de' ? 'Werksfoto + 3D' : 'Real + 3D Render') : (currentLanguage === 'fa' ? 'عکس واقعی' : currentLanguage === 'de' ? 'Werksfoto' : 'Real Photo')}
+                        </span>
+                      </div>
+
                       <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                         <span className="px-3 py-1.5 rounded-full bg-slate-900/90 text-emerald-400 text-xs font-bold flex items-center gap-1.5 shadow-lg border border-emerald-500/30">
                           <Eye className="w-3.5 h-3.5" />
-                          <span>{currentLanguage === 'fa' ? 'مشاهده مشخصات فنی' : 'View Specifications'}</span>
+                          <span>{currentLanguage === 'fa' ? 'مشاهده مشخصات فنی' : currentLanguage === 'de' ? 'Spezifikationen ansehen' : 'View Specifications'}</span>
                         </span>
                       </div>
                     </a>

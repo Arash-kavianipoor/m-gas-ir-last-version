@@ -245,3 +245,41 @@ html.gpu-safe-mode .backdrop-blur {
 [data-glow] {
   position: relative;
 }
+
+/* Sleek Compact Header Navigation across all languages to prevent viewport overflow */
+#main-header nav {
+  gap: 0.25rem !important;
+}
+
+@media (min-width: 1280px) {
+  #main-header nav {
+    gap: 0.375rem !important;
+  }
+}
+
+#main-header nav a,
+#main-header nav button {
+  padding-left: 0.45rem !important;
+  padding-right: 0.45rem !important;
+  padding-top: 0.25rem !important;
+  padding-bottom: 0.25rem !important;
+  font-size: 11px !important;
+  letter-spacing: -0.01em !important;
+}
+
+@media (min-width: 1280px) {
+  #main-header nav a,
+  #main-header nav button {
+    font-size: 12px !important;
+    padding-left: 0.55rem !important;
+    padding-right: 0.55rem !important;
+  }
+}
+
+#main-header .header-action-btn {
+  padding-left: 0.55rem !important;
+  padding-right: 0.55rem !important;
+  padding-top: 0.35rem !important;
+  padding-bottom: 0.35rem !important;
+  font-size: 11px !important;
+}

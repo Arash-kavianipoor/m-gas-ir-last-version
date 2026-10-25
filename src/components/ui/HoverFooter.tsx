@@ -16,7 +16,8 @@ import {
 } from 'lucide-react';
 import { WhatsAppIcon } from '../WhatsAppIcon';
 import { useLanguage } from '../../i18n/LanguageContext';
-import { COMPANY_INFO } from '../../data/company';
+import { COMPANY_INFO, COMPANY_ADDRESS } from '../../data/company';
+import { PAGE_TRANSLATIONS } from '../../i18n/pageTranslations';
 import { CatalogDownloadModal } from '../CatalogDownloadModal';
 import { detectDevice } from '../../utils/deviceDetection';
 
@@ -127,6 +128,7 @@ export const FooterBackgroundGradient: React.FC = () => {
 
 export const HoverFooter: React.FC = () => {
   const { t, isRTL, currentLanguage } = useLanguage();
+  const pt = PAGE_TRANSLATIONS[currentLanguage] || PAGE_TRANSLATIONS.fa;
   const [catalogModalOpen, setCatalogModalOpen] = useState(false);
 
   return (
@@ -177,9 +179,7 @@ export const HoverFooter: React.FC = () => {
                 </span>
               </div>
               <p className="text-[11px] text-slate-400">
-                {currentLanguage === 'fa'
-                  ? 'دانلود دفترچه رسمی مشخصات فنی و جدول ظرفیت کپسول‌ها'
-                  : 'Download official technical product brochure & dimensions guide'}
+                {pt.footerCatalogBrochureDesc}
               </p>
               <button
                 type="button"
@@ -187,7 +187,7 @@ export const HoverFooter: React.FC = () => {
                 className="w-full inline-flex items-center justify-center gap-2 py-1.5 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-md transition-all hover:scale-[1.02] active:scale-[0.98]"
               >
                 <Download className="w-3.5 h-3.5" />
-                <span>{currentLanguage === 'fa' ? 'دریافت رایگان فایل PDF' : 'Download Catalog PDF'}</span>
+                <span>{pt.footerDownloadFreePdf}</span>
               </button>
             </div>
 
@@ -340,7 +340,7 @@ export const HoverFooter: React.FC = () => {
 
             <div className="text-sm space-y-3 text-slate-400">
               <p className="leading-relaxed text-xs">
-                {currentLanguage === 'fa' ? COMPANY_INFO.address.fullPersian : COMPANY_INFO.address.fullEnglish}
+                {COMPANY_ADDRESS[currentLanguage] || COMPANY_ADDRESS.fa}
               </p>
 
               {/* Live Rectangular Google Map Box */}
