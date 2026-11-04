@@ -138,6 +138,28 @@ const CLEAN_PAGES_SEO: Record<string, SectionSeoItem> = {
       hy: 'Ավելի քան 50 տարվա արտադրական փորձ 1970 թվականից հիմնադիր Մուսա Ամուիի գլխավորությամբ. բարձրակարգ LPG բալոնների արտադրություն և արտահանում 12+ երկրներ:',
     },
   },
+  '/certificates': {
+    title: {
+      fa: 'گواهینامه‌های رسمی، استانداردهای ملی و بین‌المللی | کارخانه ام گاز',
+      en: 'Official Quality Certifications & Standards (ISIRI, ISO 9001, CE) | M Gas',
+      ar: 'الشهادات الرسمية والمعايير الدولية (ISIRI, ISO 9001, CE) | مصنع إم غاز',
+      de: 'Offizielle Qualitätszertifikate & Normen (ISIRI, ISO 9001, CE) | M Gas',
+      ur: 'آفیشل کوالٹی سرٹیفکیٹس اور بین الاقوامی معیارات | ایم گیس',
+      tr: 'Resmi Kalite Sertifikaları ve Uluslararası Standartlar | M Gas',
+      ru: 'Официальные сертификаты качества и стандарты (ISIRI, ISO 9001, CE) | M Gas',
+      hy: 'Որակի Պաշտոնական Սերտիֆիկատներ և Ստանդարտներ | M Gas',
+    },
+    description: {
+      fa: 'مشاهده اسناد و پروانه‌های رسمی استاندارد ملی ایران (ISIRI 841)، گواهینامه سیستم مدیریت کیفیت ISO 9001:2015 و استانداردهای اروپایی کپسول گاز مایع EN 1442 و CE در کارخانه ام گاز.',
+      en: 'View official factory quality certifications including ISIRI 841 National Standard of Iran, ISO 9001:2015, and European EN 1442 / CE pressure vessel directives.',
+      ar: 'معاينة الشهادات الرسمية لجودة أسطوانات الغاز: المواصفة القياسية الإيرانية ISIRI 841، وشهادة ISO 9001:2015، والمواصفات الأوروبية EN 1442 و CE للتصدير.',
+      de: 'Einsicht in die offiziellen Qualitätszertifikate: ISIRI 841, ISO 9001:2015 und europäische Druckgeräterichtlinien EN 1442 / CE für Gasflaschen von M Gas.',
+      ur: 'ایم گیس فیکٹری کے سرکاری سرٹیفکیٹس دیکھیں: ایرانی قومی معیار ISIRI 841، کوالٹی مینجمنٹ ISO 9001:2015 اور یورپی EN 1442 / CE معیارات۔',
+      tr: 'Resmi fabrika kalite sertifikalarını inceleyin: İran Ulusal Standardı ISIRI 841, ISO 9001:2015 ve Avrupa EN 1442 / CE LPG tüp direktifleri.',
+      ru: 'Ознакомьтесь с официальными сертификатами завода: Национальный стандарт Ирана ISIRI 841, ISO 9001:2015 и европейские директивы EN 1442 / CE.',
+      hy: 'Դիտեք գործարանի պաշտոնական որակի սերտիֆիկատները. Իրանի ազգային ստանդարտ ISIRI 841, ISO 9001:2015 և եվրոպական EN 1442 / CE պահանջներ:',
+    },
+  },
   '/faq': {
     title: {
       fa: 'پرسش‌های متداول مشتریان و صادرات کپسول گاز | کمپانی تولید سیلندر گاز مایع در ایران',

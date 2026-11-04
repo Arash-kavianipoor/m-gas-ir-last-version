@@ -14,10 +14,12 @@ import { WhatsAppIcon } from './WhatsAppIcon';
 import { useLanguage } from '../i18n/LanguageContext';
 import { COMPANY_INFO, COMPANY_ADDRESS, DIRECTOR_ROLES } from '../data/company';
 import { PAGE_TRANSLATIONS } from '../i18n/pageTranslations';
+import { ContactChoiceModal } from './ContactChoiceModal';
 
 export const ContactSection: React.FC = () => {
   const { currentLanguage, t, isRTL } = useLanguage();
   const pt = PAGE_TRANSLATIONS[currentLanguage] || PAGE_TRANSLATIONS.fa;
+  const [choiceModalOpen, setChoiceModalOpen] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -91,23 +93,22 @@ export const ContactSection: React.FC = () => {
                 </span>
               </div>
 
-              <a
-                href={`https://wa.me/${COMPANY_INFO.contacts.internationalSalesManager.whatsapp.replace('+', '')}?text=Hello%20M%20Gas%20Sales`}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                type="button"
+                onClick={() => setChoiceModalOpen(true)}
                 dir="ltr"
-                className="w-full flex items-center justify-between p-3 rounded-2xl bg-emerald-950/50 hover:bg-emerald-900/60 border border-emerald-700/40 text-emerald-300 transition-colors"
+                className="w-full flex items-center justify-between p-3 rounded-2xl bg-emerald-950/50 hover:bg-emerald-900/60 border border-emerald-700/40 text-emerald-300 transition-colors cursor-pointer group"
               >
                 <div className="flex items-center gap-2.5">
-                  <WhatsAppIcon className="w-4 h-4 text-[#25D366]" />
-                  <span className="font-mono text-xs font-bold isolate">
+                  <WhatsAppIcon className="w-4 h-4 text-[#25D366] group-hover:scale-110 transition-transform" />
+                  <span className="font-mono text-xs font-bold isolate text-white group-hover:text-emerald-300 transition-colors">
                     {COMPANY_INFO.contacts.internationalSalesManager.whatsappDisplay}
                   </span>
                 </div>
-                <span className="text-[10px] bg-emerald-500 text-slate-950 font-bold px-2 py-0.5 rounded">
-                  Chat WhatsApp
+                <span className="text-[10px] bg-emerald-500 text-slate-950 font-bold px-2 py-0.5 rounded shadow-sm">
+                  {currentLanguage === 'fa' ? 'واتس‌اپ / تماس تلفنی' : 'WhatsApp / Call'}
                 </span>
-              </a>
+              </button>
             </div>
 
             {/* Factory Management & Domestic Hotline */}
@@ -129,17 +130,16 @@ export const ContactSection: React.FC = () => {
               </div>
 
               <div className="space-y-2">
-                <a
-                  href={`tel:${COMPANY_INFO.contacts.domesticDirector.mobile}`}
+                <div
                   dir="ltr"
-                  className="flex items-center justify-between p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 hover:text-emerald-400 transition-colors text-xs font-mono isolate"
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-xs font-mono isolate select-text cursor-default"
                 >
                   <span className="flex items-center gap-2">
                     <Phone className="w-3.5 h-3.5 text-emerald-400" />
                     <span>{COMPANY_INFO.contacts.domesticDirector.mobileDisplay}</span>
                   </span>
                   <span className="text-[10px] text-slate-400">{pt.contactMobileHotline}</span>
-                </a>
+                </div>
 
                 <a
                   href={`tel:${COMPANY_INFO.contacts.domesticDirector.landline}`}
@@ -337,6 +337,13 @@ export const ContactSection: React.FC = () => {
         </div>
 
       </div>
+
+      {/* WhatsApp vs Direct Phone Call Choice Modal */}
+      <ContactChoiceModal
+        isOpen={choiceModalOpen}
+        onClose={() => setChoiceModalOpen(false)}
+        phoneNumber={COMPANY_INFO.contacts.internationalSalesManager.whatsapp}
+      />
     </section>
   );
 };

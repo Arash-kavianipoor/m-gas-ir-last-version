@@ -31,8 +31,8 @@ export const COMPANY_INFO = {
     internationalSalesManager: {
       name: 'Arash Kavianipoor',
       persianName: 'آرش کاویانی‌پور',
-      roleEn: 'International Sales & Export Representative',
-      roleFa: 'نماینده فروش و امور بین‌الملل (خارج از ایران)',
+      roleEn: 'International Sales & Export Officer',
+      roleFa: 'مسئول فروش و امور بین‌الملل (خارج از ایران)',
       whatsapp: '+989128634908',
       whatsappDisplay: '+989128634908',
     },

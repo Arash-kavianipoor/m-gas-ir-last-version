@@ -38,7 +38,7 @@ function resolveInitialPath(): string {
       window.history.replaceState({}, '', cleanPath);
       return cleanPath;
     }
-    const cleanSections = ['products', 'quality', 'factory-tour', 'articles', 'faq', 'calculator', 'contact', 'about'];
+    const cleanSections = ['products', 'quality', 'factory-tour', 'articles', 'faq', 'calculator', 'contact', 'about', 'certificates'];
     if (cleanSections.includes(section)) {
       const cleanPath = `/${section}`;
       window.history.replaceState({}, '', cleanPath);

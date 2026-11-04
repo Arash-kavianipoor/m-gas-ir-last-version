@@ -80,6 +80,43 @@ export const HistoryVision: React.FC = () => {
               </div>
             </div>
 
+            {/* Official Certification Highlights */}
+            <div className="pt-2">
+              <a
+                href="#certificates"
+                onClick={(e) => {
+                  e.preventDefault();
+                  const target = document.getElementById('about-certificates') || document.getElementById('certificates');
+                  if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }}
+                className="group flex items-center justify-between p-3.5 rounded-2xl bg-gradient-to-r from-emerald-500/10 via-slate-900/80 to-slate-900 border border-emerald-500/30 hover:border-emerald-400/60 transition-all shadow-md"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-xl bg-emerald-500/20 text-emerald-400 group-hover:bg-emerald-500 group-hover:text-slate-950 transition-colors">
+                    <Award className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span className="text-xs font-bold text-white group-hover:text-emerald-300 transition-colors block">
+                      {currentLanguage === 'fa'
+                        ? 'گواهینامه‌های رسمی و استانداردهای کارخانه (ISIRI / ISO 9001 / CE)'
+                        : 'Official Factory Certifications (ISIRI / ISO 9001 / CE)'}
+                    </span>
+                    <span className="text-[11px] text-slate-400">
+                      {currentLanguage === 'fa'
+                        ? 'مشاهده پروانه استاندارد ملی، آزمون ۳۰ بار و گواهی مدیریت کیفیت'
+                        : 'View National Standard proof, 30-bar pressure tests & ISO accreditation'}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1 text-xs text-emerald-400 font-semibold shrink-0">
+                  <span>{currentLanguage === 'fa' ? 'مشاهده اسناد' : 'View Docs'}</span>
+                  <ShieldCheck className="w-3.5 h-3.5 rtl:rotate-180" />
+                </div>
+              </a>
+            </div>
+
           </div>
 
           {/* Right Column: Factory Image & Export Destinations */}
@@ -95,6 +132,26 @@ export const HistoryVision: React.FC = () => {
               <div className="absolute bottom-4 left-4 right-4 p-3 rounded-xl bg-slate-900/90 backdrop-blur-md border border-slate-700/60 text-xs text-slate-200 flex items-center justify-between">
                 <span className="font-semibold">{currentLanguage === 'fa' ? 'مجتمع صنعتی کارخانه در استان البرز (کرج)' : 'Karaj Industrial Facility, Alborz'}</span>
                 <Globe2 className="w-4 h-4 text-emerald-400" />
+              </div>
+            </div>
+
+            {/* Quick Certificate Badges */}
+            <div className="grid grid-cols-2 gap-2.5">
+              <div className="p-2.5 rounded-xl bg-slate-900/60 border border-slate-800/80 flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span className="text-[11px] font-mono text-slate-300 font-semibold truncate">ISIRI 841 / 406</span>
+              </div>
+              <div className="p-2.5 rounded-xl bg-slate-900/60 border border-slate-800/80 flex items-center gap-2">
+                <Award className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span className="text-[11px] font-mono text-slate-300 font-semibold truncate">ISO 9001:2015</span>
+              </div>
+              <div className="p-2.5 rounded-xl bg-slate-900/60 border border-slate-800/80 flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span className="text-[11px] font-mono text-slate-300 font-semibold truncate">EN 1442 / CE</span>
+              </div>
+              <div className="p-2.5 rounded-xl bg-slate-900/60 border border-slate-800/80 flex items-center gap-2">
+                <UserCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span className="text-[11px] font-mono text-slate-300 font-semibold truncate">DOT-4BA Proof</span>
               </div>
             </div>
           </div>

@@ -19,6 +19,7 @@ import { useLanguage } from '../../i18n/LanguageContext';
 import { COMPANY_INFO, COMPANY_ADDRESS } from '../../data/company';
 import { PAGE_TRANSLATIONS } from '../../i18n/pageTranslations';
 import { CatalogDownloadModal } from '../CatalogDownloadModal';
+import { ContactChoiceModal } from '../ContactChoiceModal';
 import { detectDevice } from '../../utils/deviceDetection';
 
 export const TextHoverEffect: React.FC<{ text: string; className?: string }> = ({ text, className = '' }) => {
@@ -130,6 +131,7 @@ export const HoverFooter: React.FC = () => {
   const { t, isRTL, currentLanguage } = useLanguage();
   const pt = PAGE_TRANSLATIONS[currentLanguage] || PAGE_TRANSLATIONS.fa;
   const [catalogModalOpen, setCatalogModalOpen] = useState(false);
+  const [contactChoiceModalOpen, setContactChoiceModalOpen] = useState(false);
 
   return (
     <footer id="footer" className="relative mt-20 border-t border-slate-800/80 bg-[#0B131E] text-slate-300 overflow-hidden">
@@ -212,6 +214,10 @@ export const HoverFooter: React.FC = () => {
                 {t.navQuality}
               </a>
               <span className="text-slate-700">•</span>
+              <a href="/certificates" className="text-emerald-400 hover:text-emerald-300 transition-colors">
+                {isRTL ? 'گواهینامه‌های رسمی' : 'Certificates'}
+              </a>
+              <span className="text-slate-700">•</span>
               <a href="/factory-tour" className="text-slate-400 hover:text-white transition-colors">
                 {isRTL ? 'ویدیوهای کارخانه' : 'Factory Videos'}
               </a>
@@ -290,16 +296,15 @@ export const HoverFooter: React.FC = () => {
                 <span className="text-xs font-semibold text-slate-300 block mb-1">
                   {COMPANY_INFO.contacts.internationalSalesManager.name}
                 </span>
-                <a
-                  href={`https://wa.me/${COMPANY_INFO.contacts.internationalSalesManager.whatsapp.replace('+', '')}?text=Hello%20M%20Gas%20International%20Sales`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  type="button"
+                  onClick={() => setContactChoiceModalOpen(true)}
                   dir="ltr"
-                  className="inline-flex items-center gap-2 text-emerald-400 hover:text-emerald-300 font-mono text-xs bg-emerald-950/40 px-2.5 py-1 rounded border border-emerald-800/30"
+                  className="inline-flex items-center gap-2 text-emerald-400 hover:text-emerald-300 font-mono text-xs bg-emerald-950/40 hover:bg-emerald-950/80 px-2.5 py-1 rounded border border-emerald-800/30 cursor-pointer transition-colors"
                 >
                   <WhatsAppIcon className="w-3.5 h-3.5 text-[#25D366]" />
                   <span className="isolate">{COMPANY_INFO.contacts.internationalSalesManager.whatsappDisplay}</span>
-                </a>
+                </button>
               </div>
 
               <div className="p-2.5 rounded-lg bg-slate-900/50 border border-slate-800/80">
@@ -310,14 +315,13 @@ export const HoverFooter: React.FC = () => {
                   {COMPANY_INFO.contacts.domesticDirector.name}
                 </span>
                 <div className="flex flex-col gap-1">
-                  <a
-                    href={`tel:${COMPANY_INFO.contacts.domesticDirector.mobile}`}
+                  <div
                     dir="ltr"
-                    className="text-xs font-mono text-slate-300 hover:text-emerald-400 flex items-center gap-2"
+                    className="text-xs font-mono text-slate-300 flex items-center gap-2 select-text cursor-default"
                   >
                     <Phone className="w-3 h-3 text-emerald-400" />
                     <span className="isolate">{COMPANY_INFO.contacts.domesticDirector.mobileDisplay}</span>
-                  </a>
+                  </div>
                   <a
                     href={`tel:${COMPANY_INFO.contacts.domesticDirector.landline}`}
                     dir="ltr"
@@ -413,7 +417,14 @@ export const HoverFooter: React.FC = () => {
             <span className="text-slate-500">•</span>
             <span className="text-slate-300">Karaj, Alborz, IRAN</span>
             <span className="text-slate-500">•</span>
-            <span className="text-emerald-400 font-mono font-medium isolate" dir="ltr">+989128634908</span>
+            <button
+              type="button"
+              onClick={() => setContactChoiceModalOpen(true)}
+              className="text-emerald-400 hover:text-emerald-300 font-mono font-medium isolate cursor-pointer hover:underline transition-colors"
+              dir="ltr"
+            >
+              +989128634908
+            </button>
           </div>
         </div>
       </div>
@@ -422,6 +433,13 @@ export const HoverFooter: React.FC = () => {
       <CatalogDownloadModal
         isOpen={catalogModalOpen}
         onClose={() => setCatalogModalOpen(false)}
+      />
+
+      {/* WhatsApp vs Direct Call Choice Modal */}
+      <ContactChoiceModal
+        isOpen={contactChoiceModalOpen}
+        onClose={() => setContactChoiceModalOpen(false)}
+        phoneNumber={COMPANY_INFO.contacts.internationalSalesManager.whatsapp}
       />
     </footer>
   );

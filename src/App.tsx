@@ -15,6 +15,7 @@ import { FactoryVideoTour } from './components/FactoryVideoTour';
 import { ArticlesSection } from './components/ArticlesSection';
 import { ArticleDetail } from './components/ArticleDetail';
 import { HistoryVision } from './components/HistoryVision';
+import { CertificatesSection } from './components/CertificatesSection';
 import { FaqSection } from './components/FaqSection';
 import { RfqCalculator } from './components/RfqCalculator';
 import { ContactSection } from './components/ContactSection';
@@ -273,6 +274,39 @@ function MainWebsite() {
             </div>
           </div>
           <HistoryVision />
+          <CertificatesSection variant="about" id="about-certificates" onOpenRfq={handleOpenRfq} />
+        </div>
+      );
+    }
+
+    // 7.5 Standalone Official Certificates & Standards Page
+    if (currentPath === '/certificates') {
+      return (
+        <div className="pt-24 pb-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+            <nav className="flex items-center gap-2 text-xs text-slate-400 mb-6">
+              <Link to="/" className="hover:text-emerald-400 transition-colors">{t.navHome}</Link>
+              <ChevronRight className="w-3.5 h-3.5 text-slate-600 rtl:rotate-180" />
+              <span className="text-emerald-400 font-semibold">{isRTL ? 'گواهینامه‌ها و استانداردهای رسمی' : 'Official Certifications'}</span>
+            </nav>
+            <div className="p-8 rounded-3xl bg-gradient-to-br from-slate-900/90 via-[#0a1824]/90 to-slate-900/90 border border-emerald-500/30 shadow-2xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider mb-4">
+                <Award className="w-4 h-4" />
+                <span>{isRTL ? 'پروانه استاندارد ملی و تاییدیه بین‌المللی' : 'National & International Accredited Standards'}</span>
+              </div>
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight mb-4">
+                {isRTL
+                  ? 'گواهینامه‌های رسمی، استانداردهای ملی و بین‌المللی کارخانه ام گاز'
+                  : 'Official Quality Certifications & International Standards | M Gas'}
+              </h1>
+              <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-4xl">
+                {isRTL
+                  ? 'مشاهده و بررسی اسناد و پروانه‌های رسمی استاندارد ملی ایران (ISIRI 841)، گواهینامه ISO 9001:2015 و استانداردهای اروپایی کپسول گاز مایع EN 1442 / CE و DOT-4BA.'
+                  : 'Official certifications, quality assurance records, and third-party inspection documentation verifying M Gas high-pressure LPG cylinders for domestic distribution and global export.'}
+              </p>
+            </div>
+          </div>
+          <CertificatesSection variant="home" id="certificates" onOpenRfq={handleOpenRfq} />
         </div>
       );
     }
@@ -396,6 +430,9 @@ function MainWebsite() {
 
         {/* 30-Bar Hydrostatic Testing & Metallurgical Process */}
         <QualityProcess />
+
+        {/* Official Certifications & Standards */}
+        <CertificatesSection variant="home" id="certificates" onOpenRfq={handleOpenRfq} />
 
         {/* Factory Video Tour */}
         <FactoryVideoTour />

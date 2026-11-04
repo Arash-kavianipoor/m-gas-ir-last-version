@@ -240,6 +240,12 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
           icon: ShieldCheck,
         },
         {
+          label: isRTL ? 'گواهینامه‌های رسمی و استانداردها' : 'Official Certifications & ISO',
+          desc: isRTL ? 'پروانه استاندارد ملی، ISO 9001 و تست ۳۰ بار' : 'ISIRI, ISO 9001 & 30-bar compliance proof',
+          href: '/certificates',
+          icon: Award,
+        },
+        {
           label: pt.navQualityVideoTour,
           desc: pt.navQualityVideoTourDesc,
           href: '/factory-tour',
@@ -280,6 +286,12 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
           desc: pt.navAboutHeritageDesc,
           href: '/about',
           icon: Building2,
+        },
+        {
+          label: isRTL ? 'سرتیفیکیت‌ها و استانداردهای رسمی' : 'Official Factory Certifications',
+          desc: isRTL ? 'مشاهده اسناد پروانه ملی، ISO و بازرسی فنی' : 'Inspect official accreditation documents',
+          href: '/certificates',
+          icon: Award,
         },
         {
           label: pt.navAboutFaq,
