@@ -24,7 +24,8 @@ import { TechnicalSpecsModal } from './components/TechnicalSpecsModal';
 import { MeniscusMobileNav } from './components/MeniscusMobileNav';
 import { ProductsPage } from './components/ProductsPage';
 import { ProductDetailPage } from './components/ProductDetailPage';
-import { Product, RfqItem } from './types';
+import { Product, RfqItem, LanguageCode } from './types';
+import { getBanner } from './i18n/standaloneBanners';
 import {
   ArrowUp,
   ChevronRight,
@@ -49,6 +50,7 @@ import { scrollToTop as smoothOrInstantScrollToTop } from './utils/scrollHelper'
 
 function MainWebsite() {
   const { currentLanguage, isRTL, t } = useLanguage();
+  const lang = (currentLanguage as LanguageCode) || 'fa';
   const { currentPath, navigate } = useRouter();
   const [selectedProductForSpecs, setSelectedProductForSpecs] = useState<Product | null>(null);
   const [rfqItems, setRfqItems] = useState<RfqItem[]>([]);
@@ -151,6 +153,7 @@ function MainWebsite() {
 
     // 4. Standalone Quality & Standards Page
     if (currentPath === '/quality') {
+      const banner = getBanner('quality', lang);
       return (
         <div className="pt-24 pb-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
@@ -162,17 +165,13 @@ function MainWebsite() {
             <div className="p-8 rounded-3xl bg-gradient-to-br from-slate-900/90 via-[#0a1824]/90 to-slate-900/90 border border-emerald-500/30 shadow-2xl">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider mb-4">
                 <ShieldCheck className="w-4 h-4" />
-                <span>{isRTL ? 'استاندارد ملی و بین‌المللی ۳۰ بار فشار' : '30-Bar Hydrostatic Proof Standards'}</span>
+                <span>{banner.badge}</span>
               </div>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight mb-4">
-                {isRTL
-                  ? 'کنترل کیفیت، آزمون ۳۰ بار و استانداردهای کمپانی تولید سیلندر گاز مایع در ایران'
-                  : 'Quality Assurance & 30-Bar Testing at Premier LPG Cylinder Manufacturer in Iran'}
+                {banner.title}
               </h1>
               <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-4xl">
-                {isRTL
-                  ? 'تمامی سیلندرهای تولیدی کارخانه ام گاز از ورق‌های فولادی استاندارد مخازن تحت فشار، پرس هیدرولیک کشش عمیق، جوشکاری مکانیزه زیرپودری SAW، کوره تنش‌زدایی یکنواخت و آزمون فشار هیدرواستاتیک ۱۰۰٪ با ۳۰ بار فشار تولید و صادر می‌شوند.'
-                  : 'Every liquefied petroleum gas cylinder manufactured at M Gas undergoes deep drawing hydraulic forming, submerged arc welding (SAW), stress-relief heat treatment, and 100% individual 30-bar hydrostatic proof pressure verification.'}
+                {banner.description}
               </p>
             </div>
           </div>
@@ -184,28 +183,25 @@ function MainWebsite() {
 
     // 5. Standalone Factory Video Tour Page
     if (currentPath === '/factory-tour') {
+      const banner = getBanner('factoryTour', lang);
       return (
         <div className="pt-24 pb-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
             <nav className="flex items-center gap-2 text-xs text-slate-400 mb-6">
               <Link to="/" className="hover:text-emerald-400 transition-colors">{t.navHome}</Link>
               <ChevronRight className="w-3.5 h-3.5 text-slate-600 rtl:rotate-180" />
-              <span className="text-emerald-400 font-semibold">{isRTL ? 'مستند ویدئویی خطوط تولید' : 'Factory Video Tour'}</span>
+              <span className="text-emerald-400 font-semibold">{banner.badge}</span>
             </nav>
             <div className="p-8 rounded-3xl bg-gradient-to-br from-slate-900/90 via-[#0a1824]/90 to-slate-900/90 border border-cyan-500/30 shadow-2xl">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-bold uppercase tracking-wider mb-4">
                 <Video className="w-4 h-4" />
-                <span>{isRTL ? 'مستند کارخانه ام گاز کرج' : 'Documentary Video Tour'}</span>
+                <span>{banner.badge}</span>
               </div>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight mb-4">
-                {isRTL
-                  ? 'مستند ویدئویی خطوط تولید کارخانه ام گاز؛ مدیریت موسی عمویی'
-                  : 'Factory Video Tour & Automated Production Lines | M Gas Factory'}
+                {banner.title}
               </h1>
               <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-4xl">
-                {isRTL
-                  ? 'مشاهده ۵ ویدئوی اختصاصی با کیفیت بالا از مراحل ساخت، جوشکاری مکانیزه زیرپودری، بازرسی چشمی و نظارت مستقیم آقای موسی عمویی مدیر و بنیانگذار کارخانه ام گاز در کرج.'
-                  : 'Experience five authentic factory production videos showcasing press lines, automated submerged arc welding, hydrostatic burst testing, and executive leadership by Mousa Amooie.'}
+                {banner.description}
               </p>
             </div>
           </div>
@@ -216,6 +212,7 @@ function MainWebsite() {
 
     // 6. Standalone Articles Knowledge Base Page
     if (currentPath === '/articles') {
+      const banner = getBanner('articles', lang);
       return (
         <div className="pt-24 pb-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
@@ -227,17 +224,13 @@ function MainWebsite() {
             <div className="p-8 rounded-3xl bg-gradient-to-br from-slate-900/90 via-[#0a1824]/90 to-slate-900/90 border border-emerald-500/30 shadow-2xl">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider mb-4">
                 <BookOpen className="w-4 h-4" />
-                <span>{isRTL ? 'مرجع متالورژی و ایمنی مهندسی' : 'Engineering Knowledge Base'}</span>
+                <span>{banner.badge}</span>
               </div>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight mb-4">
-                {isRTL
-                  ? 'مقالات مهندسی و متالورژی کمپانی تولید سیلندر گاز مایع در ایران'
-                  : 'Engineering & Metallurgy Articles | LPG Cylinder Manufacturing Standards'}
+                {banner.title}
               </h1>
               <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-4xl">
-                {isRTL
-                  ? 'تحلیل جامع استانداردهای ساخت کپسول گاز، متالورژی ورق‌های فولادی مخازن تحت فشار، بازرسی رادیوگرافی جوش، الزامات NFPA 58 و دستورالعمل‌های بین‌المللی حمل‌ونقل ADR.'
-                  : 'In-depth engineering analyses covering pressure vessel steel metallurgy, submerged arc weld inspection, NFPA 58 standards, and international hazardous material transport protocols.'}
+                {banner.description}
               </p>
             </div>
           </div>
@@ -248,6 +241,7 @@ function MainWebsite() {
 
     // 7. Standalone Heritage & Leadership Page
     if (currentPath === '/about' || currentPath === '/history') {
+      const banner = getBanner('about', lang);
       return (
         <div className="pt-24 pb-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
@@ -259,17 +253,13 @@ function MainWebsite() {
             <div className="p-8 rounded-3xl bg-gradient-to-br from-slate-900/90 via-[#0a1824]/90 to-slate-900/90 border border-emerald-500/30 shadow-2xl">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider mb-4">
                 <Building2 className="w-4 h-4" />
-                <span>{isRTL ? 'بیش از ۵۰ سال افتخار صنعتی (۱۳۴۹)' : 'Over 50 Years Industrial Legacy (Est. 1970)'}</span>
+                <span>{banner.badge}</span>
               </div>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight mb-4">
-                {isRTL
-                  ? 'تاریخچه و پیشینه کمپانی تولید سیلندر گاز مایع در ایران؛ مدیریت موسی عمویی'
-                  : '50+ Years Heritage & Vision | Premier LPG Cylinder Manufacturer in Iran'}
+                {banner.title}
               </h1>
               <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-4xl">
-                {isRTL
-                  ? 'از سال ۱۳۴۹ تا کنون، کارخانه ام گاز با مدیریت و بنیانگذاری آقای موسی عمویی در خط مقدم صنعت مخازن تحت فشار ایران و خاورمیانه قرار داشته و صادرات به بیش از ۱۲ کشور را ثبت نموده است.'
-                  : 'Since 1970, M Gas Factory under the executive leadership of Mousa Amooie has manufactured certified LPG cylinders powering industries and homes across Iran and over 12 global export hubs.'}
+                {banner.description}
               </p>
             </div>
           </div>
@@ -281,28 +271,25 @@ function MainWebsite() {
 
     // 7.5 Standalone Official Certificates & Standards Page
     if (currentPath === '/certificates') {
+      const banner = getBanner('certificates', lang);
       return (
         <div className="pt-24 pb-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
             <nav className="flex items-center gap-2 text-xs text-slate-400 mb-6">
               <Link to="/" className="hover:text-emerald-400 transition-colors">{t.navHome}</Link>
               <ChevronRight className="w-3.5 h-3.5 text-slate-600 rtl:rotate-180" />
-              <span className="text-emerald-400 font-semibold">{isRTL ? 'گواهینامه‌ها و استانداردهای رسمی' : 'Official Certifications'}</span>
+              <span className="text-emerald-400 font-semibold">{banner.badge}</span>
             </nav>
             <div className="p-8 rounded-3xl bg-gradient-to-br from-slate-900/90 via-[#0a1824]/90 to-slate-900/90 border border-emerald-500/30 shadow-2xl">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider mb-4">
                 <Award className="w-4 h-4" />
-                <span>{isRTL ? 'پروانه استاندارد ملی و تاییدیه بین‌المللی' : 'National & International Accredited Standards'}</span>
+                <span>{banner.badge}</span>
               </div>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight mb-4">
-                {isRTL
-                  ? 'گواهینامه‌های رسمی، استانداردهای ملی و بین‌المللی کارخانه ام گاز'
-                  : 'Official Quality Certifications & International Standards | M Gas'}
+                {banner.title}
               </h1>
               <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-4xl">
-                {isRTL
-                  ? 'مشاهده و بررسی اسناد و پروانه‌های رسمی استاندارد ملی ایران (ISIRI 841)، گواهینامه ISO 9001:2015 و استانداردهای اروپایی کپسول گاز مایع EN 1442 / CE و DOT-4BA.'
-                  : 'Official certifications, quality assurance records, and third-party inspection documentation verifying M Gas high-pressure LPG cylinders for domestic distribution and global export.'}
+                {banner.description}
               </p>
             </div>
           </div>
@@ -313,28 +300,25 @@ function MainWebsite() {
 
     // 8. Standalone FAQ & Compliance Page
     if (currentPath === '/faq') {
+      const banner = getBanner('faq', lang);
       return (
         <div className="pt-24 pb-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
             <nav className="flex items-center gap-2 text-xs text-slate-400 mb-6">
               <Link to="/" className="hover:text-emerald-400 transition-colors">{t.navHome}</Link>
               <ChevronRight className="w-3.5 h-3.5 text-slate-600 rtl:rotate-180" />
-              <span className="text-emerald-400 font-semibold">{isRTL ? 'پرسش‌های متداول' : 'FAQ'}</span>
+              <span className="text-emerald-400 font-semibold">{banner.badge}</span>
             </nav>
             <div className="p-8 rounded-3xl bg-gradient-to-br from-slate-900/90 via-[#0a1824]/90 to-slate-900/90 border border-amber-500/30 shadow-2xl">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold uppercase tracking-wider mb-4">
                 <Award className="w-4 h-4" />
-                <span>{isRTL ? 'پاسخ به سوالات فنی و بازرگانی' : 'Technical & Commercial FAQ'}</span>
+                <span>{banner.badge}</span>
               </div>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight mb-4">
-                {isRTL
-                  ? 'سوالات متداول خریداران کپسول گاز مایع؛ کمپانی تولید سیلندر در ایران'
-                  : 'Frequently Asked Questions | LPG Cylinder Manufacturing & Export'}
+                {banner.title}
               </h1>
               <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-4xl">
-                {isRTL
-                  ? 'پاسخ به پرسش‌های رایج در زمینه فشار کاری و تست، ضخامت ورق‌های فولادی، شرایط کانتینربندی صادراتی و حداقل تیراژ تولید سفارشی.'
-                  : 'Clear, engineering-verified answers to common questions regarding working pressure, steel thickness, MOQ, container capacity, and color customization.'}
+                {banner.description}
               </p>
             </div>
           </div>
@@ -345,6 +329,7 @@ function MainWebsite() {
 
     // 9. Standalone RFQ & Logistics Calculator Page
     if (currentPath === '/calculator') {
+      const banner = getBanner('calculator', lang);
       return (
         <div className="pt-24 pb-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
@@ -356,17 +341,13 @@ function MainWebsite() {
             <div className="p-8 rounded-3xl bg-gradient-to-br from-slate-900/90 via-[#0a1824]/90 to-slate-900/90 border border-pink-500/30 shadow-2xl">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-500/10 border border-pink-500/30 text-pink-400 text-xs font-bold uppercase tracking-wider mb-4">
                 <Calculator className="w-4 h-4" />
-                <span>{isRTL ? 'محاسبه کانتینربندی و استعلام آنلاین' : 'Container Logistics & Online RFQ'}</span>
+                <span>{banner.badge}</span>
               </div>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight mb-4">
-                {isRTL
-                  ? 'استعلام قیمت عمده و محاسبه ظرفیت بارگیری کانتینر کپسول گاز'
-                  : 'Online RFQ & Shipping Container Loading Capacity Calculator'}
+                {banner.title}
               </h1>
               <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-4xl">
-                {isRTL
-                  ? 'تعداد کپسول مورد نیاز خود را وارد کنید تا ظرفیت کانتینر ۲۰ فوت، ۴۰ فوت های‌کیوب (HQ)، وزن ناخالص و پیش‌فاکتور رسمی به صورت زنده محاسبه و مستقیماً برای واحد فروش صادر شود.'
-                  : 'Enter your desired cylinder quantities to instantly compute 20ft and 40ft HQ container loading capacities, gross shipping tonnage, and dispatch directly to M Gas export directorate.'}
+                {banner.description}
               </p>
             </div>
           </div>
@@ -380,6 +361,7 @@ function MainWebsite() {
 
     // 10. Standalone Contact & Location Page
     if (currentPath === '/contact') {
+      const banner = getBanner('contact', lang);
       return (
         <div className="pt-24 pb-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
@@ -391,17 +373,13 @@ function MainWebsite() {
             <div className="p-8 rounded-3xl bg-gradient-to-br from-slate-900/90 via-[#0a1824]/90 to-slate-900/90 border border-emerald-500/30 shadow-2xl">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider mb-4">
                 <Phone className="w-4 h-4" />
-                <span>{isRTL ? 'تماس با واحد فروش و آدرس کارخانه کرج' : 'Karaj Factory Location & Export Contact'}</span>
+                <span>{banner.badge}</span>
               </div>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight mb-4">
-                {isRTL
-                  ? 'تماس با کارخانه، نشانی کرج و واحد فروش کمپانی تولید سیلندر گاز مایع در ایران'
-                  : 'Contact Karaj Factory & International Export Directorate | M Gas'}
+                {banner.title}
               </h1>
               <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-4xl">
-                {isRTL
-                  ? 'ارتباط مستقیم با مدیریت کارخانه ام گاز (آقای موسی عمویی)، ساعات کاری، لوکیشن کارخانه در کرج و مشاوره تخصصی در واتس‌اپ.'
-                  : 'Direct inquiry with M Gas factory management in Karaj, working hours, exact factory location, and instant WhatsApp international sales support.'}
+                {banner.description}
               </p>
             </div>
           </div>

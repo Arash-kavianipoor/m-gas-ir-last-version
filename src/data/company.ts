@@ -100,6 +100,17 @@ export const DIRECTOR_ROLES: Record<import('../types').LanguageCode, { name: str
   hy: { name: 'Մուսա Ամուի', role: 'Գործարանի տնօրեն և գլխավոր մենեջեր' },
 };
 
+export const SALES_COORDINATION_NOTICE: Record<string, string> = {
+  fa: 'لطفاً برای امور خرید و سفارشات فقط با شماره بالا هماهنگ کنید',
+  en: 'For purchases and orders, please coordinate only with the number above',
+  ar: 'يرجى التنسيق بخصوص المشتريات والطلبات عبر الرقم أعلاه فقط',
+  de: 'Für Einkäufe und Bestellungen wenden Sie sich bitte nur an die obige Nummer',
+  ur: 'براہ کرم خریداری اور آرڈرز کے لیے صرف اوپر دیے گئے نمبر پر رابطہ کریں',
+  hy: 'Գնումների և պատվերների համար խնդրում ենք կապվել միայն վերևի համարով',
+  tr: 'Satın alma ve sipariş işlemleri için lütfen yalnızca yukarıdaki numara ile iletişime geçin',
+  ru: 'По вопросам закупок и заказов просьба обращаться только по указанному выше номеру',
+};
+
 export const SEO_CONFIG: SeoConfig = {
   siteName: 'M Gas | کارخانه تولید کپسول گاز ام گاز',
   siteUrl: 'https://mgas.ir',

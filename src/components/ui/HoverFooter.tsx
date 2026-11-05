@@ -13,10 +13,11 @@ import {
   FileText,
   Download,
   Sparkles,
+  AlertCircle,
 } from 'lucide-react';
 import { WhatsAppIcon } from '../WhatsAppIcon';
 import { useLanguage } from '../../i18n/LanguageContext';
-import { COMPANY_INFO, COMPANY_ADDRESS } from '../../data/company';
+import { COMPANY_INFO, COMPANY_ADDRESS, SALES_COORDINATION_NOTICE } from '../../data/company';
 import { PAGE_TRANSLATIONS } from '../../i18n/pageTranslations';
 import { CatalogDownloadModal } from '../CatalogDownloadModal';
 import { ContactChoiceModal } from '../ContactChoiceModal';
@@ -308,6 +309,18 @@ export const HoverFooter: React.FC = () => {
               </div>
 
               <div className="p-2.5 rounded-lg bg-slate-900/50 border border-slate-800/80">
+                {/* Flashing Sales Coordination Notice Above Management */}
+                <div className="mb-2.5 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-amber-500/15 border border-amber-500/40 text-amber-300 font-bold text-[11px] leading-snug animate-pulse shadow-sm shadow-amber-500/10">
+                  <span className="relative flex h-2 w-2 shrink-0">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+                  </span>
+                  <AlertCircle className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                  <span>
+                    {SALES_COORDINATION_NOTICE[currentLanguage] || SALES_COORDINATION_NOTICE.fa}
+                  </span>
+                </div>
+
                 <span className="text-xs text-slate-400 block mb-0.5">
                   {t.contactDomesticManagement}
                 </span>
@@ -317,19 +330,20 @@ export const HoverFooter: React.FC = () => {
                 <div className="flex flex-col gap-1">
                   <div
                     dir="ltr"
-                    className="text-xs font-mono text-slate-300 flex items-center gap-2 select-text cursor-default"
+                    onCopy={(e) => e.preventDefault()}
+                    className="text-xs font-mono text-slate-300 flex items-center gap-2 select-none cursor-default"
                   >
                     <Phone className="w-3 h-3 text-emerald-400" />
-                    <span className="isolate">{COMPANY_INFO.contacts.domesticDirector.mobileDisplay}</span>
+                    <span className="isolate select-none">{COMPANY_INFO.contacts.domesticDirector.mobileDisplay}</span>
                   </div>
-                  <a
-                    href={`tel:${COMPANY_INFO.contacts.domesticDirector.landline}`}
+                  <div
                     dir="ltr"
-                    className="text-xs font-mono text-slate-400 hover:text-emerald-400 flex items-center gap-2"
+                    onCopy={(e) => e.preventDefault()}
+                    className="text-xs font-mono text-slate-400 flex items-center gap-2 select-none cursor-default"
                   >
                     <Phone className="w-3 h-3 text-slate-500" />
-                    <span className="isolate">{COMPANY_INFO.contacts.domesticDirector.landlineDisplay}</span>
-                  </a>
+                    <span className="isolate select-none">{COMPANY_INFO.contacts.domesticDirector.landlineDisplay}</span>
+                  </div>
                 </div>
               </div>
             </div>
