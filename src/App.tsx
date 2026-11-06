@@ -24,6 +24,7 @@ import { TechnicalSpecsModal } from './components/TechnicalSpecsModal';
 import { MeniscusMobileNav } from './components/MeniscusMobileNav';
 import { ProductsPage } from './components/ProductsPage';
 import { ProductDetailPage } from './components/ProductDetailPage';
+import { CatalogPage } from './components/CatalogPage';
 import { Product, RfqItem, LanguageCode } from './types';
 import { getBanner } from './i18n/standaloneBanners';
 import {
@@ -119,6 +120,11 @@ function MainWebsite() {
 
   // Render standalone page views
   const renderContent = () => {
+    // 0. Standalone 3-Page A4 Technical Catalog & 2D Drawings Page
+    if (currentPath === '/catalog' || currentPath.startsWith('/catalog')) {
+      return <CatalogPage />;
+    }
+
     // 1. Standalone Single Product Detail Page
     if (currentPath.startsWith('/products/') && matchedProduct) {
       return (

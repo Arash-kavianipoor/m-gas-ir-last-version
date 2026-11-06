@@ -253,7 +253,12 @@ async function startServer() {
 
     // Development localized HTML middleware for crawlers and preview
     app.use(async (req, res, next) => {
-      if (req.method === 'GET' && !req.path.startsWith('/api') && (req.headers.accept || '').includes('text/html')) {
+      if (
+        req.method === 'GET' &&
+        !req.path.startsWith('/api') &&
+        !req.path.startsWith('/catalog/') &&
+        (req.headers.accept || '').includes('text/html')
+      ) {
         try {
           const host = (req.headers.host || '').toLowerCase();
           const rawHtml = fs.readFileSync(path.resolve(__dirname, 'index.html'), 'utf-8');

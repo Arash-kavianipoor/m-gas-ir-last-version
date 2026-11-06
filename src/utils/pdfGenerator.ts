@@ -1,6 +1,5 @@
 import { jsPDF } from 'jspdf';
-import { PRODUCTS } from '../data/products';
-import { COMPANY_INFO } from '../data/company';
+import { CYLINDER_DRAWINGS } from '../data/cylinderDrawings';
 import { LanguageCode } from '../types';
 
 export interface CatalogDownloadOptions {
@@ -9,244 +8,175 @@ export interface CatalogDownloadOptions {
 }
 
 /**
- * Generates and downloads an official M-Gas Technical Product Catalog PDF
+ * Downloads the official M-Gas Technical Product Catalog PDF (3-Page A4 with 2D drawings & factory logo)
  */
 export const generateAndDownloadCatalogPdf = (options: CatalogDownloadOptions = {}) => {
-  const { language = 'en' } = options;
-  const isPersian = language === 'fa';
+  // Method 1: Instant direct download of the official pre-built 3-page PDF asset
+  try {
+    const link = document.createElement('a');
+    link.href = '/catalog/m-gas-official-catalog-2026.pdf';
+    link.download = 'M-Gas-Official-Catalog-2026.pdf';
+    link.target = '_blank';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    return;
+  } catch (err) {
+    console.warn('Direct static PDF download failed, falling back to dynamic generation:', err);
+  }
 
+  // Fallback Method 2: Dynamic client-side jsPDF 3-page generation
   const doc = new jsPDF({
     orientation: 'portrait',
     unit: 'mm',
     format: 'a4',
   });
 
-  const pageWidth = doc.internal.pageSize.getWidth();
-  const pageHeight = doc.internal.pageSize.getHeight();
+  const pageWidth = 210;
+  const pageHeight = 297;
+  const itemsPerPage = 6;
+  const totalPages = Math.ceil(CYLINDER_DRAWINGS.length / itemsPerPage);
 
-  // Color Palette
-  const darkNavy = [11, 19, 30];
-  const emeraldGreen = [16, 185, 129];
-  const goldAccent = [245, 158, 11];
-  const slateText = [148, 163, 184];
-  const cardBg = [248, 250, 252];
+  for (let page = 0; page < totalPages; page++) {
+    if (page > 0) doc.addPage();
+    const pageItems = CYLINDER_DRAWINGS.slice(page * itemsPerPage, (page + 1) * itemsPerPage);
 
-  // PAGE 1: COVER & COMPANY PROFILE
-  // Top Banner
-  doc.setFillColor(darkNavy[0], darkNavy[1], darkNavy[2]);
-  doc.rect(0, 0, pageWidth, 75, 'F');
+    // Exact Header Framed Badge Card
+    doc.setFillColor(7, 25, 34); // #071922 dark navy-emerald
+    doc.setDrawColor(16, 185, 129); // #10B981 emerald
+    doc.setLineWidth(0.4);
+    doc.roundedRect(14, 8, 42, 18.66, 3, 3, 'FD');
 
-  // Accent Line
-  doc.setFillColor(emeraldGreen[0], emeraldGreen[1], emeraldGreen[2]);
-  doc.rect(0, 75, pageWidth, 3, 'F');
+    // M-Gas Text & Flame inside badge
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(11);
+    doc.setTextColor(253, 253, 253);
+    doc.text('M GAS', 35, 18.5, { align: 'center' });
+    doc.setFontSize(5);
+    doc.setTextColor(52, 211, 153);
+    doc.text('EST. 1970', 35, 23.5, { align: 'center' });
 
-  // Header Titles
-  doc.setTextColor(255, 255, 255);
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(24);
-  doc.text('M-GAS INDUSTRIAL GROUP', 14, 28);
+    // Header Title & Branding next to framed badge
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(10.5);
+    doc.setTextColor(5, 150, 105);
+    doc.text('M-GAS INDUSTRIAL GROUP (EST. 1970)', 60, 13);
 
-  doc.setFontSize(12);
-  doc.setFont('helvetica', 'normal');
-  doc.setTextColor(emeraldGreen[0], emeraldGreen[1], emeraldGreen[2]);
-  doc.text('ESTABLISHED 1970 (50+ YEARS OF EXCELLENCE)', 14, 38);
+    doc.setFontSize(14);
+    doc.setTextColor(15, 23, 42);
+    doc.text('Gas Cylinder Specifications', 60, 19);
 
-  doc.setFontSize(14);
-  doc.setTextColor(255, 255, 255);
-  doc.text('OFFICIAL LPG CYLINDERS PRODUCT CATALOG & SPECIFICATIONS', 14, 52);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7.5);
+    doc.setTextColor(100, 116, 139);
+    doc.text('2D Orthographic Dimensional Drawings & Technical Specifications', 60, 24);
 
-  doc.setFontSize(9);
-  doc.setTextColor(slateText[0], slateText[1], slateText[2]);
-  doc.text('High-Pressure Liquefied Petroleum Gas Cylinders | ISO 9001:2015 | EN 1442 | DOT-4BA/4BW Compliance', 14, 62);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8);
+    doc.setTextColor(16, 185, 129);
+    doc.text(`Page ${page + 1} of ${totalPages}`, pageWidth - 14, 13, { align: 'right' });
 
-  // Body content: Overview & Factory Info
-  let currentY = 90;
+    // Header divider
+    doc.setDrawColor(34, 34, 34);
+    doc.setLineWidth(0.4);
+    doc.line(14, 25, pageWidth - 14, 25);
 
-  doc.setFontSize(14);
-  doc.setFont('helvetica', 'bold');
-  doc.setTextColor(darkNavy[0], darkNavy[1], darkNavy[2]);
-  doc.text('MANUFACTURING CAPABILITIES & QUALITY ASSURANCE', 14, currentY);
+    // Render 6 rows per page
+    const rowStartY = 28;
+    const rowHeight = 41;
 
-  currentY += 8;
-  doc.setFontSize(9);
-  doc.setFont('helvetica', 'normal');
-  doc.setTextColor(60, 60, 60);
+    pageItems.forEach((item, idx) => {
+      const rowY = rowStartY + idx * rowHeight;
+      const scale = 110 / 340;
+      const offsetY = rowY + (38 - item.height * scale) / 2;
 
-  const introText = 
-    'M Gas is a premier manufacturer of high-precision LPG cylinders engineered with high-tensile steel (HP295 / SG295). ' +
-    'Our manufacturing line integrates automated deep drawing, robotic submerged-arc welding, normalized heat treatment furnace, ' +
-    '100% 30-34 Bar hydrostatic pressure testing, and electrostatic powder coating according to RAL standards. ' +
-    'We export to 12+ international hubs with flexible container logistics (20ft & 40ft High Cube).';
+      // Draw vector lines
+      item.lines.forEach((line) => {
+        const isDim = line.stroke === '#333' || line.strokeWidth < 1;
+        doc.setDrawColor(isDim ? 80 : 17);
+        doc.setLineWidth(isDim ? 0.18 : 0.32);
+        const x1 = 14 + line.x1 * scale;
+        const y1 = offsetY + line.y1 * scale;
+        const x2 = 14 + line.x2 * scale;
+        const y2 = offsetY + line.y2 * scale;
+        doc.line(x1, y1, x2, y2);
+      });
 
-  const splitIntro = doc.splitTextToSize(introText, pageWidth - 28);
-  doc.text(splitIntro, 14, currentY);
-  currentY += 22;
+      // Draw hemispherical caps
+      item.circles.forEach((circ) => {
+        doc.setDrawColor(17);
+        doc.setLineWidth(0.32);
+        const cx = 14 + circ.cx * scale;
+        const cy = offsetY + circ.cy * scale;
+        const r = circ.r * scale;
+        doc.circle(cx, cy, r, 'S');
+      });
 
-  // Key Specifications Highlights Table
-  doc.setFontSize(12);
-  doc.setFont('helvetica', 'bold');
-  doc.setTextColor(darkNavy[0], darkNavy[1], darkNavy[2]);
-  doc.text('PRODUCT PORTFOLIO OVERVIEW (13 MODELS)', 14, currentY);
-  currentY += 6;
+      // Draw dimension labels
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(6.5);
+      doc.setTextColor(20);
+      item.texts.forEach((txt) => {
+        const tx = 14 + txt.x * scale;
+        const ty = offsetY + txt.y * scale - 0.3;
+        doc.text(txt.val, tx, ty, { align: 'center' });
+      });
 
-  // Table Headers
-  const tableHeaders = ['Model / Vol', 'Category', 'Empty Wt', 'Diameter', 'Height', 'Test Press', 'MOQ'];
-  const colX = [14, 48, 80, 106, 130, 156, 182];
+      // Right-side Info Box
+      const boxX = 132;
+      const boxY = rowY + 2.5;
+      const boxW = 64;
+      const boxH = 34;
 
-  doc.setFillColor(235, 243, 240);
-  doc.rect(14, currentY, pageWidth - 28, 7, 'F');
-  doc.setFontSize(8);
-  doc.setFont('helvetica', 'bold');
-  doc.setTextColor(darkNavy[0], darkNavy[1], darkNavy[2]);
+      doc.setDrawColor(50, 50, 50);
+      doc.setLineWidth(0.25);
+      doc.setFillColor(252, 252, 252);
+      doc.roundedRect(boxX, boxY, boxW, boxH, 1, 1, 'FD');
 
-  tableHeaders.forEach((header, idx) => {
-    doc.text(header, colX[idx], currentY + 4.8);
-  });
+      // Title
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(9);
+      doc.setTextColor(17);
+      doc.text(item.title, boxX + boxW / 2, boxY + 6.5, { align: 'center' });
 
-  currentY += 8;
+      // Inner divider
+      doc.setDrawColor(220, 220, 220);
+      doc.setLineWidth(0.2);
+      doc.line(boxX + 4, boxY + 9, boxX + boxW - 4, boxY + 9);
 
-  // Render Product Rows
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(7.5);
+      // Table specs
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(7.5);
+      doc.setTextColor(60);
+      doc.text('Weight:', boxX + 5, boxY + 15.5);
+      doc.text('Length:', boxX + 5, boxY + 21.5);
+      doc.text('Diameter:', boxX + 5, boxY + 27.5);
 
-  PRODUCTS.forEach((product, index) => {
-    if (index % 2 === 0) {
-      doc.setFillColor(cardBg[0], cardBg[1], cardBg[2]);
-      doc.rect(14, currentY - 1, pageWidth - 28, 6.5, 'F');
-    }
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(17);
+      doc.text(item.weight, boxX + boxW - 5, boxY + 15.5, { align: 'right' });
+      doc.text(item.length, boxX + boxW - 5, boxY + 21.5, { align: 'right' });
+      doc.text(item.diameter, boxX + boxW - 5, boxY + 27.5, { align: 'right' });
 
-    doc.setTextColor(30, 41, 59);
-    doc.text(`${product.volume} ${product.volumeUnit}`, colX[0], currentY + 3.5);
-    doc.text(product.category.toUpperCase(), colX[1], currentY + 3.5);
-    doc.text(`${product.emptyWeightKg} Kg`, colX[2], currentY + 3.5);
-    doc.text(`${product.circleDiameterCm} cm`, colX[3], currentY + 3.5);
-    doc.text(`${product.heightCm} cm`, colX[4], currentY + 3.5);
-    doc.text(`${product.testPressureBar} Bar`, colX[5], currentY + 3.5);
-    doc.text(`${product.minOrder} pcs`, colX[6], currentY + 3.5);
+      // Row separator
+      if (idx < pageItems.length - 1) {
+        doc.setDrawColor(220, 220, 220);
+        doc.setLineWidth(0.18);
+        doc.line(14, rowY + rowHeight - 2, pageWidth - 14, rowY + rowHeight - 2);
+      }
+    });
 
-    currentY += 6.5;
-  });
+    // Footer
+    doc.setDrawColor(200, 200, 200);
+    doc.setLineWidth(0.2);
+    doc.line(14, pageHeight - 14, pageWidth - 14, pageHeight - 14);
 
-  // Standards & Certifications Box
-  currentY += 4;
-  doc.setFillColor(240, 253, 244);
-  doc.setDrawColor(16, 185, 129);
-  doc.roundedRect(14, currentY, pageWidth - 28, 26, 2, 2, 'FD');
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(6.5);
+    doc.setTextColor(110);
+    doc.text('Technical reference only – simple orthographic views, not to manufacturing scale | M-Gas Factory (Karaj, Iran)', pageWidth / 2, pageHeight - 9, { align: 'center' });
+  }
 
-  doc.setFontSize(9);
-  doc.setFont('helvetica', 'bold');
-  doc.setTextColor(5, 150, 105);
-  doc.text('CERTIFICATIONS & MANUFACTURING STANDARDS', 18, currentY + 6);
-
-  doc.setFontSize(7.5);
-  doc.setFont('helvetica', 'normal');
-  doc.setTextColor(30, 41, 59);
-  doc.text('• Quality Management System: ISO 9001:2015 Certified', 18, currentY + 12);
-  doc.text('• European Standard: EN 1442 Transportable Refillable Welded Steel Cylinders for LPG', 18, currentY + 17);
-  doc.text('• Testing Protocols: 100% 30-34 Bar Hydraulic Test, Radiographic X-Ray Weld Inspection, Burst Test > 85 Bar', 18, currentY + 22);
-
-  // Footer Contacts
-  currentY += 32;
-  doc.setFontSize(8);
-  doc.setFont('helvetica', 'bold');
-  doc.setTextColor(darkNavy[0], darkNavy[1], darkNavy[2]);
-  doc.text('GLOBAL SALES & FACTORY HEADQUARTERS:', 14, currentY);
-
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(7.5);
-  doc.setTextColor(70, 70, 70);
-  doc.text(`International Sales: ${COMPANY_INFO.contacts.internationalSalesManager.whatsappDisplay} (WhatsApp)`, 14, currentY + 4.5);
-  doc.text(`Official Sales Email: ${COMPANY_INFO.emails.sales} | Website: https://mgas.ir`, 14, currentY + 8.5);
-  doc.text(`Factory Address: Karaj, Alborz Province, Iran (M-Gas Industrial Complex)`, 14, currentY + 12.5);
-
-  // Page 2: DETAILED TECHNICAL SPECIFICATIONS
-  doc.addPage();
-
-  // Page 2 Header
-  doc.setFillColor(darkNavy[0], darkNavy[1], darkNavy[2]);
-  doc.rect(0, 0, pageWidth, 28, 'F');
-  doc.setFillColor(emeraldGreen[0], emeraldGreen[1], emeraldGreen[2]);
-  doc.rect(0, 28, pageWidth, 2, 'F');
-
-  doc.setTextColor(255, 255, 255);
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(14);
-  doc.text('M-GAS TECHNICAL SPECIFICATIONS & LOGISTICS GUIDE', 14, 18);
-
-  currentY = 40;
-
-  // Logistics & Container Capacity Section
-  doc.setFontSize(11);
-  doc.setFont('helvetica', 'bold');
-  doc.setTextColor(darkNavy[0], darkNavy[1], darkNavy[2]);
-  doc.text('1. CONTAINER LOADING & PACKAGING LOGISTICS', 14, currentY);
-  currentY += 6;
-
-  doc.setFontSize(8);
-  doc.setFont('helvetica', 'normal');
-  doc.setTextColor(50, 50, 50);
-  const logisticsDesc = 
-    'Cylinders are packed on heat-treated fumigated wooden pallets or bulk loaded with protective plastic netting and strapping. ' +
-    '20ft standard containers hold approximately 900 to 1,200 units (depending on volume), while 40ft High Cube (HQ) containers ' +
-    'accommodate up to 2,400+ units. International shipping available on FOB Bandar Abbas or CIF destination port terms.';
-  doc.text(doc.splitTextToSize(logisticsDesc, pageWidth - 28), 14, currentY);
-  currentY += 20;
-
-  // Customization & Powder Coating
-  doc.setFontSize(11);
-  doc.setFont('helvetica', 'bold');
-  doc.setTextColor(darkNavy[0], darkNavy[1], darkNavy[2]);
-  doc.text('2. RAL POWDER COATING & CUSTOM EMBOSSING', 14, currentY);
-  currentY += 6;
-
-  doc.setFontSize(8);
-  doc.setFont('helvetica', 'normal');
-  const coatingDesc = 
-    'All cylinders undergo automated grit/shot blasting followed by high-adhesion electrostatic thermosetting polyester powder coating ' +
-    '(thickness 60-80 microns). Color options include standard RAL Classic shades (e.g., RAL 6018 Yellow Green, RAL 5015 Sky Blue, ' +
-    'RAL 2004 Pure Orange, RAL 3020 Traffic Red, RAL 1021 Rape Yellow). Custom logo embossing and serial number stamping available.';
-  doc.text(doc.splitTextToSize(coatingDesc, pageWidth - 28), 14, currentY);
-  currentY += 22;
-
-  // Valve Standards
-  doc.setFontSize(11);
-  doc.setFont('helvetica', 'bold');
-  doc.setTextColor(darkNavy[0], darkNavy[1], darkNavy[2]);
-  doc.text('3. VALVE THREADS & SAFETY RELIEF MECHANISMS', 14, currentY);
-  currentY += 6;
-
-  doc.setFontSize(8);
-  doc.setFont('helvetica', 'normal');
-  const valveDesc = 
-    'Compatible with universal valve configurations including POL (CGA 510), G.4 / G.8 European threads, 20mm/22mm Quick-On compact valves, ' +
-    'and BS 341 No. 4 fittings with integrated pressure relief valves (PRV) rated at 25-28 Bar for fail-safe thermal protection.';
-  doc.text(doc.splitTextToSize(valveDesc, pageWidth - 28), 14, currentY);
-  currentY += 20;
-
-  // Verification & RFQ Box
-  doc.setFillColor(248, 250, 252);
-  doc.setDrawColor(203, 213, 225);
-  doc.roundedRect(14, currentY, pageWidth - 28, 48, 2, 2, 'FD');
-
-  doc.setFontSize(10);
-  doc.setFont('helvetica', 'bold');
-  doc.setTextColor(darkNavy[0], darkNavy[1], darkNavy[2]);
-  doc.text('HOW TO REQUEST A FORMAL RFQ & COMMERCIAL INVOICE', 18, currentY + 8);
-
-  doc.setFontSize(8);
-  doc.setFont('helvetica', 'normal');
-  doc.setTextColor(60, 60, 60);
-  doc.text('1. Visit https://mgas.ir and use the interactive RFQ Container Estimator.', 18, currentY + 16);
-  doc.text('2. Select required cylinder models, capacities, quantity, and RAL coating color.', 18, currentY + 22);
-  doc.text('3. Dispatch your quote directly via WhatsApp to our International Sales Director (+989128634908).', 18, currentY + 28);
-  doc.text('4. Receive a comprehensive Proforma Invoice (PI) with shipping schedule within 24 hours.', 18, currentY + 34);
-
-  // Footer on Page 2
-  doc.setFontSize(7.5);
-  doc.setTextColor(140, 140, 140);
-  doc.text('M Gas Cylinders Industrial Group © 1970-2026. All technical parameters are subject to continuous engineering enhancement.', 14, pageHeight - 10);
-
-  // Save the PDF file
-  const fileName = `M-Gas-Industrial-LPG-Cylinders-Catalog-2026.pdf`;
-  doc.save(fileName);
+  doc.save('M-Gas-Official-Catalog-2026.pdf');
 };
+

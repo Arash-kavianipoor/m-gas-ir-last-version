@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M Gas Cylinder Specifications – 2D Dimensional Drawings (Official Catalog)</title>
+<link rel="icon" type="image/svg+xml" href="/logo/favicon.svg" />
+<style>
+  :root {
+    --border: #222;
+    --muted: #555;
+    --line: #e2e8f0;
+    --bg: #fff;
+    --emerald: #059669;
+    --navy: #0b131e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #0b131e;
+    color: #111;
+    line-height: 1.35;
+    padding: 72px 12px 48px;
+  }
+
+  /* Top Action Toolbar */
+  .catalog-toolbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    background: rgba(11, 19, 30, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(16, 185, 129, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+  .toolbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+  }
+  .toolbar-brand img {
+    height: 32px;
+    width: auto;
+  }
+  .toolbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #0b131e;
+    font-weight: 700;
+  }
+  .btn-primary:hover {
+    background: #34d399;
+    transform: translateY(-1px);
+  }
+  .btn-secondary {
+    background: #1e293b;
+    color: #e2e8f0;
+    border: 1px solid #334155;
+  }
+  .btn-secondary:hover {
+    background: #334155;
+    color: #fff;
+  }
+
+  /* A4 Page Container */
+  .page {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto 36px;
+    background: var(--bg);
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    padding: 24px 28px 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 1100px;
+  }
+
+  header {
+    margin-bottom: 12px;
+    border-bottom: 1.5px solid #222;
+    padding-bottom: 10px;
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 6px;
+  }
+  .factory-logo {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+    background: #071922 !important;
+    border: 1.5px solid rgba(16, 185, 129, 0.75) !important;
+    border-radius: 14px !important;
+    padding: 4px 10px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  .header-titles {
+    flex: 1;
+    text-align: center;
+  }
+  .company-name {
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--emerald);
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  header h1 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: #0f172a;
+    line-height: 1.2;
+  }
+  header .subtitle {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 2px;
+    font-weight: 500;
+  }
+  .page-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--emerald);
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    padding: 4px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  header .units {
+    font-size: 0.72rem;
+    color: #64748b;
+    margin-top: 4px;
+    text-align: center;
+    border-top: 1px dashed #e2e8f0;
+    padding-top: 4px;
+  }
+
+  .page-rows {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--line);
+    min-height: 125px;
+  }
+  .row:last-child { border-bottom: none; }
+  .drawing {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .drawing svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  .info {
+    flex: 0 0 210px;
+    border: 1.2px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 12px 10px;
+    background: #fafafa;
+  }
+  .info h2 {
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 6px;
+    color: #0f172a;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 4px;
+  }
+  .info table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+  }
+  .info td {
+    padding: 2px 0;
+  }
+  .info td:first-child { color: #475569; }
+  .info td:last-child {
+    text-align: right;
+    font-weight: 700;
+    color: #0f172a;
+  }
+  footer {
+    text-align: center;
+    margin-top: 12px;
+    font-size: 0.68rem;
+    color: #64748b;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 8px;
+  }
+
+  @media print {
+    @page {
+      size: A4 portrait;
+      margin: 8mm 10mm;
+    }
+    body {
+      background: #fff !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+    .catalog-toolbar {
+      display: none !important;
+    }
+    .page {
+      box-shadow: none !important;
+      border: none !important;
+      margin: 0 !important;
+      padding: 0 0 4mm 0 !important;
+      page-break-after: always !important;
+      page-break-inside: avoid !important;
+      break-after: page !important;
+      break-inside: avoid !important;
+      height: 280mm !important;
+      max-height: 282mm !important;
+      border-radius: 0 !important;
+    }
+    .page:last-child {
+      page-break-after: auto !important;
+      break-after: auto !important;
+    }
+    .row {
+      break-inside: avoid !important;
+      page-break-inside: avoid !important;
+      padding: 6px 0 !important;
+    }
+  }
+
+  @media (max-width: 640px) {
+    body { padding-top: 68px; }
+    .header-top { flex-direction: column; text-align: center; }
+    .row { flex-direction: column; align-items: stretch; gap: 12px; }
+    .drawing { width: 100%; overflow-x: auto; }
+    .info { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="catalog-toolbar">
+  <a href="/" class="toolbar-brand">
+    <img src="/logo/new-logo-mgas-2.png" alt="M Gas Logo" />
+    <span>M Gas Cylinder Industrial Group</span>
+  </a>
+  <div class="toolbar-actions">
+    <a href="/" class="btn btn-secondary">
+      <span>← بازگشت به سایت</span>
+    </a>
+    <a href="/catalog/m-gas-official-catalog-2026.pdf" download="m-gas-official-catalog-2026.pdf" class="btn btn-secondary">
+      <span>دریافت فایل PDF</span>
+    </a>
+    <button type="button" onclick="window.print()" class="btn btn-primary">
+      <span>🖨️ چاپ / ذخیره در 3 صفحه A4</span>
+    </button>
+  </div>
+</div>
+
+
+<!-- ========== PAGE 1 OF 3 ========== -->
+<div class="page">
+  <header>
+    <div class="header-top">
+      <img src="/logo/new-logo-mgas-2.svg" onerror="this.src='/logo/new-logo-mgas-2.png'" alt="M Gas Factory Logo" class="factory-logo" />
+      <div class="header-titles">
+        <div class="company-name">M-GAS INDUSTRIAL GROUP (EST. 1970)</div>
+        <h1>Gas Cylinder Specifications</h1>
+        <div class="subtitle">2D Orthographic Dimensional Drawings &amp; Technical Specifications</div>
+      </div>
+      <div class="page-badge">Page 1 of 3</div>
+    </div>
+    <div class="units">Units: Length &amp; Diameter in centimetres (cm) &nbsp;|&nbsp; Weight in kilograms (kg) &nbsp;|&nbsp; Certified to ISIRI 841 &amp; EN 1442</div>
+  </header>
+
+  <div class="page-rows">
+    
+  <!-- 75 Liter (83 cm) -->
+  <div class="row">
+    <div class="drawing">
+      <svg width="340" height="70" viewBox="0 0 340 70" xmlns="http://www.w3.org/2000/svg">
+        <!-- body -->
+        <line x1="28" y1="15" x2="156.65" y2="15" stroke="#111" stroke-width="1.2"/>
+        <line x1="28" y1="55" x2="156.65" y2="55" stroke="#111" stroke-width="1.2"/>
+        <!-- left end -->
+        <circle cx="28" cy="35" r="20" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="28" y1="15" x2="28" y2="55" stroke="#111" stroke-width="1"/>
+        <!-- right end -->
+        <circle cx="156.65" cy="35" r="20" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="156.65" y1="15" x2="156.65" y2="55" stroke="#111" stroke-width="1"/>
+        <!-- length dim -->
+        <line x1="28" y1="62" x2="156.65" y2="62" stroke="#333" stroke-width="0.7"/>
+        <line x1="28" y1="59.5" x2="28" y2="64.5" stroke="#333" stroke-width="0.7"/>
+        <line x1="156.65" y1="59.5" x2="156.65" y2="64.5" stroke="#333" stroke-width="0.7"/>
+        <text x="92.3" y="70" text-anchor="middle" font-size="9" font-family="system-ui,sans-serif" fill="#111">83</text>
+        <!-- diameter dim -->
+        <line x1="185" y1="15" x2="185" y2="55" stroke="#333" stroke-width="0.7"/>
+        <line x1="182.5" y1="15" x2="187.5" y2="15" stroke="#333" stroke-width="0.7"/>
+        <line x1="182.5" y1="55" x2="187.5" y2="55" stroke="#333" stroke-width="0.7"/>
+        <text x="192" y="38" font-size="9" font-family="system-ui,sans-serif" fill="#111">36</text>
+      </svg>
+    </div>
+    <div class="info">
+      <h2>75 Liter</h2>
+      <table>
+        <tr><td>Weight:</td><td>25.2 kg</td></tr>
+        <tr><td>Length:</td><td>83 cm</td></tr>
+        <tr><td>Diameter:</td><td>36 cm</td></tr>
+      </table>
+    </div>
+  </div>
+  <!-- 80 Liter (94 cm) -->
+  <div class="row">
+    <div class="drawing">
+      <svg width="340" height="68" viewBox="0 0 340 68" xmlns="http://www.w3.org/2000/svg">
+        <line x1="26" y1="15.5" x2="171.7" y2="15.5" stroke="#111" stroke-width="1.2"/>
+        <line x1="26" y1="52.5" x2="171.7" y2="52.5" stroke="#111" stroke-width="1.2"/>
+        <circle cx="26" cy="34" r="18.5" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="26" y1="15.5" x2="26" y2="52.5" stroke="#111" stroke-width="1"/>
+        <circle cx="171.7" cy="34" r="18.5" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="171.7" y1="15.5" x2="171.7" y2="52.5" stroke="#111" stroke-width="1"/>
+        <line x1="26" y1="60" x2="171.7" y2="60" stroke="#333" stroke-width="0.7"/>
+        <line x1="26" y1="57.5" x2="26" y2="62.5" stroke="#333" stroke-width="0.7"/>
+        <line x1="171.7" y1="57.5" x2="171.7" y2="62.5" stroke="#333" stroke-width="0.7"/>
+        <text x="98.85" y="68" text-anchor="middle" font-size="9" font-family="system-ui,sans-serif" fill="#111">94</text>
+        <line x1="198" y1="15.5" x2="198" y2="52.5" stroke="#333" stroke-width="0.7"/>
+        <line x1="195.5" y1="15.5" x2="200.5" y2="15.5" stroke="#333" stroke-width="0.7"/>
+        <line x1="195.5" y1="52.5" x2="200.5" y2="52.5" stroke="#333" stroke-width="0.7"/>
+        <text x="205" y="37" font-size="9" font-family="system-ui,sans-serif" fill="#111">34</text>
+      </svg>
+    </div>
+    <div class="info">
+      <h2>80 Liter</h2>
+      <table>
+        <tr><td>Weight:</td><td>25.7 kg</td></tr>
+        <tr><td>Length:</td><td>94 cm</td></tr>
+        <tr><td>Diameter:</td><td>34 cm</td></tr>
+      </table>
+    </div>
+  </div>
+  <!-- 95 Liter (97 cm) -->
+  <div class="row">
+    <div class="drawing">
+      <svg width="340" height="70" viewBox="0 0 340 70" xmlns="http://www.w3.org/2000/svg">
+        <line x1="28" y1="15" x2="178.35" y2="15" stroke="#111" stroke-width="1.2"/>
+        <line x1="28" y1="55" x2="178.35" y2="55" stroke="#111" stroke-width="1.2"/>
+        <circle cx="28" cy="35" r="20" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="28" y1="15" x2="28" y2="55" stroke="#111" stroke-width="1"/>
+        <circle cx="178.35" cy="35" r="20" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="178.35" y1="15" x2="178.35" y2="55" stroke="#111" stroke-width="1"/>
+        <line x1="28" y1="62" x2="178.35" y2="62" stroke="#333" stroke-width="0.7"/>
+        <line x1="28" y1="59.5" x2="28" y2="64.5" stroke="#333" stroke-width="0.7"/>
+        <line x1="178.35" y1="59.5" x2="178.35" y2="64.5" stroke="#333" stroke-width="0.7"/>
+        <text x="103.2" y="70" text-anchor="middle" font-size="9" font-family="system-ui,sans-serif" fill="#111">97</text>
+        <line x1="206" y1="15" x2="206" y2="55" stroke="#333" stroke-width="0.7"/>
+        <line x1="203.5" y1="15" x2="208.5" y2="15" stroke="#333" stroke-width="0.7"/>
+        <line x1="203.5" y1="55" x2="208.5" y2="55" stroke="#333" stroke-width="0.7"/>
+        <text x="213" y="38" font-size="9" font-family="system-ui,sans-serif" fill="#111">36</text>
+      </svg>
+    </div>
+    <div class="info">
+      <h2>95 Liter</h2>
+      <table>
+        <tr><td>Weight:</td><td>35.5 kg</td></tr>
+        <tr><td>Length:</td><td>97 cm</td></tr>
+        <tr><td>Diameter:</td><td>36 cm</td></tr>
+      </table>
+    </div>
+  </div>
+  <!-- 105 Liter (115 cm) -->
+  <div class="row">
+    <div class="drawing">
+      <svg width="340" height="70" viewBox="0 0 340 70" xmlns="http://www.w3.org/2000/svg">
+        <line x1="28" y1="15" x2="206.25" y2="15" stroke="#111" stroke-width="1.2"/>
+        <line x1="28" y1="55" x2="206.25" y2="55" stroke="#111" stroke-width="1.2"/>
+        <circle cx="28" cy="35" r="20" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="28" y1="15" x2="28" y2="55" stroke="#111" stroke-width="1"/>
+        <circle cx="206.25" cy="35" r="20" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="206.25" y1="15" x2="206.25" y2="55" stroke="#111" stroke-width="1"/>
+        <line x1="28" y1="62" x2="206.25" y2="62" stroke="#333" stroke-width="0.7"/>
+        <line x1="28" y1="59.5" x2="28" y2="64.5" stroke="#333" stroke-width="0.7"/>
+        <line x1="206.25" y1="59.5" x2="206.25" y2="64.5" stroke="#333" stroke-width="0.7"/>
+        <text x="117.1" y="70" text-anchor="middle" font-size="9" font-family="system-ui,sans-serif" fill="#111">115</text>
+        <line x1="234" y1="15" x2="234" y2="55" stroke="#333" stroke-width="0.7"/>
+        <line x1="231.5" y1="15" x2="236.5" y2="15" stroke="#333" stroke-width="0.7"/>
+        <line x1="231.5" y1="55" x2="236.5" y2="55" stroke="#333" stroke-width="0.7"/>
+        <text x="241" y="38" font-size="9" font-family="system-ui,sans-serif" fill="#111">36</text>
+      </svg>
+    </div>
+    <div class="info">
+      <h2>105 Liter</h2>
+      <table>
+        <tr><td>Weight:</td><td>36.2 kg</td></tr>
+        <tr><td>Length:</td><td>115 cm</td></tr>
+        <tr><td>Diameter:</td><td>36 cm</td></tr>
+      </table>
+    </div>
+  </div>
+  <!-- 125 Liter (133 cm) -->
+  <div class="row">
+    <div class="drawing">
+      <svg width="340" height="70" viewBox="0 0 340 70" xmlns="http://www.w3.org/2000/svg">
+        <line x1="26" y1="15" x2="225.15" y2="15" stroke="#111" stroke-width="1.2"/>
+        <line x1="26" y1="55" x2="225.15" y2="55" stroke="#111" stroke-width="1.2"/>
+        <circle cx="26" cy="35" r="20" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="26" y1="15" x2="26" y2="55" stroke="#111" stroke-width="1"/>
+        <circle cx="225.15" cy="35" r="20" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="225.15" y1="15" x2="225.15" y2="55" stroke="#111" stroke-width="1"/>
+        <line x1="26" y1="62" x2="225.15" y2="62" stroke="#333" stroke-width="0.7"/>
+        <line x1="26" y1="59.5" x2="26" y2="64.5" stroke="#333" stroke-width="0.7"/>
+        <line x1="225.15" y1="59.5" x2="225.15" y2="64.5" stroke="#333" stroke-width="0.7"/>
+        <text x="125.6" y="70" text-anchor="middle" font-size="9" font-family="system-ui,sans-serif" fill="#111">133</text>
+        <line x1="253" y1="15" x2="253" y2="55" stroke="#333" stroke-width="0.7"/>
+        <line x1="250.5" y1="15" x2="255.5" y2="15" stroke="#333" stroke-width="0.7"/>
+        <line x1="250.5" y1="55" x2="255.5" y2="55" stroke="#333" stroke-width="0.7"/>
+        <text x="260" y="38" font-size="9" font-family="system-ui,sans-serif" fill="#111">36</text>
+      </svg>
+    </div>
+    <div class="info">
+      <h2>125 Liter</h2>
+      <table>
+        <tr><td>Weight:</td><td>43.8 kg</td></tr>
+        <tr><td>Length:</td><td>133 cm</td></tr>
+        <tr><td>Diameter:</td><td>36 cm</td></tr>
+      </table>
+    </div>
+  </div>
+  <!-- 125 Liter (143 cm) -->
+  <div class="row">
+    <div class="drawing">
+      <svg width="340" height="70" viewBox="0 0 340 70" xmlns="http://www.w3.org/2000/svg">
+        <line x1="24" y1="15" x2="238.65" y2="15" stroke="#111" stroke-width="1.2"/>
+        <line x1="24" y1="55" x2="238.65" y2="55" stroke="#111" stroke-width="1.2"/>
+        <circle cx="24" cy="35" r="20" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="24" y1="15" x2="24" y2="55" stroke="#111" stroke-width="1"/>
+        <circle cx="238.65" cy="35" r="20" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="238.65" y1="15" x2="238.65" y2="55" stroke="#111" stroke-width="1"/>
+        <line x1="24" y1="62" x2="238.65" y2="62" stroke="#333" stroke-width="0.7"/>
+        <line x1="24" y1="59.5" x2="24" y2="64.5" stroke="#333" stroke-width="0.7"/>
+        <line x1="238.65" y1="59.5" x2="238.65" y2="64.5" stroke="#333" stroke-width="0.7"/>
+        <text x="131.3" y="70" text-anchor="middle" font-size="9" font-family="system-ui,sans-serif" fill="#111">143</text>
+        <line x1="267" y1="15" x2="267" y2="55" stroke="#333" stroke-width="0.7"/>
+        <line x1="264.5" y1="15" x2="269.5" y2="15" stroke="#333" stroke-width="0.7"/>
+        <line x1="264.5" y1="55" x2="269.5" y2="55" stroke="#333" stroke-width="0.7"/>
+        <text x="274" y="38" font-size="9" font-family="system-ui,sans-serif" fill="#111">36</text>
+      </svg>
+    </div>
+    <div class="info">
+      <h2>125 Liter</h2>
+      <table>
+        <tr><td>Weight:</td><td>42.8 kg</td></tr>
+        <tr><td>Length:</td><td>143 cm</td></tr>
+        <tr><td>Diameter:</td><td>36 cm</td></tr>
+      </table>
+    </div>
+  </div>
+  </div>
+
+  <footer>
+    Technical reference only – simple orthographic views, not to manufacturing scale &nbsp;|&nbsp; M-Gas Factory (Karaj, Iran) &nbsp;|&nbsp; Page 1 of 3
+  </footer>
+</div>
+
+<!-- ========== PAGE 2 OF 3 ========== -->
+<div class="page">
+  <header>
+    <div class="header-top">
+      <img src="/logo/new-logo-mgas-2.svg" onerror="this.src='/logo/new-logo-mgas-2.png'" alt="M Gas Factory Logo" class="factory-logo" />
+      <div class="header-titles">
+        <div class="company-name">M-GAS INDUSTRIAL GROUP (EST. 1970)</div>
+        <h1>Gas Cylinder Specifications</h1>
+        <div class="subtitle">2D Orthographic Dimensional Drawings &amp; Technical Specifications</div>
+      </div>
+      <div class="page-badge">Page 2 of 3</div>
+    </div>
+    <div class="units">Units: Length &amp; Diameter in centimetres (cm) &nbsp;|&nbsp; Weight in kilograms (kg) &nbsp;|&nbsp; Certified to ISIRI 841 &amp; EN 1442</div>
+  </header>
+
+  <div class="page-rows">
+    
+  <!-- 30 Liter (40 cm) -->
+  <div class="row">
+    <div class="drawing">
+      <svg width="340" height="68" viewBox="0 0 340 68" xmlns="http://www.w3.org/2000/svg">
+        <line x1="28" y1="15.25" x2="90" y2="15.25" stroke="#111" stroke-width="1.2"/>
+        <line x1="28" y1="52.75" x2="90" y2="52.75" stroke="#111" stroke-width="1.2"/>
+        <circle cx="28" cy="34" r="18.75" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="28" y1="15.25" x2="28" y2="52.75" stroke="#111" stroke-width="1"/>
+        <circle cx="90" cy="34" r="18.75" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="90" y1="15.25" x2="90" y2="52.75" stroke="#111" stroke-width="1"/>
+        <line x1="28" y1="60" x2="90" y2="60" stroke="#333" stroke-width="0.7"/>
+        <line x1="28" y1="57.5" x2="28" y2="62.5" stroke="#333" stroke-width="0.7"/>
+        <line x1="90" y1="57.5" x2="90" y2="62.5" stroke="#333" stroke-width="0.7"/>
+        <text x="59" y="68" text-anchor="middle" font-size="9" font-family="system-ui,sans-serif" fill="#111">40</text>
+        <line x1="117" y1="15.25" x2="117" y2="52.75" stroke="#333" stroke-width="0.7"/>
+        <line x1="114.5" y1="15.25" x2="119.5" y2="15.25" stroke="#333" stroke-width="0.7"/>
+        <line x1="114.5" y1="52.75" x2="119.5" y2="52.75" stroke="#333" stroke-width="0.7"/>
+        <text x="124" y="37" font-size="9" font-family="system-ui,sans-serif" fill="#111">31.5</text>
+      </svg>
+    </div>
+    <div class="info">
+      <h2>30 Liter</h2>
+      <table>
+        <tr><td>Weight:</td><td>16 kg</td></tr>
+        <tr><td>Length:</td><td>40 cm</td></tr>
+        <tr><td>Diameter:</td><td>31.5 cm</td></tr>
+      </table>
+    </div>
+  </div>
+  <!-- 25 Liter Tipple (78 cm) -->
+  <div class="row">
+    <div class="drawing">
+      <svg width="340" height="70" viewBox="0 0 340 70" xmlns="http://www.w3.org/2000/svg">
+        <line x1="28" y1="15" x2="148.9" y2="15" stroke="#111" stroke-width="1.2"/>
+        <line x1="28" y1="55" x2="148.9" y2="55" stroke="#111" stroke-width="1.2"/>
+        <circle cx="28" cy="35" r="20" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="28" y1="15" x2="28" y2="55" stroke="#111" stroke-width="1"/>
+        <circle cx="148.9" cy="35" r="20" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="148.9" y1="15" x2="148.9" y2="55" stroke="#111" stroke-width="1"/>
+        <line x1="28" y1="62" x2="148.9" y2="62" stroke="#333" stroke-width="0.7"/>
+        <line x1="28" y1="59.5" x2="28" y2="64.5" stroke="#333" stroke-width="0.7"/>
+        <line x1="148.9" y1="59.5" x2="148.9" y2="64.5" stroke="#333" stroke-width="0.7"/>
+        <text x="88.45" y="70" text-anchor="middle" font-size="9" font-family="system-ui,sans-serif" fill="#111">78</text>
+        <line x1="177" y1="15" x2="177" y2="55" stroke="#333" stroke-width="0.7"/>
+        <line x1="174.5" y1="15" x2="179.5" y2="15" stroke="#333" stroke-width="0.7"/>
+        <line x1="174.5" y1="55" x2="179.5" y2="55" stroke="#333" stroke-width="0.7"/>
+        <text x="184" y="38" font-size="9" font-family="system-ui,sans-serif" fill="#111">36</text>
+      </svg>
+    </div>
+    <div class="info">
+      <h2>25 Liter Tipple</h2>
+      <table>
+        <tr><td>Weight:</td><td>25.8 kg</td></tr>
+        <tr><td>Length:</td><td>78 cm</td></tr>
+        <tr><td>Diameter:</td><td>36 cm</td></tr>
+      </table>
+    </div>
+  </div>
+  <!-- 25 Liter Long (62 cm) -->
+  <div class="row">
+    <div class="drawing">
+      <svg width="340" height="58" viewBox="0 0 340 58" xmlns="http://www.w3.org/2000/svg">
+        <line x1="22" y1="12.5" x2="118.1" y2="12.5" stroke="#111" stroke-width="1.2"/>
+        <line x1="22" y1="41.5" x2="118.1" y2="41.5" stroke="#111" stroke-width="1.2"/>
+        <circle cx="22" cy="27" r="14.5" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="22" y1="12.5" x2="22" y2="41.5" stroke="#111" stroke-width="1"/>
+        <circle cx="118.1" cy="27" r="14.5" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="118.1" y1="12.5" x2="118.1" y2="41.5" stroke="#111" stroke-width="1"/>
+        <line x1="22" y1="48" x2="118.1" y2="48" stroke="#333" stroke-width="0.7"/>
+        <line x1="22" y1="45.5" x2="22" y2="50.5" stroke="#333" stroke-width="0.7"/>
+        <line x1="118.1" y1="45.5" x2="118.1" y2="50.5" stroke="#333" stroke-width="0.7"/>
+        <text x="70.05" y="57" text-anchor="middle" font-size="9" font-family="system-ui,sans-serif" fill="#111">62</text>
+        <line x1="140" y1="12.5" x2="140" y2="41.5" stroke="#333" stroke-width="0.7"/>
+        <line x1="137.5" y1="12.5" x2="142.5" y2="12.5" stroke="#333" stroke-width="0.7"/>
+        <line x1="137.5" y1="41.5" x2="142.5" y2="41.5" stroke="#333" stroke-width="0.7"/>
+        <text x="147" y="30" font-size="9" font-family="system-ui,sans-serif" fill="#111">23</text>
+      </svg>
+    </div>
+    <div class="info">
+      <h2>25 Liter Long</h2>
+      <table>
+        <tr><td>Weight:</td><td>11.5 kg</td></tr>
+        <tr><td>Length:</td><td>62 cm</td></tr>
+        <tr><td>Diameter:</td><td>23 cm</td></tr>
+      </table>
+    </div>
+  </div>
+  <!-- 30 Liter Long (79 cm) -->
+  <div class="row">
+    <div class="drawing">
+      <svg width="340" height="58" viewBox="0 0 340 58" xmlns="http://www.w3.org/2000/svg">
+        <line x1="22" y1="12.5" x2="144.45" y2="12.5" stroke="#111" stroke-width="1.2"/>
+        <line x1="22" y1="41.5" x2="144.45" y2="41.5" stroke="#111" stroke-width="1.2"/>
+        <circle cx="22" cy="27" r="14.5" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="22" y1="12.5" x2="22" y2="41.5" stroke="#111" stroke-width="1"/>
+        <circle cx="144.45" cy="27" r="14.5" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="144.45" y1="12.5" x2="144.45" y2="41.5" stroke="#111" stroke-width="1"/>
+        <line x1="22" y1="48" x2="144.45" y2="48" stroke="#333" stroke-width="0.7"/>
+        <line x1="22" y1="45.5" x2="22" y2="50.5" stroke="#333" stroke-width="0.7"/>
+        <line x1="144.45" y1="45.5" x2="144.45" y2="50.5" stroke="#333" stroke-width="0.7"/>
+        <text x="83.2" y="57" text-anchor="middle" font-size="9" font-family="system-ui,sans-serif" fill="#111">79</text>
+        <line x1="167" y1="12.5" x2="167" y2="41.5" stroke="#333" stroke-width="0.7"/>
+        <line x1="164.5" y1="12.5" x2="169.5" y2="12.5" stroke="#333" stroke-width="0.7"/>
+        <line x1="164.5" y1="41.5" x2="169.5" y2="41.5" stroke="#333" stroke-width="0.7"/>
+        <text x="174" y="30" font-size="9" font-family="system-ui,sans-serif" fill="#111">23</text>
+      </svg>
+    </div>
+    <div class="info">
+      <h2>30 Liter Long</h2>
+      <table>
+        <tr><td>Weight:</td><td>14 kg</td></tr>
+        <tr><td>Length:</td><td>79 cm</td></tr>
+        <tr><td>Diameter:</td><td>23 cm</td></tr>
+      </table>
+    </div>
+  </div>
+  <!-- 35 Liter Long (83 cm) -->
+  <div class="row">
+    <div class="drawing">
+      <svg width="340" height="58" viewBox="0 0 340 58" xmlns="http://www.w3.org/2000/svg">
+        <line x1="22" y1="12.5" x2="150.65" y2="12.5" stroke="#111" stroke-width="1.2"/>
+        <line x1="22" y1="41.5" x2="150.65" y2="41.5" stroke="#111" stroke-width="1.2"/>
+        <circle cx="22" cy="27" r="14.5" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="22" y1="12.5" x2="22" y2="41.5" stroke="#111" stroke-width="1"/>
+        <circle cx="150.65" cy="27" r="14.5" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="150.65" y1="12.5" x2="150.65" y2="41.5" stroke="#111" stroke-width="1"/>
+        <line x1="22" y1="48" x2="150.65" y2="48" stroke="#333" stroke-width="0.7"/>
+        <line x1="22" y1="45.5" x2="22" y2="50.5" stroke="#333" stroke-width="0.7"/>
+        <line x1="150.65" y1="45.5" x2="150.65" y2="50.5" stroke="#333" stroke-width="0.7"/>
+        <text x="86.3" y="57" text-anchor="middle" font-size="9" font-family="system-ui,sans-serif" fill="#111">83</text>
+        <line x1="173" y1="12.5" x2="173" y2="41.5" stroke="#333" stroke-width="0.7"/>
+        <line x1="170.5" y1="12.5" x2="175.5" y2="12.5" stroke="#333" stroke-width="0.7"/>
+        <line x1="170.5" y1="41.5" x2="175.5" y2="41.5" stroke="#333" stroke-width="0.7"/>
+        <text x="180" y="30" font-size="9" font-family="system-ui,sans-serif" fill="#111">23</text>
+      </svg>
+    </div>
+    <div class="info">
+      <h2>35 Liter Long</h2>
+      <table>
+        <tr><td>Weight:</td><td>15 kg</td></tr>
+        <tr><td>Length:</td><td>83 cm</td></tr>
+        <tr><td>Diameter:</td><td>23 cm</td></tr>
+      </table>
+    </div>
+  </div>
+  <!-- 60 Liter (82 cm) -->
+  <div class="row">
+    <div class="drawing">
+      <svg width="340" height="68" viewBox="0 0 340 68" xmlns="http://www.w3.org/2000/svg">
+        <line x1="28" y1="15.25" x2="155.1" y2="15.25" stroke="#111" stroke-width="1.2"/>
+        <line x1="28" y1="52.75" x2="155.1" y2="52.75" stroke="#111" stroke-width="1.2"/>
+        <circle cx="28" cy="34" r="18.75" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="28" y1="15.25" x2="28" y2="52.75" stroke="#111" stroke-width="1"/>
+        <circle cx="155.1" cy="34" r="18.75" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="155.1" y1="15.25" x2="155.1" y2="52.75" stroke="#111" stroke-width="1"/>
+        <line x1="28" y1="60" x2="155.1" y2="60" stroke="#333" stroke-width="0.7"/>
+        <line x1="28" y1="57.5" x2="28" y2="62.5" stroke="#333" stroke-width="0.7"/>
+        <line x1="155.1" y1="57.5" x2="155.1" y2="62.5" stroke="#333" stroke-width="0.7"/>
+        <text x="91.55" y="68" text-anchor="middle" font-size="9" font-family="system-ui,sans-serif" fill="#111">82</text>
+        <line x1="182" y1="15.25" x2="182" y2="52.75" stroke="#333" stroke-width="0.7"/>
+        <line x1="179.5" y1="15.25" x2="184.5" y2="15.25" stroke="#333" stroke-width="0.7"/>
+        <line x1="179.5" y1="52.75" x2="184.5" y2="52.75" stroke="#333" stroke-width="0.7"/>
+        <text x="189" y="37" font-size="9" font-family="system-ui,sans-serif" fill="#111">31.5</text>
+      </svg>
+    </div>
+    <div class="info">
+      <h2>60 Liter</h2>
+      <table>
+        <tr><td>Weight:</td><td>22.5 kg</td></tr>
+        <tr><td>Length:</td><td>82 cm</td></tr>
+        <tr><td>Diameter:</td><td>31.5 cm</td></tr>
+      </table>
+    </div>
+  </div>
+  </div>
+
+  <footer>
+    Technical reference only – simple orthographic views, not to manufacturing scale &nbsp;|&nbsp; M-Gas Factory (Karaj, Iran) &nbsp;|&nbsp; Page 2 of 3
+  </footer>
+</div>
+
+<!-- ========== PAGE 3 OF 3 ========== -->
+<div class="page">
+  <header>
+    <div class="header-top">
+      <img src="/logo/new-logo-mgas-2.svg" onerror="this.src='/logo/new-logo-mgas-2.png'" alt="M Gas Factory Logo" class="factory-logo" />
+      <div class="header-titles">
+        <div class="company-name">M-GAS INDUSTRIAL GROUP (EST. 1970)</div>
+        <h1>Gas Cylinder Specifications</h1>
+        <div class="subtitle">2D Orthographic Dimensional Drawings &amp; Technical Specifications</div>
+      </div>
+      <div class="page-badge">Page 3 of 3</div>
+    </div>
+    <div class="units">Units: Length &amp; Diameter in centimetres (cm) &nbsp;|&nbsp; Weight in kilograms (kg) &nbsp;|&nbsp; Certified to ISIRI 841 &amp; EN 1442</div>
+  </header>
+
+  <div class="page-rows">
+    
+  <!-- 20 Liter Tipple (36 cm) -->
+  <div class="row">
+    <div class="drawing">
+      <svg width="340" height="66" viewBox="0 0 340 66" xmlns="http://www.w3.org/2000/svg">
+        <line x1="28" y1="15" x2="83.8" y2="15" stroke="#111" stroke-width="1.2"/>
+        <line x1="28" y1="51" x2="83.8" y2="51" stroke="#111" stroke-width="1.2"/>
+        <circle cx="28" cy="33" r="18" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="28" y1="15" x2="28" y2="51" stroke="#111" stroke-width="1"/>
+        <circle cx="83.8" cy="33" r="18" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="83.8" y1="15" x2="83.8" y2="51" stroke="#111" stroke-width="1"/>
+        <line x1="28" y1="58" x2="83.8" y2="58" stroke="#333" stroke-width="0.7"/>
+        <line x1="28" y1="55.5" x2="28" y2="60.5" stroke="#333" stroke-width="0.7"/>
+        <line x1="83.8" y1="55.5" x2="83.8" y2="60.5" stroke="#333" stroke-width="0.7"/>
+        <text x="55.9" y="66" text-anchor="middle" font-size="9" font-family="system-ui,sans-serif" fill="#111">36</text>
+        <line x1="110" y1="15" x2="110" y2="51" stroke="#333" stroke-width="0.7"/>
+        <line x1="107.5" y1="15" x2="112.5" y2="15" stroke="#333" stroke-width="0.7"/>
+        <line x1="107.5" y1="51" x2="112.5" y2="51" stroke="#333" stroke-width="0.7"/>
+        <text x="117" y="36" font-size="9" font-family="system-ui,sans-serif" fill="#111">30</text>
+      </svg>
+    </div>
+    <div class="info">
+      <h2>20 Liter Tipple</h2>
+      <table>
+        <tr><td>Weight:</td><td>11 kg</td></tr>
+        <tr><td>Length:</td><td>36 cm</td></tr>
+        <tr><td>Diameter:</td><td>30 cm</td></tr>
+      </table>
+    </div>
+  </div>
+  <!-- 25 Liter Tipple (41 cm) -->
+  <div class="row">
+    <div class="drawing">
+      <svg width="340" height="66" viewBox="0 0 340 66" xmlns="http://www.w3.org/2000/svg">
+        <line x1="28" y1="15" x2="91.55" y2="15" stroke="#111" stroke-width="1.2"/>
+        <line x1="28" y1="51" x2="91.55" y2="51" stroke="#111" stroke-width="1.2"/>
+        <circle cx="28" cy="33" r="18" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="28" y1="15" x2="28" y2="51" stroke="#111" stroke-width="1"/>
+        <circle cx="91.55" cy="33" r="18" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="91.55" y1="15" x2="91.55" y2="51" stroke="#111" stroke-width="1"/>
+        <line x1="28" y1="58" x2="91.55" y2="58" stroke="#333" stroke-width="0.7"/>
+        <line x1="28" y1="55.5" x2="28" y2="60.5" stroke="#333" stroke-width="0.7"/>
+        <line x1="91.55" y1="55.5" x2="91.55" y2="60.5" stroke="#333" stroke-width="0.7"/>
+        <text x="59.8" y="66" text-anchor="middle" font-size="9" font-family="system-ui,sans-serif" fill="#111">41</text>
+        <line x1="118" y1="15" x2="118" y2="51" stroke="#333" stroke-width="0.7"/>
+        <line x1="115.5" y1="15" x2="120.5" y2="15" stroke="#333" stroke-width="0.7"/>
+        <line x1="115.5" y1="51" x2="120.5" y2="51" stroke="#333" stroke-width="0.7"/>
+        <text x="125" y="36" font-size="9" font-family="system-ui,sans-serif" fill="#111">30</text>
+      </svg>
+    </div>
+    <div class="info">
+      <h2>25 Liter Tipple</h2>
+      <table>
+        <tr><td>Weight:</td><td>12 kg</td></tr>
+        <tr><td>Length:</td><td>41 cm</td></tr>
+        <tr><td>Diameter:</td><td>30 cm</td></tr>
+      </table>
+    </div>
+  </div>
+  <!-- 35 Liter Tipple (49 cm) -->
+  <div class="row">
+    <div class="drawing">
+      <svg width="340" height="68" viewBox="0 0 340 68" xmlns="http://www.w3.org/2000/svg">
+        <line x1="28" y1="15.5" x2="103.95" y2="15.5" stroke="#111" stroke-width="1.2"/>
+        <line x1="28" y1="52.5" x2="103.95" y2="52.5" stroke="#111" stroke-width="1.2"/>
+        <circle cx="28" cy="34" r="18.5" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="28" y1="15.5" x2="28" y2="52.5" stroke="#111" stroke-width="1"/>
+        <circle cx="103.95" cy="34" r="18.5" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="103.95" y1="15.5" x2="103.95" y2="52.5" stroke="#111" stroke-width="1"/>
+        <line x1="28" y1="60" x2="103.95" y2="60" stroke="#333" stroke-width="0.7"/>
+        <line x1="28" y1="57.5" x2="28" y2="62.5" stroke="#333" stroke-width="0.7"/>
+        <line x1="103.95" y1="57.5" x2="103.95" y2="62.5" stroke="#333" stroke-width="0.7"/>
+        <text x="65.975" y="68" text-anchor="middle" font-size="9" font-family="system-ui,sans-serif" fill="#111">49</text>
+        <line x1="131" y1="15.5" x2="131" y2="52.5" stroke="#333" stroke-width="0.7"/>
+        <line x1="128.5" y1="15.5" x2="133.5" y2="15.5" stroke="#333" stroke-width="0.7"/>
+        <line x1="128.5" y1="52.5" x2="133.5" y2="52.5" stroke="#333" stroke-width="0.7"/>
+        <text x="138" y="37" font-size="9" font-family="system-ui,sans-serif" fill="#111">31</text>
+      </svg>
+    </div>
+    <div class="info">
+      <h2>35 Liter Tipple</h2>
+      <table>
+        <tr><td>Weight:</td><td>14 kg</td></tr>
+        <tr><td>Length:</td><td>49 cm</td></tr>
+        <tr><td>Diameter:</td><td>31 cm</td></tr>
+      </table>
+    </div>
+  </div>
+  <!-- 50 Liter New (77 cm) -->
+  <div class="row">
+    <div class="drawing">
+      <svg width="340" height="66" viewBox="0 0 340 66" xmlns="http://www.w3.org/2000/svg">
+        <line x1="28" y1="15" x2="147.35" y2="15" stroke="#111" stroke-width="1.2"/>
+        <line x1="28" y1="51" x2="147.35" y2="51" stroke="#111" stroke-width="1.2"/>
+        <circle cx="28" cy="33" r="18" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="28" y1="15" x2="28" y2="51" stroke="#111" stroke-width="1"/>
+        <circle cx="147.35" cy="33" r="18" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="147.35" y1="15" x2="147.35" y2="51" stroke="#111" stroke-width="1"/>
+        <line x1="28" y1="58" x2="147.35" y2="58" stroke="#333" stroke-width="0.7"/>
+        <line x1="28" y1="55.5" x2="28" y2="60.5" stroke="#333" stroke-width="0.7"/>
+        <line x1="147.35" y1="55.5" x2="147.35" y2="60.5" stroke="#333" stroke-width="0.7"/>
+        <text x="87.675" y="66" text-anchor="middle" font-size="9" font-family="system-ui,sans-serif" fill="#111">77</text>
+        <line x1="174" y1="15" x2="174" y2="51" stroke="#333" stroke-width="0.7"/>
+        <line x1="171.5" y1="15" x2="176.5" y2="15" stroke="#333" stroke-width="0.7"/>
+        <line x1="171.5" y1="51" x2="176.5" y2="51" stroke="#333" stroke-width="0.7"/>
+        <text x="181" y="36" font-size="9" font-family="system-ui,sans-serif" fill="#111">30</text>
+      </svg>
+    </div>
+    <div class="info">
+      <h2>50 Liter New</h2>
+      <table>
+        <tr><td>Weight:</td><td>19.5 kg</td></tr>
+        <tr><td>Length:</td><td>77 cm</td></tr>
+        <tr><td>Diameter:</td><td>30 cm</td></tr>
+      </table>
+    </div>
+  </div>
+  <!-- 50 Liter New (58 cm) -->
+  <div class="row">
+    <div class="drawing">
+      <svg width="340" height="70" viewBox="0 0 340 70" xmlns="http://www.w3.org/2000/svg">
+        <line x1="28" y1="15" x2="117.9" y2="15" stroke="#111" stroke-width="1.2"/>
+        <line x1="28" y1="55" x2="117.9" y2="55" stroke="#111" stroke-width="1.2"/>
+        <circle cx="28" cy="35" r="20" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="28" y1="15" x2="28" y2="55" stroke="#111" stroke-width="1"/>
+        <circle cx="117.9" cy="35" r="20" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="117.9" y1="15" x2="117.9" y2="55" stroke="#111" stroke-width="1"/>
+        <line x1="28" y1="62" x2="117.9" y2="62" stroke="#333" stroke-width="0.7"/>
+        <line x1="28" y1="59.5" x2="28" y2="64.5" stroke="#333" stroke-width="0.7"/>
+        <line x1="117.9" y1="59.5" x2="117.9" y2="64.5" stroke="#333" stroke-width="0.7"/>
+        <text x="72.95" y="70" text-anchor="middle" font-size="9" font-family="system-ui,sans-serif" fill="#111">58</text>
+        <line x1="146" y1="15" x2="146" y2="55" stroke="#333" stroke-width="0.7"/>
+        <line x1="143.5" y1="15" x2="148.5" y2="15" stroke="#333" stroke-width="0.7"/>
+        <line x1="143.5" y1="55" x2="148.5" y2="55" stroke="#333" stroke-width="0.7"/>
+        <text x="153" y="38" font-size="9" font-family="system-ui,sans-serif" fill="#111">36</text>
+      </svg>
+    </div>
+    <div class="info">
+      <h2>50 Liter New</h2>
+      <table>
+        <tr><td>Weight:</td><td>20 kg</td></tr>
+        <tr><td>Length:</td><td>58 cm</td></tr>
+        <tr><td>Diameter:</td><td>36 cm</td></tr>
+      </table>
+    </div>
+  </div>
+  <!-- 30 Liter New (45 cm) -->
+  <div class="row">
+    <div class="drawing">
+      <svg width="340" height="66" viewBox="0 0 340 66" xmlns="http://www.w3.org/2000/svg">
+        <line x1="28" y1="15" x2="97.75" y2="15" stroke="#111" stroke-width="1.2"/>
+        <line x1="28" y1="51" x2="97.75" y2="51" stroke="#111" stroke-width="1.2"/>
+        <circle cx="28" cy="33" r="18" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="28" y1="15" x2="28" y2="51" stroke="#111" stroke-width="1"/>
+        <circle cx="97.75" cy="33" r="18" fill="none" stroke="#111" stroke-width="1.2"/>
+        <line x1="97.75" y1="15" x2="97.75" y2="51" stroke="#111" stroke-width="1"/>
+        <line x1="28" y1="58" x2="97.75" y2="58" stroke="#333" stroke-width="0.7"/>
+        <line x1="28" y1="55.5" x2="28" y2="60.5" stroke="#333" stroke-width="0.7"/>
+        <line x1="97.75" y1="55.5" x2="97.75" y2="60.5" stroke="#333" stroke-width="0.7"/>
+        <text x="62.875" y="66" text-anchor="middle" font-size="9" font-family="system-ui,sans-serif" fill="#111">45</text>
+        <line x1="124" y1="15" x2="124" y2="51" stroke="#333" stroke-width="0.7"/>
+        <line x1="121.5" y1="15" x2="126.5" y2="15" stroke="#333" stroke-width="0.7"/>
+        <line x1="121.5" y1="51" x2="126.5" y2="51" stroke="#333" stroke-width="0.7"/>
+        <text x="131" y="36" font-size="9" font-family="system-ui,sans-serif" fill="#111">30</text>
+      </svg>
+    </div>
+    <div class="info">
+      <h2>30 Liter New</h2>
+      <table>
+        <tr><td>Weight:</td><td>12.3 kg</td></tr>
+        <tr><td>Length:</td><td>45 cm</td></tr>
+        <tr><td>Diameter:</td><td>30 cm</td></tr>
+      </table>
+    </div>
+  </div>
+  </div>
+
+  <footer>
+    Technical reference only – simple orthographic views, not to manufacturing scale &nbsp;|&nbsp; M-Gas Factory (Karaj, Iran) &nbsp;|&nbsp; Page 3 of 3
+  </footer>
+</div>
+
+
+</body>
+</html>

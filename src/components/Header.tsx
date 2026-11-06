@@ -23,7 +23,7 @@ import { SUPPORTED_LANGUAGES } from '../i18n/languages';
 import { LanguageCode } from '../types';
 import { COMPANY_INFO } from '../data/company';
 import { FlagIcon } from './FlagIcon';
-import { scrollToElement } from '../utils/scrollHelper';
+import { scrollToElement, scrollToTop as smoothOrInstantScrollToTop } from '../utils/scrollHelper';
 import { CatalogDownloadModal } from './CatalogDownloadModal';
 import { useRouter } from '../router/RouterContext';
 import { PAGE_TRANSLATIONS } from '../i18n/pageTranslations';
@@ -223,6 +223,12 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
           desc: pt.navProductsAutoDesc,
           href: '/products',
           icon: Compass,
+        },
+        {
+          label: isRTL ? 'کاتالوگ ابعاد و نقشه‌های فنی (۳ صفحه A4)' : 'Official 3-Page A4 Technical Catalog',
+          desc: isRTL ? 'نقشه‌های دوبعدی و مشخصات ۱۸ مدل کپسول' : '2D orthographic drawings & 18 cylinder specs',
+          href: '/catalog',
+          icon: FileDown,
         },
       ],
     },
@@ -471,16 +477,18 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
             {/* Right Action Elements */}
             <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
               
-              {/* Download Catalog PDF Button */}
+              {/* View Official 3-Page Catalog Button */}
               <button
                 type="button"
-                onClick={() => setCatalogModalOpen(true)}
-                className="header-action-btn hidden sm:inline-flex items-center rounded-xl bg-amber-950/40 hover:bg-amber-900/60 text-amber-300 hover:text-amber-200 border border-amber-500/40 font-semibold transition-colors shadow-sm gap-1 px-2 py-1 text-[11px]"
+                onClick={() => {
+                  navigate('/catalog');
+                  smoothOrInstantScrollToTop();
+                }}
+                className="header-action-btn inline-flex items-center rounded-xl bg-gradient-to-r from-amber-950/70 to-amber-900/60 hover:from-amber-900/80 hover:to-amber-800/80 text-amber-300 hover:text-amber-100 border border-amber-500/50 hover:border-amber-400 font-semibold transition-all shadow-md shadow-amber-950/40 gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1 text-[11px] cursor-pointer"
                 title={t.navDownloadCatalog}
               >
-                <FileDown className="w-3.5 h-3.5 text-amber-400" />
-                <span className="hidden md:inline">{SHORT_CATALOG_LABELS[currentLanguage] || t.navDownloadCatalog}</span>
-                <span className="md:hidden font-mono">PDF</span>
+                <FileDown className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                <span className="font-bold">{SHORT_CATALOG_LABELS[currentLanguage] || t.navDownloadCatalog}</span>
               </button>
 
               {/* WhatsApp Quick Link */}
@@ -630,21 +638,18 @@ export const Header: React.FC<HeaderProps> = ({ onOpenRfq }) => {
               </span>
             </div>
 
-            {/* Download Catalog PDF on Mobile */}
-            <button
-              type="button"
-              onClick={() => {
-                setMobileMenuOpen(false);
-                setCatalogModalOpen(true);
-              }}
-              className="w-full flex items-center justify-between p-3 rounded-2xl bg-amber-950/40 hover:bg-amber-900/60 border border-amber-600/40 text-amber-200 text-xs font-semibold transition-colors"
+            {/* Official 3-Page A4 Catalog on Mobile */}
+            <a
+              href="/catalog"
+              onClick={(e) => handleNavClick(e, '/catalog')}
+              className="w-full flex items-center justify-between p-3 rounded-2xl bg-amber-950/60 hover:bg-amber-900/80 border border-amber-500/50 text-amber-200 text-xs font-semibold transition-colors shadow-sm"
             >
               <div className="flex items-center gap-2">
                 <FileDown className="w-4 h-4 text-amber-400" />
-                <span>{t.navDownloadCatalog}</span>
+                <span>{isRTL ? 'کاتالوگ رسمی ابعاد و نقشه‌ها (۳ صفحه A4)' : 'Official 3-Page A4 Technical Catalog'}</span>
               </div>
-              <span className="font-mono text-amber-300 bg-amber-900/60 px-2 py-0.5 rounded text-[10px]">PDF (2026)</span>
-            </button>
+              <span className="font-mono text-amber-300 bg-amber-900/80 px-2 py-0.5 rounded text-[10px] font-bold">18 MODELS</span>
+            </a>
 
             {/* Sales WhatsApp on Mobile */}
             <a

@@ -22,6 +22,8 @@ import { PAGE_TRANSLATIONS } from '../../i18n/pageTranslations';
 import { CatalogDownloadModal } from '../CatalogDownloadModal';
 import { ContactChoiceModal } from '../ContactChoiceModal';
 import { detectDevice } from '../../utils/deviceDetection';
+import { useRouter } from '../../router/RouterContext';
+import { scrollToTop as smoothOrInstantScrollToTop } from '../../utils/scrollHelper';
 
 export const TextHoverEffect: React.FC<{ text: string; className?: string }> = ({ text, className = '' }) => {
   const [cursor, setCursor] = useState({ x: 0, y: 0 });
@@ -130,6 +132,7 @@ export const FooterBackgroundGradient: React.FC = () => {
 
 export const HoverFooter: React.FC = () => {
   const { t, isRTL, currentLanguage } = useLanguage();
+  const { navigate } = useRouter();
   const pt = PAGE_TRANSLATIONS[currentLanguage] || PAGE_TRANSLATIONS.fa;
   const [catalogModalOpen, setCatalogModalOpen] = useState(false);
   const [contactChoiceModalOpen, setContactChoiceModalOpen] = useState(false);
@@ -184,14 +187,28 @@ export const HoverFooter: React.FC = () => {
               <p className="text-[11px] text-slate-400">
                 {pt.footerCatalogBrochureDesc}
               </p>
-              <button
-                type="button"
-                onClick={() => setCatalogModalOpen(true)}
-                className="w-full inline-flex items-center justify-center gap-2 py-1.5 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-md transition-all hover:scale-[1.02] active:scale-[0.98]"
-              >
-                <Download className="w-3.5 h-3.5" />
-                <span>{pt.footerDownloadFreePdf}</span>
-              </button>
+              <div className="flex gap-2">
+                <a
+                  href="/catalog"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate('/catalog');
+                    smoothOrInstantScrollToTop();
+                  }}
+                  className="flex-1 inline-flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-md transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                >
+                  <FileDown className="w-3.5 h-3.5" />
+                  <span>{isRTL ? 'مشاهده کاتالوگ (۳ صفحه)' : 'View 3-Page Catalog'}</span>
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setCatalogModalOpen(true)}
+                  className="p-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 transition-colors cursor-pointer"
+                  title={pt.footerDownloadFreePdf}
+                >
+                  <Download className="w-4 h-4" />
+                </button>
+              </div>
             </div>
 
             <div className="pt-2 flex flex-wrap items-center gap-2">

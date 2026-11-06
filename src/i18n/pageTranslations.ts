@@ -88,14 +88,16 @@ export interface PageTranslations {
   catalogEditionBadge: string;
   catalogModalTitle: string;
   catalogModalDesc: string;
-  catalogFeature1: string;
-  catalogFeature2: string;
-  catalogFeature3: string;
-  catalogFeature4: string;
+  catalogFeature1?: string;
+  catalogFeature2?: string;
+  catalogFeature3?: string;
+  catalogFeature4?: string;
   catalogDownloadBtn: string;
+  catalogViewOnlineBtn: string;
   catalogGeneratingPdf: string;
   catalogDownloadSuccess: string;
   catalogDirectInquiry: string;
+  catalogStandardProof: string;
 
   // Technical Specs Modal & RAL
   specsModalAnglesTab: string;
@@ -232,17 +234,15 @@ export const PAGE_TRANSLATIONS: Record<LanguageCode, PageTranslations> = {
     brandsBadge: 'مشتریان عمده و طرف‌های تجاری',
     brandsHeadline: 'تأمین‌کننده مورد اعتماد صنایع بزرگ و خودروسازان',
 
-    catalogEditionBadge: 'نسخه رسمی ۲۰۲۶',
-    catalogModalTitle: 'دریافت کاتالوگ جامع محصولات و مشخصات فنی',
-    catalogModalDesc: 'شامل مشخصات مهندسی تمام ۱۳ مدل کپسول، گواهینامه‌های ISO و EN 1442، کدهای رنگ RAL و شرایط ارسال صادراتی',
-    catalogFeature1: '۱۳ مدل کپسول (خانگی، صنعتی، خودرویی)',
-    catalogFeature2: 'نتایج آزمون هیدرواستاتیک ۳۰ بار و گواهی متالورژی',
-    catalogFeature3: 'ظرفیت بارگیری در کانتینر ۲۰ و ۴۰ فوت های‌کیوب',
-    catalogFeature4: 'کاتالوگ رنگ‌های سفارشی پودری الکترواستاتیک RAL',
-    catalogDownloadBtn: 'دانلود کاتالوگ اختصاصی PDF',
-    catalogGeneratingPdf: 'در حال آماده‌سازی و دانلود کاتالوگ...',
-    catalogDownloadSuccess: 'کاتالوگ با موفقیت آماده و دانلود شد!',
-    catalogDirectInquiry: 'استعلام قیمت و سفارش عمده در واتس‌اپ',
+    catalogEditionBadge: 'کاتالوگ رسمی ۲۰۲۶ کارخانه',
+    catalogModalTitle: 'کاتالوگ ابعاد و نقشه‌های فنی ام‌گاز',
+    catalogModalDesc: '۳ صفحه A4 شامل نقشه‌های ارتوگرافیک دوبعدی و ابعاد دقیق ۱۸ مدل کپسول گاز مایع',
+    catalogDownloadBtn: 'دانلود فایل PDF (۳ صفحه A4)',
+    catalogViewOnlineBtn: 'مشاهده آنلاین کاتالوگ',
+    catalogGeneratingPdf: 'در حال آماده‌سازی و دریافت کاتالوگ...',
+    catalogDownloadSuccess: 'کاتالوگ با موفقیت آماده و دریافت شد!',
+    catalogDirectInquiry: 'استعلام قیمت در واتس‌اپ',
+    catalogStandardProof: 'استاندارد ملی ISIRI 841 • استاندارد اروپایی EN 1442 • ISO 9001',
 
     specsModalAnglesTab: 'زوایای محصول و کاتالوگ رنگ (4:3)',
     specsModalBlueprintTab: 'نقشه فنی و مهندسی',
@@ -368,16 +368,14 @@ export const PAGE_TRANSLATIONS: Record<LanguageCode, PageTranslations> = {
     brandsHeadline: 'Trusted by Leading Automotive & Gas Corporations',
 
     catalogEditionBadge: 'Official 2026 Edition',
-    catalogModalTitle: 'Download Official LPG Cylinders Catalog',
-    catalogModalDesc: 'Comprehensive guide covering 13 cylinder models, ISO/EN certifications, RAL color charts, and container logistics.',
-    catalogFeature1: '13 Cylinder Models (Domestic, Industrial, Automotive)',
-    catalogFeature2: '30-Bar Hydrostatic Test Data & Metallurgy Sheets',
-    catalogFeature3: '20ft & 40ft HQ Container Stuffing Capacities',
-    catalogFeature4: 'RAL Electrostatic Powder Coating Color Chart',
-    catalogDownloadBtn: 'Download PDF Catalog',
-    catalogGeneratingPdf: 'Generating and downloading catalog...',
+    catalogModalTitle: 'M-Gas Technical & Dimensions Catalog',
+    catalogModalDesc: '3-Page calibrated A4 catalog with 2D orthographic drawings & specifications for 18 LPG cylinders',
+    catalogDownloadBtn: 'Download PDF Catalog (3 Pages A4)',
+    catalogViewOnlineBtn: 'View Online Catalog',
+    catalogGeneratingPdf: 'Preparing and downloading PDF catalog...',
     catalogDownloadSuccess: 'Catalog downloaded successfully!',
-    catalogDirectInquiry: 'Wholesale Inquiry via WhatsApp',
+    catalogDirectInquiry: 'Direct Inquiry via WhatsApp',
+    catalogStandardProof: 'ISIRI 841 & EN 1442 Certified • ISO 9001:2015',
 
     specsModalAnglesTab: '3-Angle Views & RAL Colors (4:3)',
     specsModalBlueprintTab: 'Technical Blueprint',
@@ -503,16 +501,14 @@ export const PAGE_TRANSLATIONS: Record<LanguageCode, PageTranslations> = {
     brandsHeadline: 'Vertrauenswürdiger Zulieferer für Automobil- & Gasindustrie',
 
     catalogEditionBadge: 'Offizielle Ausgabe 2026',
-    catalogModalTitle: 'Offiziellen LPG-Gasflaschenkatalog herunterladen',
-    catalogModalDesc: 'Umfassendes Handbuch mit allen 13 Modellen, ISO/EN-Zertifikaten, RAL-Farbtabelle und Frachtkapazitäten.',
-    catalogFeature1: '13 Gasflaschenmodelle (Haushalt, Industrie, Auto)',
-    catalogFeature2: '30-Bar-Druckprüfdaten & Materialanalysen',
-    catalogFeature3: 'Beladungskapazitäten für 20ft & 40ft HQ Container',
-    catalogFeature4: 'Elektrostatische RAL-Pulverbeschichtungstabelle',
-    catalogDownloadBtn: 'Katalog als PDF herunterladen',
-    catalogGeneratingPdf: 'Katalog wird vorbereitet und heruntergeladen...',
+    catalogModalTitle: 'Technischer Maß- und Zeichnungskatalog',
+    catalogModalDesc: '3 A4-Seiten mit maßstabsgetreuen 2D-Zeichnungen und technischen Daten für 18 LPG-Gasflaschenmodelle',
+    catalogDownloadBtn: 'PDF-Katalog herunterladen (3 A4-Seiten)',
+    catalogViewOnlineBtn: 'Online-Katalog ansehen',
+    catalogGeneratingPdf: 'PDF-Katalog wird vorbereitet und heruntergeladen...',
     catalogDownloadSuccess: 'Katalog erfolgreich heruntergeladen!',
-    catalogDirectInquiry: 'Großhandelsanfrage via WhatsApp',
+    catalogDirectInquiry: 'Direktanfrage über WhatsApp',
+    catalogStandardProof: 'Zertifiziert nach ISIRI 841 & EN 1442 • ISO 9001:2015',
 
     specsModalAnglesTab: '3-Winkel-Ansichten & RAL-Farben (4:3)',
     specsModalBlueprintTab: 'Technische Zeichnung',
@@ -638,16 +634,14 @@ export const PAGE_TRANSLATIONS: Record<LanguageCode, PageTranslations> = {
     brandsHeadline: 'المورد المعتمد لدى كبرى شركات السيارات والغاز',
 
     catalogEditionBadge: 'النسخة الرسمية ۲۰۲۶',
-    catalogModalTitle: 'تحميل الكتالوج الرسمي لأسطوانات الغاز المسال',
-    catalogModalDesc: 'دليل شامل يغطي ۱۳ طرازاً من الأسطوانات، وشهادات ISO/EN، وجدول ألوان RAL، وسعات شحن الحاويات.',
-    catalogFeature1: '۱۳ طرازاً للأسطوانات (منزلية، صناعية، سيارات)',
-    catalogFeature2: 'بيانات اختبار الضغط ۳۰ بار وشهادات تحليل الفولاذ',
-    catalogFeature3: 'سعات التحميل في حاويات ۲۰ و ۴۰ قدماً عالية السقف',
-    catalogFeature4: 'جدول ألوان الطلاء الحراري الإلكتروستاتيكي RAL',
-    catalogDownloadBtn: 'تحميل كتالوج PDF المخصص',
-    catalogGeneratingPdf: 'جارٍ إعداد وتحميل الكتالوج...',
+    catalogModalTitle: 'الكتالوج الفني ومخططات الأبعاد الهندسية',
+    catalogModalDesc: '٣ صفحات A4 تتضمن مخططات ثنائية الأبعاد ومواصفات أبعاد ۱۸ طرازاً لأسطوانات الغاز المسال',
+    catalogDownloadBtn: 'تحميل ملف PDF (٣ صفحات A4)',
+    catalogViewOnlineBtn: 'عرض الكتالوج أونلاين',
+    catalogGeneratingPdf: 'جاري تجهيز وتحميل الكتالوج بصيغة PDF...',
     catalogDownloadSuccess: 'تم تحميل الكتالوج بنجاح!',
-    catalogDirectInquiry: 'استفسار طلبات الجملة عبر واتساب',
+    catalogDirectInquiry: 'طلب استفسار عبر واتساب',
+    catalogStandardProof: 'مطابق للمواصفات القياسية ISIRI 841 و EN 1442 • ISO 9001',
 
     specsModalAnglesTab: 'زوایای المنتج وألوان RAL (4:3)',
     specsModalBlueprintTab: 'المخطط الهندسي',
@@ -773,16 +767,14 @@ export const PAGE_TRANSLATIONS: Record<LanguageCode, PageTranslations> = {
     brandsHeadline: 'Otomotiv ve Gaz Sanayi Devi Kuruluşların Güvenilir Tedarikçisi',
 
     catalogEditionBadge: 'Resmi 2026 Baskısı',
-    catalogModalTitle: 'Resmi LPG Gaz Tüpleri Kataloğunu İndirin',
-    catalogModalDesc: '13 tüp modelinin teknik çizimlerini, ISO/EN sertifikalarını, RAL renk tablosunu ve konteyner lojistiğini içeren kapsamlı rehber.',
-    catalogFeature1: '13 Tüp Modeli (Ev, Sanayi, Araç)',
-    catalogFeature2: '30 Bar Hidrostatik Test Verileri ve Çelik Analizleri',
-    catalogFeature3: '20ft ve 40ft HQ Konteyner Yükleme Kapasiteleri',
-    catalogFeature4: 'Elektrostatik Toz Boya RAL Renk Kartelası',
-    catalogDownloadBtn: 'Özel PDF Kataloğu İndir',
-    catalogGeneratingPdf: 'Katalog hazırlanıyor ve indiriliyor...',
+    catalogModalTitle: 'Teknik Ölçü ve 2D Çizim Kataloğu',
+    catalogModalDesc: '18 LPG tüp modelinin 2D ortografik çizimlerini ve teknik ölçülerini içeren 3 sayfalık A4 katalog',
+    catalogDownloadBtn: 'PDF Kataloğu İndir (3 Sayfa A4)',
+    catalogViewOnlineBtn: 'Çevrimiçi Kataloğu Görüntüle',
+    catalogGeneratingPdf: 'PDF kataloğu hazırlanıyor ve indiriliyor...',
     catalogDownloadSuccess: 'Katalog başarıyla indirildi!',
-    catalogDirectInquiry: 'WhatsApp ile Toptan Sipariş ve Fiyat Sorun',
+    catalogDirectInquiry: "WhatsApp'tan Fiyat Sorun",
+    catalogStandardProof: 'ISIRI 841 ve EN 1442 Sertifikalı • ISO 9001:2015',
 
     specsModalAnglesTab: '3 Açıdan Görünüm & RAL Renkleri (4:3)',
     specsModalBlueprintTab: 'Teknik Çizim',
@@ -908,16 +900,14 @@ export const PAGE_TRANSLATIONS: Record<LanguageCode, PageTranslations> = {
     brandsHeadline: 'Надежный поставщик для автопроизводителей и газовых корпораций',
 
     catalogEditionBadge: 'Официальное издание 2026',
-    catalogModalTitle: 'Скачать официальный каталог баллонов LPG',
-    catalogModalDesc: 'Полное техническое руководство по 13 моделям баллонов, сертификатам ISO/EN, палитре RAL и логистике.',
-    catalogFeature1: '13 моделей баллонов (бытовые, промышленные, авто)',
-    catalogFeature2: 'Данные испытаний 30 бар и сертификаты стали',
-    catalogFeature3: 'Вместимость в 20ft и 40ft HQ контейнеры',
-    catalogFeature4: 'Таблица электростатических порошковых цветов RAL',
-    catalogDownloadBtn: 'Скачать PDF-каталог',
-    catalogGeneratingPdf: 'Формирование и скачивание каталога...',
+    catalogModalTitle: 'Каталог технических размеров и чертежей',
+    catalogModalDesc: '3 страницы формата A4 с 2D-ортографическими чертежами и характеристиками 18 моделей баллонов LPG',
+    catalogDownloadBtn: 'Скачать каталог в PDF (3 страницы A4)',
+    catalogViewOnlineBtn: 'Смотреть каталог онлайн',
+    catalogGeneratingPdf: 'Подготовка и скачивание PDF-каталога...',
     catalogDownloadSuccess: 'Каталог успешно скачан!',
-    catalogDirectInquiry: 'Оптовый запрос через WhatsApp',
+    catalogDirectInquiry: 'Запрос через WhatsApp',
+    catalogStandardProof: 'Сертификация ISIRI 841 и EN 1442 • ISO 9001:2015',
 
     specsModalAnglesTab: '3 ракурса и цвета RAL (4:3)',
     specsModalBlueprintTab: 'Чертеж',
@@ -1043,16 +1033,14 @@ export const PAGE_TRANSLATIONS: Record<LanguageCode, PageTranslations> = {
     brandsHeadline: 'بڑی آٹوموٹو اور گیس کمپنیوں کا قابل اعتماد سپلائر',
 
     catalogEditionBadge: 'آفیشل ایڈیشن ۲۰۲۶',
-    catalogModalTitle: 'آفیشل ایل پی جی گیس سلنڈر کیٹلاگ ڈاؤن لوڈ کریں',
-    catalogModalDesc: '۱۳ سلنڈر ماڈلز، بین الاقوامی سرٹیفکیٹس، RAL کلر چارٹ اور کنٹینر لوڈنگ کی جامع گائیڈ۔',
-    catalogFeature1: '۱۳ سلنڈر ماڈلز (گھریلو، صنعتی، گاڑیوں کے)',
-    catalogFeature2: '۳۰ بار پریشر ٹیسٹ ڈیٹا اور اسٹیل ٹیسٹ رپورٹس',
-    catalogFeature3: '۲۰ اور ۴۰ فٹ ہائی کیوب کنٹینر لوڈنگ کی گنجائش',
-    catalogFeature4: 'الیکٹرو اسٹیٹک پاؤڈر کوٹنگ RAL کلر چارٹ',
-    catalogDownloadBtn: 'پی ڈی ایف کیٹلاگ ڈاؤن لوڈ کریں',
-    catalogGeneratingPdf: 'کیٹلاگ تیار کیا جا رہا ہے...',
+    catalogModalTitle: 'تکنیکی پیمائش اور ڈرائنگ کا کیٹلاگ',
+    catalogModalDesc: '3 صفحات اے فور پر مشتمل 18 سلنڈر ماڈلز کی 2D آرتھوگرافک ڈرائنگ اور تکنیکی وضاحتیں',
+    catalogDownloadBtn: 'پی ڈی ایف کیٹلاگ ڈاؤن لوڈ کریں (3 صفحات A4)',
+    catalogViewOnlineBtn: 'آن لائن کیٹلاگ دیکھیں',
+    catalogGeneratingPdf: 'پی ڈی ایف کیٹلاگ تیار اور ڈاؤن لوڈ ہو رہا ہے...',
     catalogDownloadSuccess: 'کیٹلاگ کامیابی سے ڈاؤن لوڈ ہو گیا!',
-    catalogDirectInquiry: 'واٹس ایپ پر تھوک قیمت معلوم کریں',
+    catalogDirectInquiry: 'واٹس ایپ پر براہ راست استفسار',
+    catalogStandardProof: 'ISIRI 841 اور EN 1442 سے تصدیق شدہ • ISO 9001:2015',
 
     specsModalAnglesTab: 'تین رخی مناظر اور رنگ (4:3)',
     specsModalBlueprintTab: 'انجینئرنگ ڈرائنگ',
@@ -1178,16 +1166,14 @@ export const PAGE_TRANSLATIONS: Record<LanguageCode, PageTranslations> = {
     brandsHeadline: 'Ավտոմոբիլային և գազային խոշորագույն ընկերությունների վստահելի մատակարար',
 
     catalogEditionBadge: 'Պաշտոնական հրատարակություն 2026',
-    catalogModalTitle: 'Ներբեռնել LPG գազաբալոնների պաշտոնական կատալոգը',
-    catalogModalDesc: 'Համապարփակ ուղեցույց 13 մոդելների, ISO/EN սերտիֆիկատների, RAL գույների և կոնտեյներային լոգիստիկայի վերաբերյալ:',
-    catalogFeature1: '13 բալոնների մոդել (կենցաղային, արդյունաբերական, ավտո)',
-    catalogFeature2: '30 բար հիդրոստատիկ փորձարկման տվյալներ և պողպատի վերլուծություն',
-    catalogFeature3: '20ft և 40ft HQ կոնտեյներների բեռնման տարողություններ',
-    catalogFeature4: 'Էլեկտրաստատիկ փոշեներկման RAL գունային աղյուսակ',
-    catalogDownloadBtn: 'Ներբեռնել PDF կատալոգը',
-    catalogGeneratingPdf: 'Կատալոգը պատրաստվում և ներբեռնվում է...',
+    catalogModalTitle: 'Չափսերի և տեխնիկական գծագրերի կատալոգ',
+    catalogModalDesc: '3 էջ A4՝ 18 LPG գազաբալոնների 2D օրթոգրաֆիկ գծագրերով և տեխնիկական չափսերով',
+    catalogDownloadBtn: 'Ներբեռնել PDF կատալոգը (3 էջ A4)',
+    catalogViewOnlineBtn: 'Դիտել կատալոգը առցանց',
+    catalogGeneratingPdf: 'PDF կատալոգը պատրաստվում և ներبեռնվում է...',
     catalogDownloadSuccess: 'Կատալոգը հաջողությամբ ներբեռնվեց:',
-    catalogDirectInquiry: 'Մեծածախ հարցում WhatsApp-ով',
+    catalogDirectInquiry: 'Հարցում WhatsApp-ով',
+    catalogStandardProof: 'ISIRI 841 և EN 1442 հավաստագրված • ISO 9001:2015',
 
     specsModalAnglesTab: '3 տեսանկյուն և RAL գույներ (4:3)',
     specsModalBlueprintTab: 'Գծագիր',
