@@ -183,14 +183,14 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product, o
                   </div>
 
                   <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800">
-                    <span className="text-slate-500 block mb-1">{t.circleDiameter}</span>
+                    <span className="text-slate-500 block mb-1">{product.category === 'automotive' ? (currentLanguage === 'fa' ? 'قطر مخزن' : 'Tank Diameter') : t.circleDiameter}</span>
                     <span className="text-slate-100 font-mono font-bold text-sm">
-                      {formatNumber(product.circleDiameterCm)} {t.unitCm}
+                      Ø {formatNumber(product.circleDiameterCm)} {t.unitCm}
                     </span>
                   </div>
 
                   <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800">
-                    <span className="text-slate-500 block mb-1">{t.cylinderHeight}</span>
+                    <span className="text-slate-500 block mb-1">{product.category === 'automotive' ? (currentLanguage === 'fa' ? 'طول مخزن' : 'Tank Length') : t.cylinderHeight}</span>
                     <span className="text-slate-100 font-mono font-bold text-sm">
                       {formatNumber(product.heightCm)} {t.unitCm}
                     </span>

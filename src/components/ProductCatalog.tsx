@@ -155,31 +155,15 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
                         width={300}
                         height={300}
                         style={{ aspectRatio: '1/1' }}
-                        className={`max-h-full max-w-full object-contain mx-auto transition-all duration-300 ${
-                          product.images?.realisticRender ? 'group-hover:opacity-0 group-hover:scale-95' : 'group-hover:scale-110'
-                        }`}
+                        className="max-h-full max-w-full object-contain mx-auto transition-transform duration-300 group-hover:scale-105"
                         loading="lazy"
                         decoding="async"
                       />
 
-                      {/* Image 2: Photorealistic 3D Render (shown on hover) */}
-                      {product.images?.realisticRender && (
-                        <img
-                          src={product.images.realisticRender}
-                          alt={`${loc.name} - رندر استودیویی سه‌بعدی واقع گرایانه مخزن و کپسول گاز مایع`}
-                          width={300}
-                          height={300}
-                          style={{ aspectRatio: '1/1' }}
-                          className="max-h-full max-w-full object-contain mx-auto transition-all duration-300 absolute inset-0 m-auto p-4 opacity-0 group-hover:opacity-100 group-hover:scale-105 pointer-events-none"
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      )}
-
                       {/* View Indicator Badge */}
                       <div className="absolute top-2 left-2 z-10 flex items-center gap-1">
                         <span className="px-2 py-0.5 rounded-md bg-slate-900/90 border border-slate-700/70 text-[10px] text-slate-300 font-medium">
-                          {product.images?.realisticRender ? (currentLanguage === 'fa' ? 'عکس واقعی + رندر ۲' : currentLanguage === 'de' ? 'Werksfoto + 3D' : 'Real + 3D Render') : (currentLanguage === 'fa' ? 'عکس واقعی' : currentLanguage === 'de' ? 'Werksfoto' : 'Real Photo')}
+                          {currentLanguage === 'fa' ? 'عکس واقعی کارخانه' : currentLanguage === 'de' ? 'Werksfoto' : 'Factory Photo'}
                         </span>
                       </div>
 
@@ -219,7 +203,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
                         <span className="font-mono font-bold text-slate-200">{product.emptyWeightKg} {t.unitKg}</span>
                       </div>
                       <div className="bg-slate-900/50 p-2 rounded-lg border border-slate-800/60">
-                        <span className="text-[10px] text-slate-500 block">{t.cylinderHeight}</span>
+                        <span className="text-[10px] text-slate-500 block">{product.category === 'automotive' ? (currentLanguage === 'fa' ? 'طول مخزن' : 'Length') : t.cylinderHeight}</span>
                         <span className="font-mono font-bold text-slate-200">{product.heightCm} {t.unitCm}</span>
                       </div>
                     </div>

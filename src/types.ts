@@ -61,6 +61,7 @@ export interface Product {
   cylinderColor?: string;
   image: string;
   images: ProductImages;
+  drawingId?: number;
   locales: Record<LanguageCode, ProductLocalizedInfo>;
 }
 

@@ -12,6 +12,8 @@ export default defineConfig({
     dedupe: ['react', 'react-dom'],
   },
   build: {
+    target: ['es2015', 'edge18', 'firefox60', 'chrome60', 'safari11'],
+    cssTarget: ['chrome60', 'firefox60', 'safari11', 'edge18'],
     chunkSizeWarningLimit: 600,
     rollupOptions: {
       output: {

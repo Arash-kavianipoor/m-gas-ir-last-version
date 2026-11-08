@@ -171,20 +171,8 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onAddToRfq, onOpenSp
                       src={product.images?.referenceReal || product.images?.front || product.image}
                       alt={loc.imageAlt || `${loc.name} - ${pt.realPhotoBadge}`}
                       loading="lazy"
-                      className={`max-h-full max-w-full object-contain filter drop-shadow-2xl transition-all duration-300 ${
-                        product.images?.realisticRender ? 'group-hover:opacity-0 group-hover:scale-95' : 'group-hover:scale-105'
-                      }`}
+                      className="max-h-full max-w-full object-contain filter drop-shadow-2xl transition-transform duration-300 group-hover:scale-105"
                     />
-
-                    {/* Image 2: Photorealistic 3D Render (shown on hover) */}
-                    {product.images?.realisticRender && (
-                      <img
-                        src={product.images.realisticRender}
-                        alt={`${loc.name} - ${pt.realPlusRenderBadge}`}
-                        loading="lazy"
-                        className="max-h-full max-w-full object-contain filter drop-shadow-2xl transition-all duration-300 absolute inset-0 m-auto p-4 opacity-0 group-hover:opacity-100 group-hover:scale-105 pointer-events-none"
-                      />
-                    )}
 
                     {/* Popular / New Badges */}
                     <div className="absolute top-2.5 right-2.5 flex flex-col gap-1 z-10">
@@ -200,10 +188,10 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onAddToRfq, onOpenSp
                       )}
                     </div>
 
-                    {/* Slot 1 / Slot 2 Indicator */}
+                    {/* Slot 1 Indicator */}
                     <div className="absolute top-2.5 left-2.5 z-10">
                       <span className="px-2 py-0.5 rounded-md bg-slate-950/85 backdrop-blur-md border border-slate-700/60 text-slate-300 text-[10px] font-medium shadow-sm">
-                        {product.images?.realisticRender ? pt.realPlusRenderBadge : pt.realPhotoBadge}
+                        {pt.realPhotoBadge}
                       </span>
                     </div>
 

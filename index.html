@@ -2,7 +2,21 @@
 <html lang="fa" dir="rtl">
   <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Legacy Browser Pre-Evaluation Micro-Polyfill -->
+    <script>
+      (function() {
+        if (typeof window !== 'undefined') {
+          if (!window.globalThis) {
+            window.globalThis = window;
+          }
+          if (!window.console) {
+            window.console = { log: function(){}, warn: function(){}, error: function(){}, info: function(){} };
+          }
+        }
+      })();
+    </script>
     <title>کمپانی تولید سیلندر گاز مایع در ایران | کارخانه ام گاز (موسی عمویی)</title>
     <meta name="description" content="کمپانی تولید سیلندر گاز مایع در ایران؛ کارخانه صنعتی ام گاز (تأسیس ۱۳۴۹ - مدیریت موسی عمویی) بزرگترین تولیدکننده و صادرکننده ۱۴ مدل کپسول گاز مایع LPG خانگی، صنعتی و اتوگاز با آزمون فشار ۳۰ بار و گواهی ISO 9001." />
     <meta name="keywords" content="کمپانی تولید سیلندر گاز مایع در ایران, کارخانه تولید کپسول گاز در ایران, تولید کننده سیلندر گاز مایع, شرکت تولید سیلندر گاز مایع, کارخانه ام گاز, موسی عمویی, خرید عمده کپسول گاز, کپسول گاز ۱۱ کیلویی, کپسول ۵۰ کیلویی, مخزن اتوگاز LPG" />
@@ -104,6 +118,13 @@
     </script>
   </head>
   <body class="bg-[#050D12] text-slate-100 antialiased selection:bg-emerald-500 selection:text-slate-950 font-vazirmatn">
+    <noscript>
+      <div style="padding: 20px; text-align: center; background: #050d12; color: #10b981; font-family: sans-serif;">
+        <h2>کارخانه تولید کپسول و سیلندر گاز مایع ام گاز (موسی عمویی)</h2>
+        <p>برای مشاهده کامل کاتالوگ و مشخصات فنی، لطفاً جاوااسکریپت مرورگر خود را فعال کنید.</p>
+        <p>M Gas LPG Cylinder Manufacturing - Please enable JavaScript in your browser to view the interactive catalog.</p>
+      </div>
+    </noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { COMPANY_INFO } from '../data/company';
+import { scrollToElement } from '../utils/scrollHelper';
 import { Building2, Globe2, Award, History, CheckCircle2, UserCheck, ShieldCheck } from 'lucide-react';
 
 export const HistoryVision: React.FC = () => {
@@ -86,10 +87,7 @@ export const HistoryVision: React.FC = () => {
                 href="#certificates"
                 onClick={(e) => {
                   e.preventDefault();
-                  const target = document.getElementById('about-certificates') || document.getElementById('certificates');
-                  if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                  }
+                  scrollToElement('about-certificates', 80);
                 }}
                 className="group flex items-center justify-between p-3.5 rounded-2xl bg-gradient-to-r from-emerald-500/10 via-slate-900/80 to-slate-900 border border-emerald-500/30 hover:border-emerald-400/60 transition-all shadow-md"
               >

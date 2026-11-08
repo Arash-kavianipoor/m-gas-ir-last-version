@@ -202,11 +202,11 @@ export const TechnicalSpecsModal: React.FC<TechnicalSpecsModalProps> = ({
                     <span className="font-mono font-bold text-white">{product.emptyWeightKg} {t.unitKg}</span>
                   </div>
                   <div className="p-2.5 rounded-xl bg-slate-900/60 border border-slate-800">
-                    <span className="text-slate-400 block text-[11px]">{t.circleDiameter}</span>
-                    <span className="font-mono font-bold text-white">{product.circleDiameterCm} {t.unitCm}</span>
+                    <span className="text-slate-400 block text-[11px]">{product.category === 'automotive' ? (currentLanguage === 'fa' ? 'قطر مخزن' : 'Tank Diameter') : t.circleDiameter}</span>
+                    <span className="font-mono font-bold text-white">Ø {product.circleDiameterCm} {t.unitCm}</span>
                   </div>
                   <div className="p-2.5 rounded-xl bg-slate-900/60 border border-slate-800">
-                    <span className="text-slate-400 block text-[11px]">{t.cylinderHeight}</span>
+                    <span className="text-slate-400 block text-[11px]">{product.category === 'automotive' ? (currentLanguage === 'fa' ? 'طول مخزن' : 'Tank Length') : t.cylinderHeight}</span>
                     <span className="font-mono font-bold text-white">{product.heightCm} {t.unitCm}</span>
                   </div>
                 </div>

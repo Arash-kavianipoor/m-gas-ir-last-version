@@ -163,18 +163,18 @@ export const Hero: React.FC<HeroProps> = ({ onOpenRfq, onExploreProducts }) => {
         <div className="rounded-2xl sm:rounded-3xl overflow-hidden border border-emerald-500/30 shadow-2xl bg-slate-950">
           
           {/* Banner Image Stage: 100% Clear & Unobstructed */}
-          <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] md:aspect-[2.4/1] lg:aspect-[2.8/1] min-h-[220px] max-h-[460px] overflow-hidden bg-slate-950">
+          <div className="relative w-full aspect-[2.64/1] sm:aspect-[2.65/1] md:aspect-[2.65/1] lg:aspect-[2.68/1] min-h-0 sm:min-h-[220px] max-h-[500px] overflow-hidden bg-slate-950 flex items-center justify-center">
             <div
               key={currentSlide.id}
-              className="absolute inset-0 w-full h-full transition-opacity duration-500 ease-out"
+              className="absolute inset-0 w-full h-full transition-opacity duration-500 ease-out flex items-center justify-center"
             >
               <img
                 src={currentSlide.image}
                 alt={getLoc(currentSlide.title)}
                 width={1400}
-                height={500}
-                style={{ aspectRatio: '2.8/1' }}
-                className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-[1.02]"
+                height={530}
+                style={{ aspectRatio: '2.64/1' }}
+                className="w-full h-full object-contain sm:object-cover object-center transition-transform duration-700 hover:scale-[1.02]"
                 loading="eager"
                 fetchPriority="high"
                 decoding="async"
@@ -186,15 +186,15 @@ export const Hero: React.FC<HeroProps> = ({ onOpenRfq, onExploreProducts }) => {
             <button
               type="button"
               onClick={() => setIsZoomOpen(true)}
-              className="absolute top-3 end-3 sm:top-4 sm:end-4 z-20 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-950/75 hover:bg-slate-900 text-white text-xs font-semibold border border-white/20 backdrop-blur-md shadow-lg transition-transform hover:scale-105"
+              className="absolute top-2 end-2 sm:top-4 sm:end-4 z-20 inline-flex items-center gap-1.5 px-2 py-1 sm:px-3 sm:py-1.5 rounded-lg sm:rounded-xl bg-slate-950/75 hover:bg-slate-900 text-white text-[11px] sm:text-xs font-semibold border border-white/20 backdrop-blur-md shadow-lg transition-transform hover:scale-105"
               title="نمایش تصویر بنر با کیفیت اصلی"
             >
-              <Maximize2 className="w-3.5 h-3.5 text-emerald-400" />
+              <Maximize2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-400" />
               <span className="hidden sm:inline">مشاهده تصویر بنر (HD)</span>
             </button>
 
             {/* Slide Indicator Dots */}
-            <div className="absolute bottom-3 inset-x-0 z-20 flex items-center justify-center gap-2">
+            <div className="absolute bottom-1.5 sm:bottom-3 inset-x-0 z-20 flex items-center justify-center gap-1.5 sm:gap-2">
               {HERO_BANNERS.map((_, dotIdx) => (
                 <button
                   key={dotIdx}
@@ -202,8 +202,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpenRfq, onExploreProducts }) => {
                   onClick={() => handleSlideSelect(dotIdx)}
                   className={`transition-all duration-300 rounded-full ${
                     dotIdx === currentSlideIndex
-                      ? 'w-7 h-2 bg-emerald-400 shadow-md shadow-emerald-500/50'
-                      : 'w-2 h-2 bg-white/40 hover:bg-white/80'
+                      ? 'w-5 sm:w-7 h-1 sm:h-2 bg-emerald-400 shadow-md shadow-emerald-500/50'
+                      : 'w-1.5 sm:w-2 h-1 sm:h-2 bg-white/40 hover:bg-white/80'
                   }`}
                   aria-label={`Slide ${dotIdx + 1}`}
                 />

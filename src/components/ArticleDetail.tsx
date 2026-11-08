@@ -78,11 +78,33 @@ export const ArticleDetail: React.FC<ArticleDetailProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, [article]);
 
+  const fallbackCopy = (text: string) => {
+    try {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.top = '0';
+      textArea.style.left = '0';
+      textArea.style.opacity = '0';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+    } catch {
+      // Gracefully ignore clipboard failures in legacy sandboxed environments
+    }
+  };
+
   const handleCopyLink = () => {
     const url = currentLanguage === 'fa'
       ? `https://mgas.ir/articles/${article.slug}`
       : `https://${currentLanguage}.mgas.ir/articles/${article.slug}`;
-    navigator.clipboard.writeText(url);
+    if (typeof navigator !== 'undefined' && navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+      navigator.clipboard.writeText(url).catch(() => fallbackCopy(url));
+    } else {
+      fallbackCopy(url);
+    }
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
   };

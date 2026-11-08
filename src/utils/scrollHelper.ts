@@ -19,26 +19,44 @@ export const scrollToElement = (elementOrId: HTMLElement | string, offset = 0): 
   if (isMobile) {
     // Instant scroll on mobile to avoid compositor lag
     const rect = target.getBoundingClientRect();
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const targetY = rect.top + scrollTop - offset;
-    window.scrollTo({
-      top: Math.max(0, targetY),
-      behavior: 'auto',
-    });
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    const targetY = Math.max(0, rect.top + scrollTop - offset);
+    try {
+      window.scrollTo({
+        top: targetY,
+        behavior: 'auto',
+      });
+    } catch {
+      window.scrollTo(0, targetY);
+    }
   } else {
-    // Smooth scroll on desktop
-    target.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    });
+    // Smooth scroll on desktop with legacy fallback
+    try {
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    } catch {
+      try {
+        target.scrollIntoView(true);
+      } catch {
+        const rect = target.getBoundingClientRect();
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        window.scrollTo(0, Math.max(0, rect.top + scrollTop - offset));
+      }
+    }
   }
 };
 
 export const scrollToTop = (): void => {
   if (typeof window === 'undefined') return;
   const isMobile = isMobileDevice();
-  window.scrollTo({
-    top: 0,
-    behavior: isMobile ? 'auto' : 'smooth',
-  });
+  try {
+    window.scrollTo({
+      top: 0,
+      behavior: isMobile ? 'auto' : 'smooth',
+    });
+  } catch {
+    window.scrollTo(0, 0);
+  }
 };
