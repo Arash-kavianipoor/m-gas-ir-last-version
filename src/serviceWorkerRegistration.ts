@@ -1,54 +1,24 @@
-// Service Worker Registration for M Gas Progressive Web Application
-
-export function registerServiceWorker() {
-  if (typeof window !== 'undefined' && 'serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker
-        .register('/sw.js')
-        .then((registration) => {
-          registration.onupdatefound = () => {
-            const installingWorker = registration.installing;
-            if (installingWorker == null) {
-              return;
-            }
-            installingWorker.onstatechange = () => {
-              if (installingWorker.state === 'installed') {
-                if (navigator.serviceWorker.controller) {
-                  // New content is available; will be used on next reload
-                  console.log('[SW] New content is available; please refresh.');
-                } else {
-                  // Content is cached for offline use
-                  console.log('[SW] Content is cached for offline use.');
-                }
-              }
-            };
-          };
-        })
-        .catch((error) => {
-          console.warn('[SW] Service worker registration failed:', error);
-        });
-    });
-  } else if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
-    // In development mode, register as well if needed for previewing
-    window.addEventListener('load', () => {
-      navigator.serviceWorker
-        .register('/sw.js')
-        .then(() => {
-          console.log('[SW] Service worker registered.');
-        })
-        .catch(() => {});
-    });
-  }
-}
+// Active cleanup of any legacy Service Workers to prevent Chrome caching freezes
 
 export function unregisterServiceWorker() {
   if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
-    navigator.serviceWorker.ready
-      .then((registration) => {
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      for (const registration of registrations) {
         registration.unregister();
-      })
-      .catch((error) => {
-        console.error(error.message);
-      });
+      }
+    }).catch(() => {});
+    
+    if (typeof caches !== 'undefined') {
+      caches.keys().then((keys) => {
+        for (const key of keys) {
+          caches.delete(key);
+        }
+      }).catch(() => {});
+    }
   }
+}
+
+export function registerServiceWorker() {
+  // Purge any registered worker
+  unregisterServiceWorker();
 }
