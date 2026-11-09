@@ -85,9 +85,11 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
     if (typeof window === 'undefined') return;
 
     // Detect visitor country for logistics estimation, but do NOT force-change language without user consent
-    detectVisitorLanguage().then((result) => {
-      setGeoInfo(result);
-    });
+    detectVisitorLanguage()
+      .then((result) => {
+        setGeoInfo(result);
+      })
+      .catch(() => {});
   }, []);
 
   const languageInfo = useMemo(() => {

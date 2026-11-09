@@ -250,23 +250,34 @@ async function startServer() {
       server: {
         middlewareMode: true,
         allowedHosts: true,
+        hmr: false,
       },
       appType: 'spa',
     });
 
-    // Development localized HTML middleware for crawlers and preview
+    // Development localized HTML middleware for all browsers (Firefox Nightly, Safari, Chrome, Edge)
     app.use(async (req, res, next) => {
+      const isStaticFile = /\.[a-zA-Z0-9]{2,8}$/.test(req.path);
+      const isHtmlRequest =
+        (req.headers.accept || '').includes('text/html') ||
+        (!isStaticFile && !req.path.startsWith('/@') && !req.path.startsWith('/node_modules'));
+
       if (
         req.method === 'GET' &&
         !req.path.startsWith('/api') &&
         !req.path.startsWith('/catalog/') &&
-        (req.headers.accept || '').includes('text/html')
+        isHtmlRequest
       ) {
         try {
           const host = (req.headers.host || '').toLowerCase();
           const rawHtml = fs.readFileSync(path.resolve(__dirname, 'index.html'), 'utf-8');
           const localizedHtml = injectSubdomainMeta(rawHtml, host, req.path);
-          const transformed = await vite.transformIndexHtml(req.originalUrl, localizedHtml);
+          let transformed: string;
+          try {
+            transformed = await vite.transformIndexHtml(req.originalUrl, localizedHtml);
+          } catch {
+            transformed = await vite.transformIndexHtml('/', localizedHtml);
+          }
           res.setHeader('Content-Type', 'text/html; charset=utf-8');
           return res.send(transformed);
         } catch (e) {

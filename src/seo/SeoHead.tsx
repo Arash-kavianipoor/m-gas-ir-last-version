@@ -305,14 +305,15 @@ export const SeoHead: React.FC<SeoHeadProps> = ({ currentPath, activeArticle, ac
       ogType = 'website';
     }
 
-    // 1. Page Title
-    document.title = pageTitle;
+    try {
+      // 1. Page Title
+      document.title = pageTitle;
 
-    // Helper to set or create meta tag
-    const setMetaTag = (attrName: 'name' | 'property', attrValue: string, content: string) => {
-      let meta = document.querySelector(`meta[${attrName}="${attrValue}"]`);
-      if (!meta) {
-        meta = document.createElement('meta');
+      // Helper to set or create meta tag
+      const setMetaTag = (attrName: 'name' | 'property', attrValue: string, content: string) => {
+        let meta = document.querySelector(`meta[${attrName}="${attrValue}"]`);
+        if (!meta) {
+          meta = document.createElement('meta');
         meta.setAttribute(attrName, attrValue);
         document.head.appendChild(meta);
       }
@@ -438,7 +439,9 @@ export const SeoHead: React.FC<SeoHeadProps> = ({ currentPath, activeArticle, ac
       }
       script.textContent = JSON.stringify(data);
     });
-
+    } catch {
+      // Safe fallback for strict sandboxed environments
+    }
   }, [currentLanguage, languageInfo, activeArticle, activeProduct, currentPath]);
 
   return null;

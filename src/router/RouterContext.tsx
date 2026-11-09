@@ -7,46 +7,64 @@ interface RouterContextType {
 
 const RouterContext = createContext<RouterContextType | undefined>(undefined);
 
+function safeReplaceState(url: string) {
+  try {
+    window.history.replaceState({}, '', url);
+  } catch {}
+}
+
+function safePushState(url: string) {
+  try {
+    window.history.pushState({}, '', url);
+  } catch {
+    safeReplaceState(url);
+  }
+}
+
 /**
  * Normalizes URL path, stripping trailing slash (except root) and resolving legacy hash anchors
  */
 function resolveInitialPath(): string {
   if (typeof window === 'undefined') return '/';
 
-  const hash = window.location.hash;
-  const pathname = window.location.pathname.replace(/\/+$/, '') || '/';
+  try {
+    const hash = window.location.hash || '';
+    const pathname = window.location.pathname.replace(/\/+$/, '') || '/';
 
-  // 1. Upgrade legacy hash URLs to clean canonical paths
-  if (hash.startsWith('#article=')) {
-    const slug = hash.replace('#article=', '').split('&')[0];
-    const cleanPath = `/articles/${slug}`;
-    window.history.replaceState({}, '', cleanPath);
-    return cleanPath;
-  }
-
-  if (hash.startsWith('#product=')) {
-    const slug = hash.replace('#product=', '').split('&')[0];
-    const cleanPath = `/products/${slug}`;
-    window.history.replaceState({}, '', cleanPath);
-    return cleanPath;
-  }
-
-  if (hash.startsWith('#')) {
-    const section = hash.replace('#', '').split('&')[0].split('?')[0];
-    if (section === 'history') {
-      const cleanPath = '/about';
-      window.history.replaceState({}, '', cleanPath);
+    // 1. Upgrade legacy hash URLs to clean canonical paths
+    if (hash.startsWith('#article=')) {
+      const slug = hash.replace('#article=', '').split('&')[0];
+      const cleanPath = `/articles/${slug}`;
+      safeReplaceState(cleanPath);
       return cleanPath;
     }
-    const cleanSections = ['products', 'quality', 'factory-tour', 'articles', 'faq', 'calculator', 'contact', 'about', 'certificates'];
-    if (cleanSections.includes(section)) {
-      const cleanPath = `/${section}`;
-      window.history.replaceState({}, '', cleanPath);
+
+    if (hash.startsWith('#product=')) {
+      const slug = hash.replace('#product=', '').split('&')[0];
+      const cleanPath = `/products/${slug}`;
+      safeReplaceState(cleanPath);
       return cleanPath;
     }
-  }
 
-  return pathname;
+    if (hash.startsWith('#')) {
+      const section = hash.replace('#', '').split('&')[0].split('?')[0];
+      if (section === 'history') {
+        const cleanPath = '/about';
+        safeReplaceState(cleanPath);
+        return cleanPath;
+      }
+      const cleanSections = ['products', 'quality', 'factory-tour', 'articles', 'faq', 'calculator', 'contact', 'about', 'certificates'];
+      if (cleanSections.includes(section)) {
+        const cleanPath = `/${section}`;
+        safeReplaceState(cleanPath);
+        return cleanPath;
+      }
+    }
+
+    return pathname;
+  } catch {
+    return '/';
+  }
 }
 
 export const RouterProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -54,8 +72,10 @@ export const RouterProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 
   useEffect(() => {
     const handlePopState = () => {
-      const path = window.location.pathname.replace(/\/+$/, '') || '/';
-      setCurrentPath(path);
+      try {
+        const path = window.location.pathname.replace(/\/+$/, '') || '/';
+        setCurrentPath(path);
+      } catch {}
     };
 
     window.addEventListener('popstate', handlePopState);
@@ -68,15 +88,21 @@ export const RouterProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     const normalizedPath = path.replace(/\/+$/, '') || '/';
 
     if (options?.replace) {
-      window.history.replaceState({}, '', normalizedPath);
+      safeReplaceState(normalizedPath);
     } else {
-      window.history.pushState({}, '', normalizedPath);
+      safePushState(normalizedPath);
     }
 
     setCurrentPath(normalizedPath);
 
     if (options?.scrollToTop !== false) {
-      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      try {
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      } catch {
+        try {
+          window.scrollTo(0, 0);
+        } catch {}
+      }
     }
   }, []);
 
