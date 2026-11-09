@@ -12,6 +12,7 @@ import {
   ROOT_DOMAIN,
   ROOT_URL,
 } from '../utils/subdomains';
+import { safeStorage } from '../utils/safeStorage';
 
 interface LanguageContextType {
   currentLanguage: LanguageCode;
@@ -46,8 +47,8 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
         const urlParams = new URLSearchParams(window.location.search);
         const urlLang = urlParams.get('lang') as LanguageCode | null;
         if (urlLang && SUPPORTED_LANGUAGES[urlLang]) {
-          localStorage.setItem(STORAGE_KEY, urlLang);
-          localStorage.setItem(MANUAL_LOCK_KEY, 'true');
+          safeStorage.setItem(STORAGE_KEY, urlLang);
+          safeStorage.setItem(MANUAL_LOCK_KEY, 'true');
           // If lang is Persian (the default), clean the URL query to preserve canonical https://mgas.ir/
           if (urlLang === DEFAULT_LANGUAGE) {
             const cleanSearch = stripLangQueryParam(window.location.search);
@@ -58,9 +59,9 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
         }
       } catch {}
 
-      // 3. User manual preference in localStorage if previously selected
-      const isManual = localStorage.getItem(MANUAL_LOCK_KEY) === 'true';
-      const saved = localStorage.getItem(STORAGE_KEY) as LanguageCode | null;
+      // 3. User manual preference in safeStorage if previously selected
+      const isManual = safeStorage.getItem(MANUAL_LOCK_KEY) === 'true';
+      const saved = safeStorage.getItem(STORAGE_KEY) as LanguageCode | null;
       if (isManual && saved && SUPPORTED_LANGUAGES[saved]) {
         return saved;
       }
@@ -127,8 +128,8 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
       setCurrentLanguageState(lang);
       
       if (typeof window !== 'undefined') {
-        localStorage.setItem(STORAGE_KEY, lang);
-        localStorage.setItem(MANUAL_LOCK_KEY, 'true');
+        safeStorage.setItem(STORAGE_KEY, lang);
+        safeStorage.setItem(MANUAL_LOCK_KEY, 'true');
 
         // 2. Direct Subdomain Navigation in Production (Strictly avoids ?lang= cannibalization)
         try {

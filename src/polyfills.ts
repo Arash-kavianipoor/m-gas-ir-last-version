@@ -22,6 +22,42 @@ try {
   // Silent fallback
 }
 
+// 1.5. localStorage & sessionStorage safe fallback for Chrome Incognito & restricted iframes
+try {
+  if (typeof window !== 'undefined') {
+    let storageAvailable = true;
+    try {
+      const probe = '__probe__';
+      window.localStorage.setItem(probe, probe);
+      window.localStorage.removeItem(probe);
+    } catch {
+      storageAvailable = false;
+    }
+
+    if (!storageAvailable) {
+      const createStorageShim = () => {
+        const store = new Map<string, string>();
+        return {
+          getItem: (key: string) => store.get(key) ?? null,
+          setItem: (key: string, value: string) => store.set(key, String(value)),
+          removeItem: (key: string) => store.delete(key),
+          clear: () => store.clear(),
+          get length() { return store.size; },
+          key: (index: number) => Array.from(store.keys())[index] ?? null,
+        };
+      };
+      try {
+        Object.defineProperty(window, 'localStorage', { value: createStorageShim(), configurable: true, writable: true });
+      } catch {}
+      try {
+        Object.defineProperty(window, 'sessionStorage', { value: createStorageShim(), configurable: true, writable: true });
+      } catch {}
+    }
+  }
+} catch {
+  // Silent fallback
+}
+
 // 2. crypto & crypto.randomUUID polyfill
 try {
   if (typeof window !== 'undefined') {

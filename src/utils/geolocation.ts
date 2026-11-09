@@ -1,5 +1,6 @@
 import { LanguageCode } from '../types';
 import { SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE } from '../i18n/languages';
+import { safeStorage } from './safeStorage';
 
 // Comprehensive Country ISO2 code to LanguageCode mapping covering all Search Console regions
 export const COUNTRY_TO_LANGUAGE: Record<string, LanguageCode> = {
@@ -179,8 +180,8 @@ const LAST_DETECTED_COUNTRY_KEY = 'mgas_last_detected_country';
  * Layer 8: Default (fa)
  */
 export async function detectVisitorLanguage(): Promise<GeolocationResult> {
-  const previousIp = typeof window !== 'undefined' ? localStorage.getItem(LAST_DETECTED_IP_KEY) : null;
-  const previousCountry = typeof window !== 'undefined' ? localStorage.getItem(LAST_DETECTED_COUNTRY_KEY) : null;
+  const previousIp = typeof window !== 'undefined' ? safeStorage.getItem(LAST_DETECTED_IP_KEY) : null;
+  const previousCountry = typeof window !== 'undefined' ? safeStorage.getItem(LAST_DETECTED_COUNTRY_KEY) : null;
 
   // Layer 1: Cloudflare Trace (fast, zero rate limit, returns edge IP and loc=XX)
   try {
@@ -209,8 +210,8 @@ export async function detectVisitorLanguage(): Promise<GeolocationResult> {
         const isNewIp = Boolean(previousIp && previousIp !== currentIp) || Boolean(previousCountry && previousCountry !== countryCode);
 
         if (typeof window !== 'undefined') {
-          localStorage.setItem(LAST_DETECTED_IP_KEY, currentIp);
-          localStorage.setItem(LAST_DETECTED_COUNTRY_KEY, countryCode);
+          safeStorage.setItem(LAST_DETECTED_IP_KEY, currentIp);
+          safeStorage.setItem(LAST_DETECTED_COUNTRY_KEY, countryCode);
         }
 
         return {
@@ -245,8 +246,8 @@ export async function detectVisitorLanguage(): Promise<GeolocationResult> {
         const isNewIp = Boolean(previousIp && previousIp !== currentIp) || Boolean(previousCountry && previousCountry !== countryCode);
 
         if (typeof window !== 'undefined') {
-          localStorage.setItem(LAST_DETECTED_IP_KEY, currentIp);
-          localStorage.setItem(LAST_DETECTED_COUNTRY_KEY, countryCode);
+          safeStorage.setItem(LAST_DETECTED_IP_KEY, currentIp);
+          safeStorage.setItem(LAST_DETECTED_COUNTRY_KEY, countryCode);
         }
 
         return {
@@ -282,8 +283,8 @@ export async function detectVisitorLanguage(): Promise<GeolocationResult> {
         const isNewIp = Boolean(previousIp && previousIp !== currentIp) || Boolean(previousCountry && previousCountry !== countryCode);
 
         if (typeof window !== 'undefined') {
-          localStorage.setItem(LAST_DETECTED_IP_KEY, currentIp);
-          localStorage.setItem(LAST_DETECTED_COUNTRY_KEY, countryCode);
+          safeStorage.setItem(LAST_DETECTED_IP_KEY, currentIp);
+          safeStorage.setItem(LAST_DETECTED_COUNTRY_KEY, countryCode);
         }
 
         return {
@@ -319,8 +320,8 @@ export async function detectVisitorLanguage(): Promise<GeolocationResult> {
         const isNewIp = Boolean(previousIp && previousIp !== currentIp) || Boolean(previousCountry && previousCountry !== countryCode);
 
         if (typeof window !== 'undefined') {
-          localStorage.setItem(LAST_DETECTED_IP_KEY, currentIp);
-          localStorage.setItem(LAST_DETECTED_COUNTRY_KEY, countryCode);
+          safeStorage.setItem(LAST_DETECTED_IP_KEY, currentIp);
+          safeStorage.setItem(LAST_DETECTED_COUNTRY_KEY, countryCode);
         }
 
         return {
@@ -356,8 +357,8 @@ export async function detectVisitorLanguage(): Promise<GeolocationResult> {
         const isNewIp = Boolean(previousIp && previousIp !== currentIp) || Boolean(previousCountry && previousCountry !== countryCode);
 
         if (typeof window !== 'undefined') {
-          localStorage.setItem(LAST_DETECTED_IP_KEY, currentIp);
-          localStorage.setItem(LAST_DETECTED_COUNTRY_KEY, countryCode);
+          safeStorage.setItem(LAST_DETECTED_IP_KEY, currentIp);
+          safeStorage.setItem(LAST_DETECTED_COUNTRY_KEY, countryCode);
         }
 
         return {
